@@ -19,7 +19,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: Arial, sans-serif;
+  font-family: "Trebuchet MS", Arial, sans-serif;
 
   background:
     radial-gradient(circle at 20% 20%, #ffd1e3, transparent 35%),
@@ -29,7 +29,6 @@ body {
   animation: backgroundMove 8s ease-in-out infinite alternate;
 }
 
-/* Animated background */
 @keyframes backgroundMove {
   0% {
     background-position: 0% 0%;
@@ -40,7 +39,10 @@ body {
   }
 }
 
-/* Floating background particles */
+
+/* =========================
+   BACKGROUND PARTICLES
+========================= */
 
 .particle {
   position: fixed;
@@ -51,6 +53,7 @@ body {
 }
 
 @keyframes particleUp {
+
   0% {
     transform: translateY(0) scale(0.5);
     opacity: 0;
@@ -64,32 +67,40 @@ body {
     transform: translateY(-110vh) scale(1.2);
     opacity: 0;
   }
+
 }
 
 
-/* Main glass card */
+/* =========================
+   MAIN CARD
+========================= */
 
 .container {
   width: 90%;
   max-width: 450px;
+
   text-align: center;
-  padding: 35px 22px;
+
+  padding: 38px 22px;
 
   background: rgba(255,255,255,0.45);
+
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
 
   border: 1px solid rgba(255,255,255,0.7);
+
   border-radius: 30px;
 
   box-shadow:
-    0 20px 60px rgba(255, 59, 120, 0.2),
+    0 20px 60px rgba(255,59,120,0.2),
     inset 0 0 25px rgba(255,255,255,0.5);
 
   animation: cardAppear 1s ease;
 }
 
 @keyframes cardAppear {
+
   0% {
     opacity: 0;
     transform: translateY(40px) scale(0.85);
@@ -99,16 +110,24 @@ body {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+
 }
 
 
-/* Emoji */
+/* =========================
+   EMOJI
+========================= */
 
 .emoji {
   font-size: 75px;
+
   margin-bottom: 15px;
 
-  filter: drop-shadow(0 8px 15px rgba(255,59,120,0.25));
+  filter:
+    drop-shadow(
+      0 8px 15px
+      rgba(255,59,120,0.25)
+    );
 
   animation:
     bounce 1.5s infinite,
@@ -116,74 +135,207 @@ body {
 }
 
 @keyframes bounce {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
+
+  0%,100% {
+    transform:
+      translateY(0)
+      rotate(0deg);
   }
 
   50% {
-    transform: translateY(-12px) rotate(3deg);
+    transform:
+      translateY(-12px)
+      rotate(3deg);
   }
+
 }
 
 @keyframes glow {
+
   from {
-    filter: drop-shadow(0 5px 10px rgba(255,59,120,0.2));
+    filter:
+      drop-shadow(
+        0 5px 10px
+        rgba(255,59,120,0.2)
+      );
   }
 
   to {
-    filter: drop-shadow(0 5px 25px rgba(255,59,120,0.7));
+    filter:
+      drop-shadow(
+        0 5px 25px
+        rgba(255,59,120,0.7)
+      );
   }
+
 }
 
 
-/* Heading */
+/* =========================
+   STYLISH MAIN HEADING
+========================= */
 
 h1 {
-  color: #ff3b78;
-  font-size: 30px;
-  margin-bottom: 15px;
+  font-family:
+    "Trebuchet MS",
+    Arial,
+    sans-serif;
 
-  text-shadow:
-    0 2px 10px rgba(255,59,120,0.2);
+  font-size: 31px;
 
-  animation: textGlow 2s infinite alternate;
+  font-weight: 900;
+
+  letter-spacing: 0.6px;
+
+  line-height: 1.3;
+
+  margin-bottom: 16px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #ff1761,
+      #ff4f87,
+      #ff9cbd,
+      #ff1761
+    );
+
+  background-size: 300% auto;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  color: transparent;
+
+  filter:
+    drop-shadow(
+      0 4px 10px
+      rgba(255,59,120,0.25)
+    );
+
+  animation:
+    gradientText 4s linear infinite,
+    headingFloat 2.5s ease-in-out infinite alternate;
 }
 
-@keyframes textGlow {
-  from {
-    text-shadow: 0 2px 8px rgba(255,59,120,0.2);
+@keyframes gradientText {
+
+  0% {
+    background-position: 0% center;
   }
 
-  to {
-    text-shadow: 0 2px 20px rgba(255,59,120,0.5);
+  100% {
+    background-position: 300% center;
   }
+
 }
 
+@keyframes headingFloat {
+
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-4px);
+  }
+
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
 
 p {
-  color: #555;
-  font-size: 18px;
+  font-family:
+    "Trebuchet MS",
+    Arial,
+    sans-serif;
+
+  font-size: 19px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.4px;
+
+  line-height: 1.5;
+
+  color: #70495b;
+
   margin-bottom: 30px;
+
+  text-shadow:
+    0 2px 8px
+    rgba(255,59,120,0.18);
+}
+
+#message {
+  animation:
+    messageAppear 0.8s ease,
+    messageFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes messageAppear {
+
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+@keyframes messageFloat {
+
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-2px);
+  }
+
 }
 
 
-/* Buttons */
+/* =========================
+   BUTTONS
+========================= */
 
 .buttons {
   display: flex;
+
   justify-content: center;
+
   align-items: center;
+
   gap: 20px;
+
   min-height: 60px;
 }
 
 button {
   border: none;
+
   border-radius: 15px;
+
   padding: 14px 30px;
 
+  font-family:
+    "Trebuchet MS",
+    Arial,
+    sans-serif;
+
   font-size: 18px;
-  font-weight: bold;
+
+  font-weight: 900;
+
+  letter-spacing: 0.7px;
 
   cursor: pointer;
 
@@ -193,41 +345,71 @@ button {
     background 0.25s ease;
 
   box-shadow:
-    0 8px 20px rgba(0,0,0,0.12);
+    0 8px 20px
+    rgba(0,0,0,0.12);
 }
 
 
-/* YES */
+/* =========================
+   YES BUTTON
+========================= */
 
 #yes {
-  background: linear-gradient(135deg, #ff3b78, #ff1761);
+  background:
+    linear-gradient(
+      135deg,
+      #ff3b78,
+      #ff1761
+    );
+
   color: white;
 
-  animation: yesPulse 2s infinite;
+  text-shadow:
+    0 2px 5px
+    rgba(0,0,0,0.15);
+
+  animation:
+    yesPulse 2s infinite;
 }
 
 #yes:hover {
   transform: scale(1.1);
+
   box-shadow:
-    0 10px 30px rgba(255,23,97,0.45);
+    0 10px 30px
+    rgba(255,23,97,0.45);
 }
 
 @keyframes yesPulse {
-  0%, 100% {
-    box-shadow: 0 5px 15px rgba(255,59,120,0.25);
+
+  0%,100% {
+    box-shadow:
+      0 5px 15px
+      rgba(255,59,120,0.25);
   }
 
   50% {
-    box-shadow: 0 5px 30px rgba(255,59,120,0.55);
+    box-shadow:
+      0 5px 30px
+      rgba(255,59,120,0.55);
   }
+
 }
 
 
-/* NO */
+/* =========================
+   NO BUTTON
+========================= */
 
 #no {
-  background: rgba(255,255,255,0.9);
+  background:
+    rgba(255,255,255,0.9);
+
   color: #ff3b78;
+
+  text-shadow:
+    0 1px 3px
+    rgba(255,59,120,0.15);
 }
 
 #no:hover {
@@ -235,38 +417,99 @@ button {
 }
 
 
-/* Success */
+/* =========================
+   SUCCESS SCREEN
+========================= */
 
 .success {
   display: none;
-  animation: successAppear 0.8s ease;
+
+  animation:
+    successAppear 0.8s ease;
 }
 
 .success h2 {
-  color: #ff3b78;
-  font-size: 34px;
+
+  font-family:
+    "Trebuchet MS",
+    Arial,
+    sans-serif;
+
+  font-size: 40px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
   margin: 15px 0;
 
-  animation: yay 1s ease infinite alternate;
+  background:
+    linear-gradient(
+      90deg,
+      #ff1761,
+      #ff4f87,
+      #ff9cbd,
+      #ff1761
+    );
+
+  background-size: 300% auto;
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  color: transparent;
+
+  filter:
+    drop-shadow(
+      0 5px 12px
+      rgba(255,59,120,0.3)
+    );
+
+  animation:
+    successGradient 3s linear infinite,
+    yay 1s ease-in-out infinite alternate;
+}
+
+@keyframes successGradient {
+
+  0% {
+    background-position: 0% center;
+  }
+
+  100% {
+    background-position: 300% center;
+  }
+
 }
 
 @keyframes successAppear {
+
   0% {
-    transform: scale(0.3) rotate(-10deg);
+    transform:
+      scale(0.3)
+      rotate(-10deg);
+
     opacity: 0;
   }
 
   70% {
-    transform: scale(1.1) rotate(3deg);
+    transform:
+      scale(1.1)
+      rotate(3deg);
   }
 
   100% {
-    transform: scale(1) rotate(0);
+    transform:
+      scale(1)
+      rotate(0);
+
     opacity: 1;
   }
+
 }
 
 @keyframes yay {
+
   from {
     transform: scale(1);
   }
@@ -274,23 +517,69 @@ button {
   to {
     transform: scale(1.08);
   }
+
 }
 
 
-/* Floating hearts */
+/* Success paragraph */
+
+.success p {
+
+  font-family:
+    "Trebuchet MS",
+    Arial,
+    sans-serif;
+
+  font-size: 19px;
+
+  font-weight: 700;
+
+  color: #70495b;
+
+  text-shadow:
+    0 2px 8px
+    rgba(255,59,120,0.15);
+
+  animation:
+    successMessage 1s ease;
+}
+
+@keyframes successMessage {
+
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+}
+
+
+/* =========================
+   FLOATING HEARTS
+========================= */
 
 .heart {
   position: fixed;
+
   bottom: -40px;
 
   font-size: 25px;
 
   pointer-events: none;
 
-  animation: floatUp 4s linear forwards;
+  animation:
+    floatUp 4s linear forwards;
 
   filter:
-    drop-shadow(0 0 8px rgba(255,59,120,0.5));
+    drop-shadow(
+      0 0 8px
+      rgba(255,59,120,0.5)
+    );
 }
 
 @keyframes floatUp {
@@ -323,33 +612,49 @@ button {
 
     opacity: 0;
   }
+
 }
 
 
-/* Sparkles */
+/* =========================
+   SPARKLES
+========================= */
 
 .sparkle {
   position: fixed;
+
   pointer-events: none;
+
   font-size: 18px;
 
-  animation: sparkleAnim 1s ease-out forwards;
+  animation:
+    sparkleAnim 1s ease-out forwards;
 }
 
 @keyframes sparkleAnim {
+
   0% {
-    transform: scale(0) rotate(0deg);
+    transform:
+      scale(0)
+      rotate(0deg);
+
     opacity: 1;
   }
 
   100% {
-    transform: scale(1.5) rotate(180deg);
+    transform:
+      scale(1.5)
+      rotate(180deg);
+
     opacity: 0;
   }
+
 }
 
 
-/* Mobile */
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 500px) {
 
@@ -373,8 +678,8 @@ button {
     padding: 13px 25px;
     font-size: 17px;
   }
-}
 
+}
 </style>
 </head>
 
@@ -387,9 +692,13 @@ button {
 
   <div id="question">
 
-    <div class="emoji">🥺❤️</div>
+    <div class="emoji">
+      🥺❤️
+    </div>
 
-    <h1>Kya Tum Mujh Se Pyar Karti Ho?</h1>
+    <h1>
+      Kya Tum Mujh Se Pyar Karti Ho?
+    </h1>
 
     <p id="message">
       Sach sach batana... 🥺💕
@@ -460,7 +769,8 @@ function createBackgroundParticles() {
   const particle =
     document.createElement("div");
 
-  particle.className = "particle";
+  particle.className =
+    "particle";
 
   particle.innerHTML =
     ["♡", "♥", "✨", "•", "💕"][
@@ -476,13 +786,14 @@ function createBackgroundParticles() {
   particle.style.animationDuration =
     (5 + Math.random() * 6) + "s";
 
-  document.body.appendChild(particle);
+  document.body.appendChild(
+    particle
+  );
 
   setTimeout(() => {
     particle.remove();
   }, 11000);
 }
-
 
 setInterval(
   createBackgroundParticles,
@@ -491,7 +802,7 @@ setInterval(
 
 
 /* =========================
-   NO BUTTON MOVE
+   NO BUTTON
 ========================= */
 
 function moveNoButton() {
@@ -513,11 +824,13 @@ function moveNoButton() {
     15;
 
   const x =
-    10 + Math.random() *
+    10 +
+    Math.random() *
     Math.max(maxX - 10, 10);
 
   const y =
-    10 + Math.random() *
+    10 +
+    Math.random() *
     Math.max(maxY - 10, 10);
 
   noButton.style.position =
@@ -528,7 +841,6 @@ function moveNoButton() {
 
   noButton.style.top =
     y + "px";
-
 }
 
 
@@ -583,7 +895,6 @@ noButton.addEventListener(
 
   }
 );
-
 
 noButton.addEventListener(
   "touchstart",
@@ -680,7 +991,7 @@ function createHearts() {
 
 
 /* =========================
-   SPARKLE EFFECT
+   SPARKLES
 ========================= */
 
 function createSparkles() {
