@@ -3,126 +3,237 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>For You ❤️</title>
 
 <style>
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+html {
+    min-height: 100%;
+}
+
 body {
     min-height: 100vh;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
+    padding: 25px 0;
+
     font-family: "Trebuchet MS", Arial, sans-serif;
+
     background:
-        radial-gradient(circle at 20% 20%, #ffd1e3, transparent 35%),
-        radial-gradient(circle at 80% 80%, #ffc1dc, transparent 35%),
-        linear-gradient(135deg, #fff0f6, #ffd6e7);
+        radial-gradient(
+            circle at 20% 20%,
+            #ffd1e3,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            #ffc1dc,
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #fff0f6,
+            #ffd6e7
+        );
+
     animation: backgroundMove 8s ease-in-out infinite alternate;
 }
 
 @keyframes backgroundMove {
+
     0% {
         background-position: 0% 0%;
     }
+
     100% {
         background-position: 100% 100%;
     }
+
 }
+
+
+/* PARTICLES */
 
 .particle {
     position: fixed;
     bottom: -30px;
+
     pointer-events: none;
+
     opacity: 0.6;
-    animation: particleUp linear forwards;
+
+    animation:
+        particleUp
+        linear
+        forwards;
 }
 
 @keyframes particleUp {
+
     0% {
-        transform: translateY(0) scale(0.5);
+        transform:
+            translateY(0)
+            scale(0.5);
+
         opacity: 0;
     }
+
     20% {
         opacity: 0.7;
     }
+
     100% {
-        transform: translateY(-110vh) scale(1.2);
+        transform:
+            translateY(-110vh)
+            scale(1.2);
+
         opacity: 0;
     }
+
 }
+
+
+/* MAIN CARD */
 
 .container {
+
     width: 90%;
     max-width: 450px;
-    max-height: 95vh;
-    overflow-y: auto;
-    text-align: center;
-    padding: 38px 22px;
-    background: rgba(255,255,255,0.45);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255,255,255,0.7);
-    border-radius: 30px;
-    box-shadow:
-        0 20px 60px rgba(255,59,120,0.2),
-        inset 0 0 25px rgba(255,255,255,0.5);
-    animation: cardAppear 1s ease;
-}
 
-.container::-webkit-scrollbar {
-    width: 0;
+    text-align: center;
+
+    padding: 38px 22px;
+
+    background:
+        rgba(255,255,255,0.45);
+
+    backdrop-filter:
+        blur(15px);
+
+    -webkit-backdrop-filter:
+        blur(15px);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.7);
+
+    border-radius: 30px;
+
+    box-shadow:
+        0 20px 60px
+        rgba(255,59,120,0.2),
+
+        inset 0 0 25px
+        rgba(255,255,255,0.5);
+
+    animation:
+        cardAppear
+        1s ease;
 }
 
 @keyframes cardAppear {
+
     0% {
         opacity: 0;
-        transform: translateY(40px) scale(0.85);
+
+        transform:
+            translateY(40px)
+            scale(0.85);
     }
+
     100% {
         opacity: 1;
-        transform: translateY(0) scale(1);
+
+        transform:
+            translateY(0)
+            scale(1);
     }
+
 }
 
+
+/* EMOJI */
+
 .emoji {
+
     font-size: 75px;
+
     margin-bottom: 15px;
-    filter: drop-shadow(0 8px 15px rgba(255,59,120,0.25));
+
+    filter:
+        drop-shadow(
+            0 8px 15px
+            rgba(255,59,120,0.25)
+        );
+
     animation:
         bounce 1.5s infinite,
         glow 2s ease-in-out infinite alternate;
 }
 
 @keyframes bounce {
+
     0%,100% {
-        transform: translateY(0) rotate(0deg);
+        transform:
+            translateY(0)
+            rotate(0deg);
     }
+
     50% {
-        transform: translateY(-12px) rotate(3deg);
+        transform:
+            translateY(-12px)
+            rotate(3deg);
     }
+
 }
 
 @keyframes glow {
+
     from {
-        filter: drop-shadow(0 5px 10px rgba(255,59,120,0.2));
+        filter:
+            drop-shadow(
+                0 5px 10px
+                rgba(255,59,120,0.2)
+            );
     }
+
     to {
-        filter: drop-shadow(0 5px 25px rgba(255,59,120,0.7));
+        filter:
+            drop-shadow(
+                0 5px 25px
+                rgba(255,59,120,0.7)
+            );
     }
+
 }
 
+
+/* HEADING */
+
 h1 {
+
     font-size: 31px;
+
     font-weight: 900;
+
     letter-spacing: 0.6px;
+
     line-height: 1.3;
+
     margin-bottom: 16px;
+
     background:
         linear-gradient(
             90deg,
@@ -131,133 +242,247 @@ h1 {
             #ff9cbd,
             #ff1761
         );
+
     background-size: 300% auto;
+
     -webkit-background-clip: text;
     background-clip: text;
+
     color: transparent;
-    filter: drop-shadow(0 4px 10px rgba(255,59,120,0.25));
+
+    filter:
+        drop-shadow(
+            0 4px 10px
+            rgba(255,59,120,0.25)
+        );
+
     animation:
         gradientText 4s linear infinite,
         headingFloat 2.5s ease-in-out infinite alternate;
 }
 
 @keyframes gradientText {
+
     0% {
         background-position: 0% center;
     }
+
     100% {
         background-position: 300% center;
     }
+
 }
 
 @keyframes headingFloat {
+
     0% {
         transform: translateY(0);
     }
+
     100% {
         transform: translateY(-4px);
     }
+
 }
+
+
+/* TEXT */
 
 p {
+
     font-size: 19px;
+
     font-weight: 700;
+
     letter-spacing: 0.4px;
+
     line-height: 1.5;
+
     color: #70495b;
+
     margin-bottom: 30px;
-    text-shadow: 0 2px 8px rgba(255,59,120,0.18);
+
+    text-shadow:
+        0 2px 8px
+        rgba(255,59,120,0.18);
 }
 
+
+/* MESSAGE */
+
 #message {
+
     animation:
         messageAppear 0.8s ease,
         messageFloat 3s ease-in-out infinite alternate;
 }
 
 @keyframes messageAppear {
+
     0% {
         opacity: 0;
-        transform: translateY(12px);
+
+        transform:
+            translateY(12px);
     }
+
     100% {
         opacity: 1;
-        transform: translateY(0);
+
+        transform:
+            translateY(0);
     }
+
 }
 
 @keyframes messageFloat {
+
     0% {
-        transform: translateY(0);
+        transform:
+            translateY(0);
     }
+
     100% {
-        transform: translateY(-2px);
+        transform:
+            translateY(-2px);
     }
+
 }
 
+
+/* BUTTONS */
+
 .buttons {
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
+
     gap: 20px;
+
     min-height: 60px;
 }
 
 button {
+
     border: none;
+
     border-radius: 15px;
-    padding: 14px 30px;
+
+    padding:
+        14px 30px;
+
     font-size: 18px;
+
     font-weight: 900;
+
     letter-spacing: 0.7px;
+
     cursor: pointer;
+
     transition:
         transform 0.25s ease,
-        box-shadow 0.25s ease,
-        background 0.25s ease;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        box-shadow 0.25s ease;
+
+    box-shadow:
+        0 8px 20px
+        rgba(0,0,0,0.12);
 }
 
+
+/* YES */
+
 #yes {
-    background: linear-gradient(135deg, #ff3b78, #ff1761);
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff3b78,
+            #ff1761
+        );
+
     color: white;
-    text-shadow: 0 2px 5px rgba(0,0,0,0.15);
-    animation: yesPulse 2s infinite;
+
+    text-shadow:
+        0 2px 5px
+        rgba(0,0,0,0.15);
+
+    animation:
+        yesPulse 2s infinite;
 }
 
 #yes:hover {
-    transform: scale(1.1);
-    box-shadow: 0 10px 30px rgba(255,23,97,0.45);
+
+    transform:
+        scale(1.1);
+
+    box-shadow:
+        0 10px 30px
+        rgba(255,23,97,0.45);
 }
 
 @keyframes yesPulse {
+
     0%,100% {
-        box-shadow: 0 5px 15px rgba(255,59,120,0.25);
+
+        box-shadow:
+            0 5px 15px
+            rgba(255,59,120,0.25);
     }
+
     50% {
-        box-shadow: 0 5px 30px rgba(255,59,120,0.55);
+
+        box-shadow:
+            0 5px 30px
+            rgba(255,59,120,0.55);
     }
+
 }
 
+
+/* NO */
+
 #no {
-    background: rgba(255,255,255,0.9);
-    color: #ff3b78;
-    text-shadow: 0 1px 3px rgba(255,59,120,0.15);
+
+    background:
+        rgba(255,255,255,0.9);
+
+    color:
+        #ff3b78;
+
+    text-shadow:
+        0 1px 3px
+        rgba(255,59,120,0.15);
 }
 
 #no:hover {
-    transform: scale(1.05);
+
+    transform:
+        scale(1.05);
 }
 
+
+/* SUCCESS */
+
 .success {
+
     display: none;
-    animation: successAppear 0.8s ease;
+
+    animation:
+        successAppear
+        0.8s ease;
 }
 
 .success h2 {
+
     font-size: 40px;
+
     font-weight: 900;
+
     letter-spacing: 1px;
+
     margin: 15px 0;
 
     background:
@@ -269,12 +494,19 @@ button {
             #ff1761
         );
 
-    background-size: 300% auto;
+    background-size:
+        300% auto;
+
     -webkit-background-clip: text;
     background-clip: text;
+
     color: transparent;
 
-    filter: drop-shadow(0 5px 12px rgba(255,59,120,0.3));
+    filter:
+        drop-shadow(
+            0 5px 12px
+            rgba(255,59,120,0.3)
+        );
 
     animation:
         successGradient 3s linear infinite,
@@ -282,219 +514,457 @@ button {
 }
 
 @keyframes successGradient {
+
     0% {
-        background-position: 0% center;
+        background-position:
+            0% center;
     }
+
     100% {
-        background-position: 300% center;
+        background-position:
+            300% center;
     }
+
 }
 
 @keyframes successAppear {
+
     0% {
-        transform: scale(0.3) rotate(-10deg);
+
+        transform:
+            scale(0.3)
+            rotate(-10deg);
+
         opacity: 0;
     }
+
     70% {
-        transform: scale(1.1) rotate(3deg);
+
+        transform:
+            scale(1.1)
+            rotate(3deg);
     }
+
     100% {
-        transform: scale(1) rotate(0);
+
+        transform:
+            scale(1)
+            rotate(0);
+
         opacity: 1;
     }
+
 }
 
 @keyframes yay {
+
     from {
-        transform: scale(1);
+        transform:
+            scale(1);
     }
+
     to {
-        transform: scale(1.08);
+        transform:
+            scale(1.08);
     }
+
 }
 
+
+/* SUCCESS MESSAGE */
+
 .success p {
+
     font-size: 19px;
+
     font-weight: 700;
+
     color: #70495b;
-    text-shadow: 0 2px 8px rgba(255,59,120,0.15);
-    animation: successMessage 1s ease;
+
+    text-shadow:
+        0 2px 8px
+        rgba(255,59,120,0.15);
+
+    animation:
+        successMessage 1s ease;
+
     margin-bottom: 20px;
 }
 
 @keyframes successMessage {
+
     0% {
+
         opacity: 0;
-        transform: scale(0.8);
+
+        transform:
+            scale(0.8);
     }
+
     100% {
+
         opacity: 1;
-        transform: scale(1);
+
+        transform:
+            scale(1);
     }
+
 }
 
+
+/* CONTACT */
+
 .contact-info {
+
     margin-top: 10px;
-    animation: fadeInUp 1s ease 0.5s both;
+
+    animation:
+        fadeInUp
+        1s ease
+        0.5s both;
 }
 
 .contact-name {
+
     font-size: 24px;
+
     font-weight: 900;
-    background: linear-gradient(90deg, #ff1761, #ff4f87);
-    -webkit-background-clip: text;
-    background-clip: text;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff1761,
+            #ff4f87
+        );
+
+    -webkit-background-clip:
+        text;
+
+    background-clip:
+        text;
+
     color: transparent;
+
     margin-bottom: 12px;
+
     letter-spacing: 1px;
 }
 
+
+/* WHATSAPP */
+
 .whatsapp-btn {
+
     display: inline-block;
-    background: linear-gradient(135deg, #25D366, #128C7E);
+
+    background:
+        linear-gradient(
+            135deg,
+            #25D366,
+            #128C7E
+        );
+
     color: white;
+
     text-decoration: none;
-    padding: 14px 28px;
+
+    padding:
+        14px 28px;
+
     border-radius: 15px;
+
     font-weight: 900;
+
     font-size: 17px;
-    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
-    transition: transform 0.25s ease;
+
+    box-shadow:
+        0 8px 25px
+        rgba(37,211,102,0.4);
+
+    transition:
+        transform 0.25s ease;
 }
 
 .whatsapp-btn:hover {
-    transform: scale(1.08);
+
+    transform:
+        scale(1.08);
 }
 
 @keyframes fadeInUp {
+
     0% {
+
         opacity: 0;
-        transform: translateY(15px);
+
+        transform:
+            translateY(15px);
     }
+
     100% {
+
         opacity: 1;
-        transform: translateY(0);
+
+        transform:
+            translateY(0);
     }
+
 }
+
 
 /* VIDEO */
 
 .video-container {
-    margin-top: 25px;
+
+    display: none;
+
     width: 100%;
-    animation: videoAppear 1.2s ease 0.8s both;
+
+    margin-top: 28px;
+
+    animation:
+        videoAppear
+        1s ease;
+}
+
+.video-title {
+
+    font-size: 18px;
+
+    font-weight: 900;
+
+    color: #ff1761;
+
+    margin-bottom: 12px;
+
+    text-shadow:
+        0 2px 8px
+        rgba(255,59,120,0.2);
 }
 
 .video-container video {
-    width: 100%;
-    max-height: 300px;
+
     display: block;
-    margin: auto;
+
+    width: 100%;
+
+    height: auto;
+
+    max-height: 400px;
+
+    margin: 0 auto;
+
     border-radius: 20px;
-    object-fit: cover;
+
     background: #000;
-    border: 2px solid rgba(255,255,255,0.8);
+
+    object-fit: contain;
+
+    border:
+        2px solid
+        rgba(255,255,255,0.9);
+
     box-shadow:
-        0 10px 30px rgba(255,59,120,0.35),
-        0 0 25px rgba(255,59,120,0.15);
+        0 10px 35px
+        rgba(255,59,120,0.4),
+
+        0 0 25px
+        rgba(255,59,120,0.2);
 }
 
 @keyframes videoAppear {
+
     0% {
+
         opacity: 0;
-        transform: translateY(30px) scale(0.9);
+
+        transform:
+            translateY(30px)
+            scale(0.9);
     }
+
     100% {
+
         opacity: 1;
-        transform: translateY(0) scale(1);
+
+        transform:
+            translateY(0)
+            scale(1);
     }
+
 }
 
+
+/* HEARTS */
+
 .heart {
+
     position: fixed;
+
     bottom: -40px;
+
     font-size: 25px;
+
     pointer-events: none;
-    animation: floatUp 4s linear forwards;
-    filter: drop-shadow(0 0 8px rgba(255,59,120,0.5));
+
+    animation:
+        floatUp
+        4s linear
+        forwards;
+
+    filter:
+        drop-shadow(
+            0 0 8px
+            rgba(255,59,120,0.5)
+        );
 }
 
 @keyframes floatUp {
+
     0% {
-        transform: translateY(0) rotate(0deg) scale(0.7);
+
+        transform:
+            translateY(0)
+            rotate(0deg)
+            scale(0.7);
+
         opacity: 0;
     }
+
     15% {
         opacity: 1;
     }
+
     50% {
-        transform: translateY(-50vh) rotate(180deg) scale(1);
+
+        transform:
+            translateY(-50vh)
+            rotate(180deg)
+            scale(1);
     }
+
     100% {
-        transform: translateY(-110vh) rotate(360deg) scale(1.3);
+
+        transform:
+            translateY(-110vh)
+            rotate(360deg)
+            scale(1.3);
+
         opacity: 0;
     }
+
 }
 
+
+/* SPARKLES */
+
 .sparkle {
+
     position: fixed;
+
     pointer-events: none;
+
     font-size: 18px;
-    animation: sparkleAnim 1s ease-out forwards;
+
+    animation:
+        sparkleAnim
+        1s ease-out
+        forwards;
 }
 
 @keyframes sparkleAnim {
+
     0% {
-        transform: scale(0) rotate(0deg);
+
+        transform:
+            scale(0)
+            rotate(0deg);
+
         opacity: 1;
     }
+
     100% {
-        transform: scale(1.5) rotate(180deg);
+
+        transform:
+            scale(1.5)
+            rotate(180deg);
+
         opacity: 0;
     }
+
 }
+
+
+/* MOBILE */
 
 @media (max-width: 500px) {
 
+    body {
+
+        padding:
+            20px 0;
+    }
+
     .container {
-        padding: 30px 18px;
+
+        width: 92%;
+
+        padding:
+            30px 18px;
     }
 
     h1 {
+
         font-size: 26px;
     }
 
     p {
+
         font-size: 17px;
     }
 
     .emoji {
+
         font-size: 65px;
     }
 
     button {
-        padding: 13px 25px;
+
+        padding:
+            13px 25px;
+
         font-size: 17px;
     }
 
     .success h2 {
+
         font-size: 34px;
     }
 
     .video-container video {
-        max-height: 260px;
+
+        max-height: 350px;
     }
+
 }
+
 </style>
 </head>
 
+
 <body>
+
 
 <div class="container">
 
+
+    <!-- QUESTION -->
+
     <div id="question">
 
-        <div class="emoji">🥺❤️</div>
+        <div class="emoji">
+            🥺❤️
+        </div>
 
         <h1>
             Kya Tum Mujh Se Pyar Karti Ho?
@@ -505,6 +975,7 @@ button {
         </p>
 
         <div class="buttons">
+
             <button id="yes">
                 Yes ❤️
             </button>
@@ -512,12 +983,18 @@ button {
             <button id="no">
                 No 😭
             </button>
+
         </div>
 
     </div>
 
 
-    <div class="success" id="success">
+    <!-- SUCCESS -->
+
+    <div
+        class="success"
+        id="success"
+    >
 
         <div class="emoji">
             🥰❤️
@@ -531,6 +1008,8 @@ button {
             Mujhe pata tha tum Yes bolo gi! 😭💕
         </p>
 
+
+        <!-- NAME + WHATSAPP -->
 
         <div class="contact-info">
 
@@ -551,16 +1030,24 @@ button {
 
         <!-- VIDEO -->
 
-        <div class="video-container">
+        <div
+            class="video-container"
+            id="videoContainer"
+        >
+
+            <div class="video-title">
+                ❤️ Sirf Tumhare Liye ❤️
+            </div>
 
             <video
                 id="loveVideo"
-                playsinline
                 controls
+                playsinline
+                preload="auto"
             >
 
                 <source
-                    src="innocentking.mp4"
+                    src="./innocentking.mp4"
                     type="video/mp4"
                 >
 
@@ -577,12 +1064,29 @@ button {
 
 <script>
 
-const yesButton = document.getElementById("yes");
-const noButton = document.getElementById("no");
-const question = document.getElementById("question");
-const success = document.getElementById("success");
-const message = document.getElementById("message");
-const loveVideo = document.getElementById("loveVideo");
+
+/* ELEMENTS */
+
+const yesButton =
+    document.getElementById("yes");
+
+const noButton =
+    document.getElementById("no");
+
+const question =
+    document.getElementById("question");
+
+const success =
+    document.getElementById("success");
+
+const message =
+    document.getElementById("message");
+
+const loveVideo =
+    document.getElementById("loveVideo");
+
+const videoContainer =
+    document.getElementById("videoContainer");
 
 let noCount = 0;
 
@@ -591,13 +1095,24 @@ let noCount = 0;
 
 function createBackgroundParticles() {
 
-    const particle = document.createElement("div");
+    const particle =
+        document.createElement("div");
 
-    particle.className = "particle";
+    particle.className =
+        "particle";
 
     particle.innerHTML =
-        ["♡", "♥", "✨", "•", "💕"]
-        [Math.floor(Math.random() * 5)];
+        [
+            "♡",
+            "♥",
+            "✨",
+            "•",
+            "💕"
+        ][
+            Math.floor(
+                Math.random() * 5
+            )
+        ];
 
     particle.style.left =
         Math.random() * 100 + "vw";
@@ -608,14 +1123,20 @@ function createBackgroundParticles() {
     particle.style.animationDuration =
         (5 + Math.random() * 6) + "s";
 
-    document.body.appendChild(particle);
+    document.body.appendChild(
+        particle
+    );
 
-    setTimeout(() => {
-        particle.remove();
-    }, 11000);
+    setTimeout(
+        () => particle.remove(),
+        11000
+    );
 }
 
-setInterval(createBackgroundParticles, 500);
+setInterval(
+    createBackgroundParticles,
+    500
+);
 
 
 /* NO BUTTON */
@@ -641,14 +1162,21 @@ function moveNoButton() {
     const x =
         10 +
         Math.random() *
-        Math.max(maxX - 10, 10);
+        Math.max(
+            maxX - 10,
+            10
+        );
 
     const y =
         10 +
         Math.random() *
-        Math.max(maxY - 10, 10);
+        Math.max(
+            maxY - 10,
+            10
+        );
 
-    noButton.style.position = "fixed";
+    noButton.style.position =
+        "fixed";
 
     noButton.style.left =
         x + "px";
@@ -685,6 +1213,7 @@ noButton.addEventListener(
 
             moveNoButton();
         }
+
     }
 );
 
@@ -694,7 +1223,9 @@ noButton.addEventListener(
     function() {
 
         if (noCount >= 2) {
+
             moveNoButton();
+
         }
 
     }
@@ -710,6 +1241,7 @@ noButton.addEventListener(
             e.preventDefault();
 
             moveNoButton();
+
         }
 
     }
@@ -720,14 +1252,27 @@ noButton.addEventListener(
 
 yesButton.addEventListener(
     "click",
-    function() {
+    async function() {
 
-        question.style.display = "none";
+        /* Hide question */
 
-        success.style.display = "block";
+        question.style.display =
+            "none";
 
 
-        /* HEARTS + SPARKLES */
+        /* Show success */
+
+        success.style.display =
+            "block";
+
+
+        /* Show video */
+
+        videoContainer.style.display =
+            "block";
+
+
+        /* Animations */
 
         createHearts();
 
@@ -736,24 +1281,63 @@ yesButton.addEventListener(
         createExtraHearts();
 
 
-        /* VIDEO START */
+        /*
+         * Reset video
+         */
 
         loveVideo.currentTime = 0;
 
-        loveVideo.play().catch(function(error) {
+
+        /*
+         * Try to play automatically.
+         * Because this happens directly
+         * after the YES tap, the browser
+         * should allow playback.
+         */
+
+        try {
+
+            await loveVideo.play();
+
+        }
+
+        catch (error) {
 
             console.log(
-                "Video autoplay failed:",
+                "Autoplay blocked:",
                 error
             );
 
-        });
+            /*
+             * If browser blocks autoplay,
+             * controls remain visible so
+             * the user can press Play.
+             */
+
+        }
+
+
+        /*
+         * Scroll video into view
+         */
+
+        setTimeout(
+            function() {
+
+                videoContainer.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+
+            },
+            300
+        );
 
     }
 );
 
 
-/* FLOATING HEARTS */
+/* HEARTS */
 
 function createHearts() {
 
@@ -763,34 +1347,59 @@ function createHearts() {
         i++
     ) {
 
-        setTimeout(() => {
+        setTimeout(
+            () => {
 
-            const heart =
-                document.createElement("div");
+                const heart =
+                    document.createElement(
+                        "div"
+                    );
 
-            heart.className =
-                "heart";
+                heart.className =
+                    "heart";
 
-            heart.innerHTML =
-                ["❤️","💕","💖","💗","💓","💞"]
-                [Math.floor(Math.random() * 6)];
+                heart.innerHTML =
+                    [
+                        "❤️",
+                        "💕",
+                        "💖",
+                        "💗",
+                        "💓",
+                        "💞"
+                    ][
+                        Math.floor(
+                            Math.random() * 6
+                        )
+                    ];
 
-            heart.style.left =
-                Math.random() * 100 + "vw";
+                heart.style.left =
+                    Math.random() * 100 +
+                    "vw";
 
-            heart.style.animationDuration =
-                (3 + Math.random() * 4) + "s";
+                heart.style.animationDuration =
+                    (
+                        3 +
+                        Math.random() * 4
+                    ) + "s";
 
-            heart.style.fontSize =
-                (18 + Math.random() * 25) + "px";
+                heart.style.fontSize =
+                    (
+                        18 +
+                        Math.random() * 25
+                    ) + "px";
 
-            document.body.appendChild(heart);
+                document.body.appendChild(
+                    heart
+                );
 
-            setTimeout(() => {
-                heart.remove();
-            }, 7000);
+                setTimeout(
+                    () => heart.remove(),
+                    7000
+                );
 
-        }, i * 80);
+            },
+            i * 80
+        );
 
     }
 
@@ -807,31 +1416,49 @@ function createSparkles() {
         i++
     ) {
 
-        setTimeout(() => {
+        setTimeout(
+            () => {
 
-            const sparkle =
-                document.createElement("div");
+                const sparkle =
+                    document.createElement(
+                        "div"
+                    );
 
-            sparkle.className =
-                "sparkle";
+                sparkle.className =
+                    "sparkle";
 
-            sparkle.innerHTML =
-                ["✨", "💫", "⭐", "💕"]
-                [Math.floor(Math.random() * 4)];
+                sparkle.innerHTML =
+                    [
+                        "✨",
+                        "💫",
+                        "⭐",
+                        "💕"
+                    ][
+                        Math.floor(
+                            Math.random() * 4
+                        )
+                    ];
 
-            sparkle.style.left =
-                Math.random() * 100 + "vw";
+                sparkle.style.left =
+                    Math.random() * 100 +
+                    "vw";
 
-            sparkle.style.top =
-                Math.random() * 100 + "vh";
+                sparkle.style.top =
+                    Math.random() * 100 +
+                    "vh";
 
-            document.body.appendChild(sparkle);
+                document.body.appendChild(
+                    sparkle
+                );
 
-            setTimeout(() => {
-                sparkle.remove();
-            }, 1000);
+                setTimeout(
+                    () => sparkle.remove(),
+                    1000
+                );
 
-        }, i * 100);
+            },
+            i * 100
+        );
 
     }
 
@@ -843,7 +1470,13 @@ function createSparkles() {
 function createExtraHearts() {
 
     const emojis =
-        ["❤️", "💗", "💖", "💕", "💞"];
+        [
+            "❤️",
+            "💗",
+            "💖",
+            "💕",
+            "💞"
+        ];
 
     for (
         let i = 0;
@@ -852,7 +1485,9 @@ function createExtraHearts() {
     ) {
 
         const heart =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         heart.className =
             "heart";
@@ -872,16 +1507,25 @@ function createExtraHearts() {
             "45vh";
 
         heart.style.fontSize =
-            (18 + Math.random() * 25) + "px";
+            (
+                18 +
+                Math.random() * 25
+            ) + "px";
 
         heart.style.animationDuration =
-            (2 + Math.random() * 2) + "s";
+            (
+                2 +
+                Math.random() * 2
+            ) + "s";
 
-        document.body.appendChild(heart);
+        document.body.appendChild(
+            heart
+        );
 
-        setTimeout(() => {
-            heart.remove();
-        }, 4500);
+        setTimeout(
+            () => heart.remove(),
+            4500
+        );
 
     }
 
