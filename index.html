@@ -94,5 +94,8 @@ function createHearts() {for (let i = 0; i < 45; i++) {setTimeout(() => {const h
 function createSparkles() {for (let i = 0; i < 35; i++) {setTimeout(() => {const sparkle = document.createElement("div"); sparkle.className = "sparkle"; sparkle.innerHTML = ["✨", "💫", "⭐", "💕"][Math.floor(Math.random() * 4)]; sparkle.style.left = Math.random() * 100 + "vw"; sparkle.style.top = Math.random() * 100 + "vh"; document.body.appendChild(sparkle); setTimeout(() => {sparkle.remove();}, 1000);}, i * 100);}}
 function createExtraHearts() {const emojis = ["❤️", "💗", "💖", "💕", "💞"]; for (let i = 0; i < 25; i++) {const heart = document.createElement("div"); heart.className = "heart"; heart.innerHTML = emojis[Math.floor(Math.random() * emojis.length)]; heart.style.left = "50vw"; heart.style.bottom = "45vh"; heart.style.fontSize = (18 + Math.random() * 25) + "px"; heart.style.animationDuration = (2 + Math.random() * 2) + "s"; document.body.appendChild(heart); setTimeout(() => {heart.remove();}, 4500);}}
 </script>
+    <video autoplay loop muted playsinline>
+    <source src="innocentking.mp4" type="video/mp4">
+    </video>
 </body>
 </html>
