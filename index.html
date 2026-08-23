@@ -73,8 +73,11 @@ body {
 .particle {
     position: fixed;
     bottom: -30px;
+
     pointer-events: none;
+
     opacity: 0.6;
+
     z-index: 1;
 
     animation:
@@ -142,6 +145,7 @@ body {
         rgba(255,255,255,0.5);
 
     position: relative;
+
     z-index: 5;
 
     animation:
@@ -728,6 +732,45 @@ button {
 }
 
 
+/* COUNTDOWN */
+
+.countdown {
+
+    margin-top: 15px;
+
+    font-size: 16px;
+
+    font-weight: 900;
+
+    color: #ff1761;
+
+    animation:
+        countdownPulse 1s infinite;
+}
+
+#countNumber {
+
+    display: inline-block;
+
+    min-width: 24px;
+
+    font-size: 22px;
+
+}
+
+@keyframes countdownPulse {
+
+    0%,100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+
+}
+
+
 /* VIDEO */
 
 .video-container {
@@ -1084,6 +1127,10 @@ button {
                 Sadeem Umar
             </div>
 
+            <div class="countdown">
+                WhatsApp <span id="countNumber">10</span> seconds mein open hoga... 💚
+            </div>
+
             <a
                 href="https://wa.me/923149793116?text=I%20love%20you%20%E2%9D%A4%EF%B8%8F"
                 target="_blank"
@@ -1131,7 +1178,6 @@ button {
 
 <script>
 
-
 /* ELEMENTS */
 
 const yesButton =
@@ -1155,7 +1201,16 @@ const loveVideo =
 const videoContainer =
     document.getElementById("videoContainer");
 
+const countNumber =
+    document.getElementById("countNumber");
+
 let noCount = 0;
+
+
+/* WHATSAPP LINK */
+
+const whatsappLink =
+    "https://wa.me/923149793116?text=I%20love%20you%20%E2%9D%A4%EF%B8%8F";
 
 
 /* BACKGROUND PARTICLES */
@@ -1429,20 +1484,52 @@ yesButton.addEventListener(
 
 
         /*
+         * WHATSAPP COUNTDOWN
+         * EXACTLY 10 SECONDS
+         */
+
+        let seconds =
+            10;
+
+        countNumber.textContent =
+            seconds;
+
+
+        const countdownTimer =
+            setInterval(
+                function() {
+
+                    seconds--;
+
+                    countNumber.textContent =
+                        seconds;
+
+                    if (seconds <= 0) {
+
+                        clearInterval(
+                            countdownTimer
+                        );
+
+                    }
+
+                },
+                1000
+            );
+
+
+        /*
          * OPEN WHATSAPP
-         *
-         * Message:
-         * I love you ❤️
+         * AFTER 10 SECONDS
          */
 
         setTimeout(
             function() {
 
                 window.location.href =
-                    "https://wa.me/923149793116?text=I%20love%20you%20%E2%9D%A4%EF%B8%8F";
+                    whatsappLink;
 
             },
-            1800
+            10000
         );
 
     }
