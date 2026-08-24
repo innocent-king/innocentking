@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Surprise For Meri Jaan 🎁</title>
+<title>For Meri Jaan ❤️</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Dancing+Script:wght@700&display=swap');
 
@@ -13,23 +13,9 @@ body{
     width:100%;
     height:100vh;
     overflow:hidden;
-    background: #000;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
     font-family: 'Poppins', sans-serif;
 }
-
-/* STARS BACKGROUND */
-#stars{
-    position:fixed;
-    inset:0;
-    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-}
-.star{
-    position:absolute;
-    background:white;
-    border-radius:50%;
-    animation: twinkle 3s infinite;
-}
-@keyframes twinkle{ 0%,100%{ opacity:0; } 50%{ opacity:1; } }
 
 /* PASSWORD */
 #lockScreen{
@@ -48,9 +34,7 @@ body{
     border-radius:30px;
     text-align:center;
     border:2px solid rgba(255,255,255,0.2);
-    animation: popIn 1s ease;
 }
-@keyframes popIn{ from{ transform:scale(0.5); opacity:0; } to{ transform:scale(1); opacity:1; } }
 .lock-box h2{ color:white; font-size:35px; margin-bottom:30px; font-family: 'Dancing Script', cursive; }
 .lock-box input{
     width:250px;
@@ -72,112 +56,66 @@ body{
     font-size:20px;
     font-weight:bold;
     cursor:pointer;
-    animation: glow 2s infinite;
 }
-@keyframes glow{ 0%,100%{ box-shadow:0 0 20px #ff006e; } 50%{ box-shadow:0 0 40px #8338ec; } }
 
 /* MAIN */
 #mainContent{ display:none; }
 .container{ width:100%; height:100vh; display:flex; justify-content:center; align-items:center; flex-direction:column; }
 
-/* SCREEN 1 - HEART BURST */
-.screen1 h1{
-    font-size:clamp(50px,15vw,100px);
-    color:white;
-    animation: rainbow 4s linear infinite;
-}
-@keyframes rainbow{
-    0%{ color:#ff006e } 25%{ color:#8338ec } 50%{ color:#3a86ff } 75%{ color:#ffbe0b } 100%{ color:#ff006e }
-}
-.heart-btn{
-    font-size:150px;
-    margin:40px 0;
-    cursor:pointer;
-    animation: bounce 1s infinite;
-    filter: drop-shadow(0 0 40px #ff006e);
-}
+/* SCREEN 1 */
+.screen1 h1{ font-size:clamp(50px,15vw,100px); color:white; animation: rainbow 4s linear infinite; }
+@keyframes rainbow{ 0%{ color:#ff006e } 50%{ color:#3a86ff } 100%{ color:#ff006e } }
+.heart-btn{ font-size:150px; margin:40px 0; cursor:pointer; animation: bounce 1s infinite; }
 @keyframes bounce{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-30px); } }
 
-/* SCREEN 2 - SCRATCH CARD LETTER */
+/* SCREEN 2 - SCRATCH FIXED */
 .screen2{ display:none; }
-.scratch-card{
-    width:350px;
-    height:400px;
-    background: linear-gradient(135deg,#ff9a9e,#fecfef);
-    border-radius:20px;
+.scratch-wrapper{
     position:relative;
-    cursor: crosshair;
-    box-shadow:0 30px 80px rgba(255,0,128,.5);
+    width:350px;
+    height:420px;
 }
-.scratch-layer{
+#scratchCanvas{
     position:absolute;
-    inset:0;
-    background: #888;
+    top:0;
+    left:0;
     border-radius:20px;
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:30px;
-    font-weight:bold;
+    cursor: crosshair;
 }
 .letter-content{
+    width:350px;
+    height:420px;
+    background: linear-gradient(135deg,#ff9a9e,#fecfef);
+    border-radius:20px;
     padding:30px;
     color:#333;
     text-align:center;
+    box-shadow:0 30px 80px rgba(255,0,128,.5);
 }
-.letter-content h2{ font-family: 'Dancing Script', cursive; font-size:40px; color:#d63384; }
+.letter-content h2{ font-family: 'Dancing Script', cursive; font-size:40px; color:#d63384; margin-bottom:15px; }
 .bear{ font-size:90px; margin:15px 0; animation: wiggle 1s infinite; }
 @keyframes wiggle{ 0%,100%{ transform:rotate(-10deg); } 50%{ transform:rotate(10deg); } }
+.progress{ color:white; margin-top:15px; font-size:16px; }
 
-/* SCREEN 3 - GAME */
-.screen3{ display:none; }
-.cake-game{ text-align:center; }
-.cake{
-    width:300px;
-    height:220px;
-    margin:20px auto;
-    position:relative;
-}
-.candle{ position:absolute; top:-50px; left:50%; transform:translateX(-50%); font-size:50px; cursor:pointer; }
-.flame{ animation: flicker .2s infinite alternate; }
-@keyframes flicker{ from{ transform:scale(1) rotate(-10deg); } to{ transform:scale(1.3) rotate(10deg); } }
-.blown{ animation: blowOut .8s forwards; }
-@keyframes blowOut{ to{ transform: scale(0) translateY(-100px); opacity:0; } }
-.tap-hint{ color:white; font-size:18px; margin-top:20px; }
+/* SCREEN 3 */
+.screen3{ display:none; text-align:center; }
+.candle{ font-size:80px; cursor:pointer; }
+.flame{ animation: flicker.2s infinite alternate; }
+@keyframes flicker{ from{ transform:scale(1); } to{ transform:scale(1.3); } }
+.blown{ animation: blowOut.8s forwards; }
+@keyframes blowOut{ to{ transform: scale(0); opacity:0; } }
 
-/* SCREEN 4 - FINAL BLAST */
+/* SCREEN 4 */
 .screen4{ display:none; text-align:center; }
-.name{
-    font-family: 'Dancing Script', cursive;
-    font-size:80px;
-    color:white;
-    animation: zoomIn 1s ease;
-}
-@keyframes zoomIn{ from{ transform:scale(0); } to{ transform:scale(1); } }
+.name{ font-family: 'Dancing Script', cursive; font-size:80px; color:white; }
 .photo-frame{
     width:280px;
     height:280px;
     border-radius:50%;
     margin:30px auto;
     border:8px solid white;
-    box-shadow:0 0 60px rgba(255,255,255,.8);
-    animation: pulseRing 2s infinite;
 }
-@keyframes pulseRing{ 0%{ box-shadow:0 0 0 0 rgba(255,255,255,.7); } 70%{ box-shadow:0 0 0 40px rgba(255,255,255,0); } 100%{ box-shadow:0 0 0 0 rgba(255,255,255,0); } }
 .photo-frame img{ width:100%; height:100%; border-radius:50%; object-fit:cover; }
-
-/* CONFETTI */
-.confetti{
-    position:absolute;
-    width:12px;
-    height:12px;
-    background:#ff0;
-    animation: confettiFall 3s linear infinite;
-}
-@keyframes confettiFall{
-    to{ transform:translateY(100vh) rotate(720deg); opacity:0; }
-}
 
 .btn{
     margin-top:30px;
@@ -193,8 +131,6 @@ body{
 </style>
 </head>
 <body>
-
-<div id="stars"></div>
 
 <!-- PASSWORD -->
 <div id="lockScreen">
@@ -217,13 +153,12 @@ body{
         <div class="screen1" id="s1">
             <h1>SURPRISE!</h1>
             <div class="heart-btn" onclick="next(1)">💥</div>
-            <p style="color:white;">IS DIL KO PHORO</p>
         </div>
 
-        <!-- SCREEN 2 - SCRATCH -->
+        <!-- SCREEN 2 - SCRATCH CARD -->
         <div class="screen2" id="s2">
-            <div class="scratch-card" id="scratchCard">
-                <div class="scratch-layer">SCRATCH KARO 👇</div>
+            <div class="scratch-wrapper">
+                <canvas id="scratchCanvas" width="350" height="420"></canvas>
                 <div class="letter-content">
                     <h2>Meri Jaan ❤️</h2>
                     <div class="bear">🧸</div>
@@ -234,20 +169,14 @@ body{
                     </p>
                 </div>
             </div>
-            <button class="btn" onclick="next(2)" style="margin-top:20px;">NEXT</button>
+            <p class="progress" id="progressText">70% scratch karo to aagy jaye ga 👆</p>
         </div>
 
-        <!-- SCREEN 3 - BLOW GAME -->
+        <!-- SCREEN 3 -->
         <div class="screen3" id="s3">
             <h1 style="color:white; font-size:40px;">CAKE PHONKO! 🎂</h1>
-            <div class="cake-game">
-                <div class="cake">
-                    <div class="candle" onclick="blowCandle()">
-                        <div class="flame" id="flame">🔥</div>
-                    </div>
-                    <img src="https://i.imgur.com/8Km9tLL.png" style="width:100%;">
-                </div>
-                <p class="tap-hint">Candle ki aag pe tap karo!</p>
+            <div class="candle" onclick="blowCandle()">
+                <div class="flame" id="flame">🔥</div>
             </div>
             <button class="btn" id="nextBtn3" onclick="next(3)" style="display:none;">LAST WALA</button>
         </div>
@@ -259,10 +188,6 @@ body{
             <div class="photo-frame">
                 <img src="photo.jpg" alt="love">
             </div>
-            <p style="color:white; font-size:20px; max-width:500px;">
-                Happy Birthday meri jaan!<br>
-                Tum mere liye duniya ho ❤️
-            </p>
         </div>
     </div>
 </div>
@@ -270,45 +195,80 @@ body{
 <script>
 const CORRECT_PASSWORD = "0824";
 
-// STARS
-for(let i=0; i<100; i++){
-    let s = document.createElement('div');
-    s.className = 'star';
-    s.style.width = s.style.height = Math.random()*3 + 'px';
-    s.style.left = Math.random()*100 + '%';
-    s.style.top = Math.random()*100 + '%';
-    s.style.animationDelay = Math.random()*3 + 's';
-    document.getElementById('stars').appendChild(s);
-}
-
 function checkPassword(){
     if(document.getElementById('passwordInput').value === CORRECT_PASSWORD){
         document.getElementById('lockScreen').style.display = 'none';
         document.getElementById('mainContent').style.display = 'flex';
         document.getElementById('bgMusic').play();
+        initScratch();
     } else { alert('Galat password jaan 😢'); }
-}
-
-function blowCandle(){
-    document.getElementById('flame').classList.add('blown');
-    createConfetti();
-    document.getElementById('nextBtn3').style.display = 'inline-block';
-}
-
-function createConfetti(){
-    for(let i=0; i<150; i++){
-        let c = document.createElement('div');
-        c.className = 'confetti';
-        c.style.left = Math.random()*100 + 'vw';
-        c.style.backgroundColor = `hsl(${Math.random()*360},100%,50%)`;
-        c.style.animationDelay = Math.random()*2 + 's';
-        document.body.appendChild(c);
-    }
 }
 
 function next(n){
     document.getElementById('s'+n).style.display = 'none';
     document.getElementById('s'+(n+1)).style.display = 'flex';
+}
+
+function blowCandle(){
+    document.getElementById('flame').classList.add('blown');
+    document.getElementById('nextBtn3').style.display = 'inline-block';
+}
+
+// ========== SCRATCH LOGIC ==========
+let canvas, ctx, isDrawing = false;
+let scratchedPixels = 0;
+
+function initScratch(){
+    canvas = document.getElementById('scratchCanvas');
+    ctx = canvas.getContext('2d');
+
+    // Gray layer
+    ctx.fillStyle = '#888';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'white';
+    ctx.font = 'bold 30px Poppins';
+    ctx.textAlign = 'center';
+    ctx.fillText('SCRATCH KARO 👇', canvas.width/2, canvas.height/2);
+
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDraw);
+    canvas.addEventListener('touchstart', startDraw);
+    canvas.addEventListener('touchmove', draw);
+    canvas.addEventListener('touchend', stopDraw);
+}
+
+function startDraw(e){ isDrawing = true; draw(e); }
+function stopDraw(){ isDrawing = false; }
+
+function draw(e){
+    if(!isDrawing) return;
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.touches? e.touches[0].clientX : e.clientX) - rect.left;
+    const y = (e.touches? e.touches[0].clientY : e.clientY) - rect.top;
+
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.arc(x, y, 25, 0, Math.PI*2);
+    ctx.fill();
+
+    checkScratchProgress();
+}
+
+function checkScratchProgress(){
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let transparent = 0;
+    for(let i=3; i<imageData.data.length; i+=4){
+        if(imageData.data[i] < 128) transparent++;
+    }
+    let percent = (transparent / (canvas.width * canvas.height)) * 100;
+
+    document.getElementById('progressText').innerText = Math.floor(percent) + '% ho gaya...';
+
+    if(percent > 70){
+        setTimeout(() => next(2), 800); // 70% scratch hote hi auto next
+    }
 }
 </script>
 
