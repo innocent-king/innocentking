@@ -17,7 +17,6 @@ body{
     font-family: 'Poppins', sans-serif;
 }
 
-/* PASSWORD */
 #lockScreen{
     position:fixed;
     inset:0;
@@ -58,7 +57,6 @@ body{
     cursor:pointer;
 }
 
-/* MAIN */
 #mainContent{ display:none; }
 .container{ width:100%; height:100vh; display:flex; justify-content:center; align-items:center; flex-direction:column; }
 
@@ -68,7 +66,7 @@ body{
 .heart-btn{ font-size:150px; margin:40px 0; cursor:pointer; animation: bounce 1s infinite; }
 @keyframes bounce{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-30px); } }
 
-/* SCREEN 2 - SCRATCH FIXED */
+/* SCREEN 2 - SCRATCH */
 .screen2{ display:none; }
 .scratch-wrapper{
     position:relative;
@@ -127,7 +125,10 @@ body{
     font-size:20px;
     font-weight:bold;
     cursor:pointer;
+    display:none; /* hidden by default */
+    animation: popIn.5s ease;
 }
+@keyframes popIn{ from{ transform:scale(0); } to{ transform:scale(1); } }
 </style>
 </head>
 <body>
@@ -169,7 +170,8 @@ body{
                     </p>
                 </div>
             </div>
-            <p class="progress" id="progressText">70% scratch karo to aagy jaye ga 👆</p>
+            <p class="progress" id="progressText">70% scratch karo 👆</p>
+            <button class="btn" id="nextBtn2" onclick="next(2)">NEXT 🎂</button>
         </div>
 
         <!-- SCREEN 3 -->
@@ -178,7 +180,7 @@ body{
             <div class="candle" onclick="blowCandle()">
                 <div class="flame" id="flame">🔥</div>
             </div>
-            <button class="btn" id="nextBtn3" onclick="next(3)" style="display:none;">LAST WALA</button>
+            <button class="btn" id="nextBtn3" onclick="next(3)" style="display:none;">LAST WALA 🎁</button>
         </div>
 
         <!-- SCREEN 4 -->
@@ -216,13 +218,12 @@ function blowCandle(){
 
 // ========== SCRATCH LOGIC ==========
 let canvas, ctx, isDrawing = false;
-let scratchedPixels = 0;
+let scratchDone = false;
 
 function initScratch(){
     canvas = document.getElementById('scratchCanvas');
     ctx = canvas.getContext('2d');
 
-    // Gray layer
     ctx.fillStyle = '#888';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = 'white';
@@ -242,7 +243,7 @@ function startDraw(e){ isDrawing = true; draw(e); }
 function stopDraw(){ isDrawing = false; }
 
 function draw(e){
-    if(!isDrawing) return;
+    if(!isDrawing || scratchDone) return;
     e.preventDefault();
     const rect = canvas.getBoundingClientRect();
     const x = (e.touches? e.touches[0].clientX : e.clientX) - rect.left;
@@ -266,8 +267,10 @@ function checkScratchProgress(){
 
     document.getElementById('progressText').innerText = Math.floor(percent) + '% ho gaya...';
 
-    if(percent > 70){
-        setTimeout(() => next(2), 800); // 70% scratch hote hi auto next
+    if(percent > 70 &&!scratchDone){
+        scratchDone = true;
+        document.getElementById('progressText').innerText = 'Shabash! Ab NEXT dabao ❤️';
+        document.getElementById('nextBtn2').style.display = 'inline-block'; // button show
     }
 }
 </script>
