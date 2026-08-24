@@ -3,347 +3,374 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Jaan ❤️</title>
-
+<title>For Meri Jaan ❤️</title>
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Dancing+Script:wght@700&display=swap');
 
-html,body{
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+body{
     width:100%;
-    height:100%;
+    height:100vh;
     overflow:hidden;
-    font-family:'Poppins', Arial, sans-serif;
-    background: radial-gradient(circle at top,#ff006e 0%,#8338ec 50%,#3a0ca3 100%);
-    color:white;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+    font-family: 'Poppins', sans-serif;
 }
 
-/* MUSIC BUTTON */
-#musicBtn{
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 999;
-    background: rgba(255,255,255,.2);
-    border: 2px solid white;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 24px;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-}
-
-/* BACKGROUND */
-#particles, #confetti{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-}
-
+/* LOVE PARTICLES */
 .particle{
     position:absolute;
-    bottom:-40px;
-    animation:float linear infinite;
-    opacity:0;
+    bottom:-20px;
+    animation: floatUp 8s infinite ease-in;
+    pointer-events:none;
 }
-@keyframes float{
-    0%{ transform:translateY(0) rotate(0deg); opacity:0; }
-    15%{ opacity:.8; }
-    100%{ transform:translateY(-110vh) rotate(720deg); opacity:0; }
-}
-
-/* CONFETTI */
-.confetti{
-    position:absolute;
-    width:10px;
-    height:10px;
-    background:#ff0;
-    animation:confettiFall 4s linear infinite;
-}
-@keyframes confettiFall{
-    0%{ transform:translateY(-100vh) rotate(0deg); opacity:1; }
-    100%{ transform:translateY(100vh) rotate(720deg); opacity:0; }
+@keyframes floatUp{
+    0%{ transform:translateY(0) scale(0); opacity:0; }
+    10%{ opacity:1; }
+    100%{ transform:translateY(-120vh) scale(1.5); opacity:0; }
 }
 
-/* SCREENS */
-.screen{
+/* ========== PASSWORD SCREEN ========== */
+#lockScreen{
     position:fixed;
     inset:0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+.lock-box{
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(25px);
+    padding:50px 35px;
+    border-radius:25px;
+    text-align:center;
+    border:1px solid rgba(255,255,255,0.3);
+    box-shadow:0 25px 70px rgba(0,0,0,.4);
+    animation: fadeIn 1s ease;
+}
+@keyframes fadeIn{ from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
+.lock-box h2{
+    color:white;
+    font-size:30px;
+    margin-bottom:25px;
+    font-family: 'Dancing Script', cursive;
+}
+.lock-box input{
+    width:220px;
+    padding:15px;
+    border:none;
+    border-radius:50px;
+    font-size:22px;
+    text-align:center;
+    letter-spacing:8px;
+    margin-bottom:25px;
+    outline:none;
+    background: rgba(255,255,255,0.9);
+}
+.lock-box button{
+    padding:15px 45px;
+    border:none;
+    border-radius:50px;
+    background: linear-gradient(90deg,#ff0080,#ff4d94);
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+.lock-box button:hover{ transform:scale(1.05); }
+.error{ color:#ffeb3b; margin-top:12px; display:none; font-weight:bold; }
+
+/* ========== MAIN ========== */
+#mainContent{ display:none; }
+.container{
+    width:100%;
+    height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
     flex-direction:column;
     text-align:center;
-    padding:25px;
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
-    transition: opacity .8s ease, transform .8s ease;
-    transform:scale(.9);
-}
-.screen.active{
-    opacity:1;
-    visibility:visible;
-    pointer-events:auto;
-    transform:scale(1);
+    color:white;
+    padding:20px;
 }
 
 /* SCREEN 1 */
-.title{
-    font-size:clamp(40px,12vw,80px);
+.screen1 h1{
+    font-size:clamp(45px,12vw,90px);
     font-weight:900;
-    background:linear-gradient(90deg,#ffffff,#ff00d4,#ffffff,#00f5ff);
-    background-size:300%;
+    background: linear-gradient(90deg,#fff,#ffe0e9,#fff);
     -webkit-background-clip:text;
     background-clip:text;
     color:transparent;
-    animation:shine 3s linear infinite;
+    animation: shine 3s ease infinite;
+    text-shadow: 0 0 30px rgba(255,255,255,.3);
 }
-@keyframes shine{ from{ background-position:0%; } to{ background-position:300%; } }
+@keyframes shine{ 0%{background-position:0%} 50%{background-position:100%} 100%{background-position:0%} }
 
-.heart{
-    width:200px;
-    height:200px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:140px;
-    margin:30px 0;
+.heart-btn{
+    font-size:130px;
+    margin:40px 0;
     cursor:pointer;
-    animation:heartbeat 1s infinite;
-    filter: drop-shadow(0 0 20px #ff2eae) drop-shadow(0 0 50px #ff2eae);
+    animation: heartbeat 1.3s infinite;
+    filter: drop-shadow(0 0 25px #ff0080);
 }
 @keyframes heartbeat{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.25); } }
+.tap-text{ font-size:15px; letter-spacing:3px; opacity:.8; }
 
-/* SCREEN 2 - LETTER */
+/* SCREEN 2 - LETTER WITH BEAR */
+.screen2{ display:none; position:relative; }
+.bear{
+    font-size:110px;
+    position:absolute;
+    top:45%;
+    left:50%;
+    transform: translate(-50%, -50%) scale(0);
+    animation: bearHug 1.2s ease .4s forwards;
+    z-index:1;
+    filter: drop-shadow(0 0 40px rgba(255,255,255,.6));
+}
+@keyframes bearHug{
+    0%{ transform: translate(-50%, -50%) scale(0) rotate(-15deg); }
+    70%{ transform: translate(-50%, -50%) scale(1.15) rotate(8deg); }
+    100%{ transform: translate(-50%, -50%) scale(1) rotate(0); }
+}
+
 .letter{
-    width:min(90%,550px);
-    max-height:80vh;
-    overflow:auto;
-    padding:35px 28px;
-    color:#3a0ca3;
-    background: linear-gradient(135deg,#fffdf5,#ffe5f5);
-    border-radius:20px;
-    box-shadow: 0 0 50px rgba(255,64,183,.5), 0 20px 60px rgba(0,0,0,.4);
-    animation:letterOpen 1s ease forwards;
+    background: linear-gradient(135deg, #fffdf5, #ffeef8);
+    color:#5a2a4a;
+    padding:45px 35px;
+    border-radius:25px;
+    max-width:520px;
+    cursor:pointer;
+    position:relative;
+    z-index:2;
+    box-shadow: 0 20px 60px rgba(255,0,128,.25);
+    transition: all .4s ease;
 }
-@keyframes letterOpen{
-    0%{ transform: rotate(-10deg) scale(.3); opacity:0; }
-    70%{ transform: rotate(3deg) scale(1.05); }
-    100%{ transform: rotate(0) scale(1); opacity:1; }
+.letter:hover{ transform: translateY(-5px) scale(1.02); }
+.letter h2{
+    font-family: 'Dancing Script', cursive;
+    font-size:45px;
+    color:#d63384;
+    margin-bottom:25px;
 }
-.letter h2{ font-size:32px; margin-bottom:20px; }
-.letter p{ font-size:18px; line-height:1.9; margin-bottom:15px; }
+.letter p{
+    font-size:18px;
+    line-height:2;
+    margin-bottom:18px;
+    text-align:left;
+}
+.tap-letter{
+    font-size:14px;
+    color:#ff0080;
+    margin-top:20px;
+    font-weight:bold;
+    animation: blink 1.3s infinite;
+}
 
 /* SCREEN 3 - CAKE */
-.cake{ position:relative; width:240px; height:200px; margin-bottom:25px; }
-.cakeBase{ position:absolute; left:20px; bottom:10px; width:200px; height:100px; border-radius: 15px 15px 25px 25px; background: linear-gradient(#ff73bc,#d82778); box-shadow: 0 10px 30px rgba(255,35,160,.5); }
-.cakeTop{ position:absolute; left:20px; top:70px; width:200px; height:45px; border-radius:50%; background:#ffb7df; }
-.cream{ position:absolute; left:20px; top:90px; width:200px; height:25px; border-radius:50%; background:#fff; }
-.candle{ position:absolute; left:110px; top:15px; width:20px; height:65px; border-radius:5px; background: repeating-linear-gradient(45deg,#ffffff 0 8px,#ff4ca5 8px 16px); z-index:5; }
-.flame{ position:absolute; top:-45px; left:-8px; font-size:35px; animation:flame .4s infinite alternate; }
-@keyframes flame{ from{ transform:scale(.8) rotate(-8deg); } to{ transform:scale(1.2) rotate(8deg); } }
+.screen3{ display:none; }
+.cake{
+    width:260px;
+    height:210px;
+    margin:25px auto;
+    position:relative;
+    cursor:pointer;
+}
+.cake-layer{
+    position:absolute;
+    width:100%;
+    height:65px;
+    background: linear-gradient(#ff6b9d, #c44569);
+    border-radius:12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.2);
+}
+.cake-layer:nth-child(2){ bottom:65px; background: linear-gradient(#feca57, #ff9f1c); }
+.cake-layer:nth-child(3){ bottom:130px; background: linear-gradient(#48dbfb, #0abde3); }
+.candle{
+    position:absolute;
+    top:-45px;
+    left:50%;
+    transform:translateX(-50%);
+    width:18px;
+    height:55px;
+    background: repeating-linear-gradient(45deg, #fff 0 6px, #ff9ecb 6px 12px);
+    border-radius:3px;
+}
+.flame{
+    position:absolute;
+    top:-35px;
+    left:-10px;
+    font-size:35px;
+    animation: flicker .4s infinite alternate;
+    transition: all .6s ease;
+}
+.flame.blow{ opacity:0; transform: scale(0) translateY(-20px); }
+@keyframes flicker{ from{ transform:scale(.9) rotate(-8deg); } to{ transform:scale(1.15) rotate(8deg); } }
+.wish-text{ font-size:16px; margin-top:15px; }
 
 /* SCREEN 4 - FINAL */
+.screen4{ display:none; }
 .photo-frame{
-    width: 220px;
-    height: 220px;
-    margin: 25px auto;
-    border-radius: 50%;
-    padding: 6px;
-    background: conic-gradient(from 0deg, #ff238f, #ff5d75, #00f5ff, #ff238f);
-    animation: borderRotate 3s linear infinite, photoPop 1.2s ease;
-    box-shadow: 0 0 40px rgba(255, 60, 190, .6);
+    width:260px;
+    height:260px;
+    border-radius:50%;
+    padding:10px;
+    background: conic-gradient(from 0deg, #ff0080, #ff8c00, #40e0d0, #ff0080);
+    animation: rotate 5s linear infinite;
+    margin:25px auto;
+    box-shadow:0 0 60px rgba(255,0,128,.6);
 }
 .photo-frame img{
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 5px solid white;
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    object-fit:cover;
+    border:6px solid white;
 }
-@keyframes borderRotate{ 0%{ transform: rotate(0deg); } 100%{ transform: rotate(360deg); } }
-@keyframes photoPop{ 0%{ opacity: 0; transform: scale(0.2); } 60%{ transform: scale(1.15); } 100%{ opacity: 1; transform: scale(1); } }
+@keyframes rotate{ 100%{ transform:rotate(360deg); } }
 
 .name{
-    font-size:clamp(50px,14vw,100px);
-    font-weight:900;
-    background: linear-gradient(90deg,#fff,#ff55c7,#00f5ff,#ff55c7,#fff);
-    background-size:400%;
+    font-family: 'Dancing Script', cursive;
+    font-size:75px;
+    background: linear-gradient(90deg,#fff,#ff9ecb,#fff);
     -webkit-background-clip:text;
     background-clip:text;
     color:transparent;
-    animation: nameShine 3s linear infinite;
-    text-shadow: 0 0 40px rgba(255,60,190,.5);
+    animation: nameGlow 2.5s ease infinite;
 }
-@keyframes nameShine{ from{ background-position:0%; } to{ background-position:400%; } }
+@keyframes nameGlow{ 0%,100%{ filter: brightness(1); } 50%{ filter: brightness(1.3); } }
 
-.typewriter{
+.btn{
+    margin-top:30px;
+    padding:16px 45px;
+    border:none;
+    border-radius:50px;
+    background: linear-gradient(90deg,#ff0080,#ff4d94);
+    color:white;
     font-size:18px;
-    line-height:1.9;
-    margin-top:20px;
-    max-width:500px;
-    border-right: 3px solid #fff;
-    white-space: pre-wrap;
-    animation: blinkCursor .7s infinite;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 12px 35px rgba(255,0,128,.4);
+    transition:.3s;
 }
-@keyframes blinkCursor{ 50%{ border-color: transparent; } }
-
-/* BUTTON */
-.button{
-    border:0; outline:0; margin-top:25px; padding:16px 35px; border-radius:50px;
-    color:white; font-size:17px; font-weight:bold;
-    background: linear-gradient(90deg,#ff238f,#ff5d75);
-    box-shadow: 0 10px 30px rgba(255,35,143,.5);
-    cursor:pointer; transition:.2s;
-}
-.button:active{ transform:scale(.9); }
-
-.whatsapp{
-    display:inline-block; margin-top:25px; padding:16px 35px; border-radius:50px;
-    background:#25D366; color:white; text-decoration:none; font-weight:bold; font-size:17px;
-    box-shadow: 0 10px 30px rgba(37,211,102,.5); transition:.2s;
-}
-.whatsapp:active{ transform:scale(.9); }
-
+.btn:hover{ transform: translateY(-3px); }
 </style>
 </head>
 <body>
 
-<audio id="bgMusic" loop>
-    <source src="song.mp3" type="audio/mpeg">
-</audio>
-
-<button id="musicBtn" onclick="toggleMusic()">🎵</button>
-
 <div id="particles"></div>
-<div id="confetti"></div>
 
-<!-- SCREEN 1 -->
-<div class="screen active" id="screen1">
-    <div style="font-size:14px; letter-spacing:5px; opacity:.8; margin-bottom:20px;">A SPECIAL SURPRISE FOR YOU ✨</div>
-    <div class="title">HAPPY BIRTHDAY 🎉</div>
-    <div class="heart" onclick="openLetter()">❤️</div>
-    <div style="font-size:14px; letter-spacing:2px; animation:blink 1.4s infinite;">TAP THE HEART 💕</div>
-</div>
-
-<!-- SCREEN 2 -->
-<div class="screen" id="screen2">
-    <div class="letter">
-        <h2>💌 A Little Letter</h2>
-        <p>Today is a very special day because someone very special was born today. ❤️</p>
-        <p>I hope your life is always filled with happiness, beautiful memories, endless smiles and lots of love. ✨</p>
-        <p>May every dream you have come true, and may every new year bring you more beautiful moments.</p>
-        <p>Keep smiling, keep shining and always stay the wonderful person you are. 🥹❤️</p>
-        <div style="margin-top:20px; font-weight:bold;">Happy Birthday once again! 🎂❤️</div>
-        <button class="button" onclick="openCake()">NEXT 🎁</button>
+<!-- PASSWORD LOCK -->
+<div id="lockScreen">
+    <div class="lock-box">
+        <h2>🔐 Ye Sirf Tumhare Liye Hai</h2>
+        <input type="password" id="passwordInput" placeholder="0824" maxlength="4">
+        <br>
+        <button onclick="checkPassword()">DIL KHOLO ❤️</button>
+        <div class="error" id="errorMsg">Galat Password Hai Jaan!</div>
     </div>
 </div>
 
-<!-- SCREEN 3 -->
-<div class="screen" id="screen3">
-    <div style="font-size:35px; font-weight:bold; margin-bottom:25px;">Make A Wish ✨</div>
-    <div class="cake">
-        <div class="candle"><div class="flame">🔥</div></div>
-        <div class="cakeTop"></div>
-        <div class="cream"></div>
-        <div class="cakeBase"></div>
+<!-- MAIN CONTENT -->
+<div id="mainContent">
+    <audio id="bgMusic" loop autoplay>
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <!-- SCREEN 1 -->
+        <div class="screen1" id="s1">
+            <h1>HAPPY BIRTHDAY</h1>
+            <div class="heart-btn" onclick="next(1)">❤️</div>
+            <p class="tap-text">DIL PE CLICK KRO</p>
+        </div>
+
+        <!-- SCREEN 2 -->
+        <div class="screen2" id="s2">
+            <div class="bear">🧸</div>
+            <div class="letter" onclick="next(2)">
+                <h2>Meri Pyaari Jaan Ke Naam</h2>
+                <p>Aaj ka din sab se khaas hai...<br>kyunki aaj "Meri Jaan" is duniya me aayi thi ✨</p>
+                <p>Tumhari har hansi me meri khushi hai.<br>Tumhare har sapne me mera dua hai.</p>
+                <p>May Allah tumhe hamesha khush rakhe,<br>aur tumhari zindagi pyaar se bhar de ❤️</p>
+                <p class="tap-letter">AAGE PADHNE KE LIYE CLICK KRO 🎂</p>
+            </div>
+        </div>
+
+        <!-- SCREEN 3 -->
+        <div class="screen3" id="s3">
+            <h1 style="font-size:42px;">Ek Khwahish Maango ✨</h1>
+            <div class="cake" onclick="blowCandle()">
+                <div class="candle">
+                    <div class="flame" id="flame">🕯️</div>
+                </div>
+                <div class="cake-layer"></div>
+                <div class="cake-layer"></div>
+                <div class="cake-layer"></div>
+            </div>
+            <p class="wish-text">Candle pe phoonk maaro aur wish karo 🕯️</p>
+            <button class="btn" id="nextBtn3" onclick="next(3)" style="display:none;">AKHRI SURPRISE 🎁</button>
+        </div>
+
+        <!-- SCREEN 4 -->
+        <div class="screen4" id="s4">
+            <p style="font-size:17px; letter-spacing:4px; opacity:.9;">YEH PAL SIRF TUMHARE LIYE</p>
+            <div class="name">Meri Jaan</div>
+            <div class="photo-frame">
+                <img src="photo.jpg" alt="my love">
+            </div>
+            <p style="font-size:19px; max-width:550px; margin:25px auto; line-height:2;">
+                Tumhari muskurahat se meri duniya roshan hai.<br>
+                Tum saath ho to har din Eid hai ❤️<br><br>
+                <b>HAPPY BIRTHDAY MERI JAAN! 🎂🎉<br>I LOVE YOU SO MUCH</b>
+            </p>
+        </div>
     </div>
-    <div style="font-size:18px; line-height:1.8;">One more year of beautiful memories,<br>smiles and happiness. ❤️</div>
-    <button class="button" onclick="openFinal()">LAST SURPRISE ✨</button>
-</div>
-
-<!-- SCREEN 4 -->
-<div class="screen" id="screen4">
-    <div style="font-size:15px; letter-spacing:5px; margin-bottom:20px; opacity:.8;">THIS SPECIAL MOMENT IS FOR</div>
-    <div class="name">You.</div>
-    
-    <div class="photo-frame">
-        <img src="photo.jpg" alt="Birthday Pic">
-    </div>
-
-    <div class="typewriter" id="typeText"></div>
-
-    <a class="whatsapp" href="https://wa.me/923149793116?text=I%20love%20you%20%E2%9D%A4%EF%B8%8F" target="_blank">💚 Send Love on WhatsApp</a>
 </div>
 
 <script>
-// FLOATING PARTICLES
-const particleBox = document.getElementById("particles");
-const symbols = ["❤️","💖","💕","💗","✨","💓","🎂","🎈"];
-for(let i = 0; i < 50; i++){
-    const item = document.createElement("div");
-    item.className = "particle";
-    item.innerText = symbols[Math.floor(Math.random() * symbols.length)];
-    item.style.left = Math.random() * 100 + "%";
-    item.style.fontSize = (14 + Math.random() * 25) + "px";
-    item.style.animationDuration = (5 + Math.random() * 7) + "s";
-    item.style.animationDelay = Math.random() * 7 + "s";
-    particleBox.appendChild(item);
+const CORRECT_PASSWORD = "0824";
+
+// LOVE PARTICLES
+for(let i=0; i<30; i++){
+    let p = document.createElement('div');
+    p.className = 'particle';
+    p.innerHTML = ['❤️','✨','💕','🌸'][Math.floor(Math.random()*4)];
+    p.style.left = Math.random()*100 + '%';
+    p.style.fontSize = (15 + Math.random()*20) + 'px';
+    p.style.animationDelay = Math.random()*8 + 's';
+    document.getElementById('particles').appendChild(p);
 }
 
-// CONFETTI
-function createConfetti(){
-    const confettiBox = document.getElementById("confetti");
-    for(let i=0; i<100; i++){
-        const c = document.createElement("div");
-        c.className = "confetti";
-        c.style.left = Math.random()*100 + "vw";
-        c.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 50%)`;
-        c.style.animationDelay = Math.random()*3 + "s";
-        confettiBox.appendChild(c);
-    }
-}
-
-// SCREEN CHANGE
-function changeScreen(oldScreen,newScreen){
-    document.getElementById(oldScreen).classList.remove("active");
-    setTimeout(function(){
-        document.getElementById(newScreen).classList.add("active");
-        if(newScreen === "screen4"){ 
-            createConfetti();
-            typeWriter();
-        }
-    },400);
-}
-
-function openLetter(){ changeScreen("screen1","screen2"); }
-function openCake(){ changeScreen("screen2","screen3"); }
-function openFinal(){ changeScreen("screen3","screen4"); }
-
-// TYPEWRITER EFFECT
-function typeWriter(){
-    const text = "May your smile always stay beautiful,\nmay your dreams keep shining,\nand may your life be filled with countless happy moments. ❤️\n\nHAPPY BIRTHDAY, Meri Jaan! 🎂🎉";
-    let i = 0;
-    const speed = 50;
-    function type(){
-        if(i < text.length){
-            document.getElementById("typeText").innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
-    }
-    type();
-}
-
-// MUSIC
-let isPlaying = false;
-function toggleMusic(){
-    const music = document.getElementById("bgMusic");
-    const btn = document.getElementById("musicBtn");
-    if(isPlaying){
-        music.pause();
-        btn.innerText = "🎵";
-        isPlaying = false;
+function checkPassword(){
+    const input = document.getElementById('passwordInput').value;
+    if(input === CORRECT_PASSWORD){
+        document.getElementById('lockScreen').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'flex';
+        document.getElementById('bgMusic').play().catch(()=>{});
     } else {
-        music.play();
-        btn.innerText = "🔇";
-        isPlaying = true;
+        document.getElementById('errorMsg').style.display = 'block';
+        document.getElementById('passwordInput').value = '';
     }
+}
+
+document.getElementById('passwordInput').addEventListener('keypress', e => {
+    if(e.key === 'Enter'){ checkPassword(); }
+});
+
+function blowCandle(){
+    document.getElementById('flame').classList.add('blow');
+    document.querySelector('.wish-text').innerText = 'Wish Qabool Ho Gayi! ✨';
+    document.getElementById('nextBtn3').style.display = 'inline-block';
+}
+
+function next(n){
+    document.getElementById('s'+n).style.display = 'none';
+    document.getElementById('s'+(n+1)).style.display = 'flex';
 }
 </script>
 
