@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday Surprise ❤️</title>
+<title>Happy Birthday Jaan ❤️</title>
 
 <style>
 *{
@@ -15,22 +15,32 @@
 html,body{
     width:100%;
     height:100%;
-}
-
-body{
     overflow:hidden;
-    font-family:Arial,sans-serif;
-    background:
-        radial-gradient(circle at top,#65005c 0%,#26002d 45%,#08000f 100%);
+    font-family:'Poppins', Arial, sans-serif;
+    background: radial-gradient(circle at top,#ff006e 0%,#8338ec 50%,#3a0ca3 100%);
     color:white;
 }
 
-/* ================= BACKGROUND ================= */
+/* MUSIC BUTTON */
+#musicBtn{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 999;
+    background: rgba(255,255,255,.2);
+    border: 2px solid white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+}
 
-#particles{
+/* BACKGROUND */
+#particles, #confetti{
     position:fixed;
     inset:0;
-    overflow:hidden;
     pointer-events:none;
 }
 
@@ -40,25 +50,26 @@ body{
     animation:float linear infinite;
     opacity:0;
 }
-
 @keyframes float{
-    0%{
-        transform:translateY(0) rotate(0deg);
-        opacity:0;
-    }
-
-    15%{
-        opacity:.8;
-    }
-
-    100%{
-        transform:translateY(-110vh) rotate(360deg);
-        opacity:0;
-    }
+    0%{ transform:translateY(0) rotate(0deg); opacity:0; }
+    15%{ opacity:.8; }
+    100%{ transform:translateY(-110vh) rotate(720deg); opacity:0; }
 }
 
-/* ================= SCREENS ================= */
+/* CONFETTI */
+.confetti{
+    position:absolute;
+    width:10px;
+    height:10px;
+    background:#ff0;
+    animation:confettiFall 4s linear infinite;
+}
+@keyframes confettiFall{
+    0%{ transform:translateY(-100vh) rotate(0deg); opacity:1; }
+    100%{ transform:translateY(100vh) rotate(720deg); opacity:0; }
+}
 
+/* SCREENS */
 .screen{
     position:fixed;
     inset:0;
@@ -68,18 +79,12 @@ body{
     flex-direction:column;
     text-align:center;
     padding:25px;
-
     opacity:0;
     visibility:hidden;
     pointer-events:none;
-
-    transition:
-        opacity .8s ease,
-        transform .8s ease;
-
-    transform:scale(.92);
+    transition: opacity .8s ease, transform .8s ease;
+    transform:scale(.9);
 }
-
 .screen.active{
     opacity:1;
     visibility:visible;
@@ -87,768 +92,259 @@ body{
     transform:scale(1);
 }
 
-/* ================= FIRST SCREEN ================= */
-
-.small{
-    font-size:13px;
-    letter-spacing:4px;
-    opacity:.8;
-    margin-bottom:18px;
-}
-
+/* SCREEN 1 */
 .title{
-    font-size:clamp(35px,10vw,70px);
+    font-size:clamp(40px,12vw,80px);
     font-weight:900;
-
-    background:linear-gradient(
-        90deg,
-        #ffffff,
-        #ff7edb,
-        #ffffff,
-        #ff4fc3
-    );
-
+    background:linear-gradient(90deg,#ffffff,#ff00d4,#ffffff,#00f5ff);
     background-size:300%;
-
     -webkit-background-clip:text;
     background-clip:text;
     color:transparent;
-
-    animation:shine 4s linear infinite;
+    animation:shine 3s linear infinite;
 }
-
-@keyframes shine{
-    from{
-        background-position:0%;
-    }
-
-    to{
-        background-position:300%;
-    }
-}
-
-/* ================= HEART ================= */
+@keyframes shine{ from{ background-position:0%; } to{ background-position:300%; } }
 
 .heart{
-    width:180px;
-    height:180px;
-
+    width:200px;
+    height:200px;
     display:flex;
     align-items:center;
     justify-content:center;
-
-    font-size:120px;
-
-    margin:25px 0;
-
+    font-size:140px;
+    margin:30px 0;
     cursor:pointer;
-    user-select:none;
-
-    animation:heartbeat 1.15s infinite;
-
-    filter:
-        drop-shadow(0 0 10px #ff2eae)
-        drop-shadow(0 0 35px #ff2eae);
+    animation:heartbeat 1s infinite;
+    filter: drop-shadow(0 0 20px #ff2eae) drop-shadow(0 0 50px #ff2eae);
 }
+@keyframes heartbeat{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.25); } }
 
-@keyframes heartbeat{
-    0%,100%{
-        transform:scale(1);
-    }
-
-    50%{
-        transform:scale(1.18);
-    }
-}
-
-.tap{
-    font-size:14px;
-    letter-spacing:2px;
-    animation:blink 1.4s infinite;
-}
-
-@keyframes blink{
-    50%{
-        opacity:.3;
-    }
-}
-
-/* ================= LETTER ================= */
-
+/* SCREEN 2 - LETTER */
 .letter{
-    width:min(92%,500px);
+    width:min(90%,550px);
     max-height:80vh;
     overflow:auto;
-
-    padding:30px 24px;
-
-    color:#461936;
-
-    background:
-        linear-gradient(
-            135deg,
-            #fffdf5,
-            #fff2f8
-        );
-
-    border-radius:12px;
-
-    box-shadow:
-        0 0 40px rgba(255,64,183,.4),
-        0 20px 60px rgba(0,0,0,.4);
-
+    padding:35px 28px;
+    color:#3a0ca3;
+    background: linear-gradient(135deg,#fffdf5,#ffe5f5);
+    border-radius:20px;
+    box-shadow: 0 0 50px rgba(255,64,183,.5), 0 20px 60px rgba(0,0,0,.4);
     animation:letterOpen 1s ease forwards;
 }
-
 @keyframes letterOpen{
-    0%{
-        transform:
-            rotate(-7deg)
-            scale(.4);
-        opacity:0;
-    }
-
-    70%{
-        transform:
-            rotate(2deg)
-            scale(1.05);
-    }
-
-    100%{
-        transform:
-            rotate(0)
-            scale(1);
-        opacity:1;
-    }
+    0%{ transform: rotate(-10deg) scale(.3); opacity:0; }
+    70%{ transform: rotate(3deg) scale(1.05); }
+    100%{ transform: rotate(0) scale(1); opacity:1; }
 }
+.letter h2{ font-size:32px; margin-bottom:20px; }
+.letter p{ font-size:18px; line-height:1.9; margin-bottom:15px; }
 
-.letter h2{
-    font-family:Georgia,serif;
-    font-size:30px;
-    margin-bottom:20px;
+/* SCREEN 3 - CAKE */
+.cake{ position:relative; width:240px; height:200px; margin-bottom:25px; }
+.cakeBase{ position:absolute; left:20px; bottom:10px; width:200px; height:100px; border-radius: 15px 15px 25px 25px; background: linear-gradient(#ff73bc,#d82778); box-shadow: 0 10px 30px rgba(255,35,160,.5); }
+.cakeTop{ position:absolute; left:20px; top:70px; width:200px; height:45px; border-radius:50%; background:#ffb7df; }
+.cream{ position:absolute; left:20px; top:90px; width:200px; height:25px; border-radius:50%; background:#fff; }
+.candle{ position:absolute; left:110px; top:15px; width:20px; height:65px; border-radius:5px; background: repeating-linear-gradient(45deg,#ffffff 0 8px,#ff4ca5 8px 16px); z-index:5; }
+.flame{ position:absolute; top:-45px; left:-8px; font-size:35px; animation:flame .4s infinite alternate; }
+@keyframes flame{ from{ transform:scale(.8) rotate(-8deg); } to{ transform:scale(1.2) rotate(8deg); } }
+
+/* SCREEN 4 - FINAL */
+.photo-frame{
+    width: 220px;
+    height: 220px;
+    margin: 25px auto;
+    border-radius: 50%;
+    padding: 6px;
+    background: conic-gradient(from 0deg, #ff238f, #ff5d75, #00f5ff, #ff238f);
+    animation: borderRotate 3s linear infinite, photoPop 1.2s ease;
+    box-shadow: 0 0 40px rgba(255, 60, 190, .6);
 }
-
-.letter p{
-    font-family:Georgia,serif;
-    font-size:17px;
-    line-height:1.8;
-    margin-bottom:14px;
+.photo-frame img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid white;
 }
-
-.signature{
-    margin-top:20px;
-    font-weight:bold;
-}
-
-/* ================= BUTTON ================= */
-
-.button{
-    border:0;
-    outline:0;
-
-    margin-top:20px;
-
-    padding:14px 30px;
-
-    border-radius:40px;
-
-    color:white;
-
-    font-size:16px;
-    font-weight:bold;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ff238f,
-            #ff5d75
-        );
-
-    box-shadow:
-        0 8px 25px rgba(255,35,143,.4);
-
-    cursor:pointer;
-
-    transition:.2s;
-}
-
-.button:active{
-    transform:scale(.92);
-}
-
-/* ================= CAKE ================= */
-
-.cakeTitle{
-    font-size:32px;
-    font-weight:bold;
-    margin-bottom:25px;
-}
-
-.cake{
-    position:relative;
-
-    width:220px;
-    height:190px;
-
-    margin-bottom:20px;
-}
-
-.cakeBase{
-    position:absolute;
-
-    left:10px;
-    bottom:10px;
-
-    width:200px;
-    height:100px;
-
-    border-radius:
-        12px
-        12px
-        20px
-        20px;
-
-    background:
-        linear-gradient(
-            #ff73bc,
-            #d82778
-        );
-
-    box-shadow:
-        0 10px 30px rgba(255,35,160,.45);
-}
-
-.cakeTop{
-    position:absolute;
-
-    left:10px;
-    top:70px;
-
-    width:200px;
-    height:40px;
-
-    border-radius:50%;
-
-    background:#ffb7df;
-}
-
-.cream{
-    position:absolute;
-
-    left:10px;
-    top:88px;
-
-    width:200px;
-    height:25px;
-
-    border-radius:50%;
-
-    background:#fff;
-}
-
-.candle{
-    position:absolute;
-
-    left:100px;
-    top:18px;
-
-    width:20px;
-    height:65px;
-
-    border-radius:5px;
-
-    background:
-        repeating-linear-gradient(
-            45deg,
-            #ffffff 0 8px,
-            #ff4ca5 8px 16px
-        );
-
-    z-index:5;
-}
-
-.flame{
-    position:absolute;
-
-    top:-42px;
-    left:-6px;
-
-    font-size:32px;
-
-    animation:flame .5s infinite alternate;
-}
-
-@keyframes flame{
-    from{
-        transform:scale(.8) rotate(-5deg);
-    }
-
-    to{
-        transform:scale(1.15) rotate(5deg);
-    }
-}
-
-/* ================= FINAL ================= */
-
-.finalSmall{
-    font-size:14px;
-    letter-spacing:4px;
-    margin-bottom:20px;
-    opacity:.8;
-}
+@keyframes borderRotate{ 0%{ transform: rotate(0deg); } 100%{ transform: rotate(360deg); } }
+@keyframes photoPop{ 0%{ opacity: 0; transform: scale(0.2); } 60%{ transform: scale(1.15); } 100%{ opacity: 1; transform: scale(1); } }
 
 .name{
-    font-size:clamp(45px,13vw,90px);
+    font-size:clamp(50px,14vw,100px);
     font-weight:900;
-
-    background:
-        linear-gradient(
-            90deg,
-            #fff,
-            #ff55c7,
-            #ffd7f3,
-            #ff55c7,
-            #fff
-        );
-
+    background: linear-gradient(90deg,#fff,#ff55c7,#00f5ff,#ff55c7,#fff);
     background-size:400%;
-
     -webkit-background-clip:text;
     background-clip:text;
     color:transparent;
-
-    animation:
-        nameAppear 1.5s ease,
-        nameShine 4s linear infinite;
-
-    text-shadow:
-        0 0 30px rgba(255,60,190,.4);
+    animation: nameShine 3s linear infinite;
+    text-shadow: 0 0 40px rgba(255,60,190,.5);
 }
+@keyframes nameShine{ from{ background-position:0%; } to{ background-position:400%; } }
 
-@keyframes nameAppear{
-    0%{
-        opacity:0;
-        transform:
-            scale(.2)
-            rotate(-10deg);
-    }
-
-    70%{
-        transform:
-            scale(1.15)
-            rotate(3deg);
-    }
-
-    100%{
-        opacity:1;
-        transform:
-            scale(1)
-            rotate(0);
-    }
-}
-
-@keyframes nameShine{
-    from{
-        background-position:0%;
-    }
-
-    to{
-        background-position:400%;
-    }
-}
-
-.message{
+.typewriter{
+    font-size:18px;
+    line-height:1.9;
+    margin-top:20px;
     max-width:500px;
-
-    margin-top:22px;
-
-    font-size:17px;
-    line-height:1.8;
-
-    animation:messageIn 2s ease;
+    border-right: 3px solid #fff;
+    white-space: pre-wrap;
+    animation: blinkCursor .7s infinite;
 }
+@keyframes blinkCursor{ 50%{ border-color: transparent; } }
 
-@keyframes messageIn{
-    from{
-        opacity:0;
-        transform:translateY(30px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+/* BUTTON */
+.button{
+    border:0; outline:0; margin-top:25px; padding:16px 35px; border-radius:50px;
+    color:white; font-size:17px; font-weight:bold;
+    background: linear-gradient(90deg,#ff238f,#ff5d75);
+    box-shadow: 0 10px 30px rgba(255,35,143,.5);
+    cursor:pointer; transition:.2s;
 }
-
-/* ================= WHATSAPP ================= */
+.button:active{ transform:scale(.9); }
 
 .whatsapp{
-    display:inline-block;
-
-    margin-top:28px;
-
-    padding:15px 30px;
-
-    border-radius:40px;
-
-    background:#25D366;
-
-    color:white;
-
-    text-decoration:none;
-
-    font-weight:bold;
-    font-size:16px;
-
-    box-shadow:
-        0 8px 25px rgba(37,211,102,.4);
-
-    transition:.2s;
+    display:inline-block; margin-top:25px; padding:16px 35px; border-radius:50px;
+    background:#25D366; color:white; text-decoration:none; font-weight:bold; font-size:17px;
+    box-shadow: 0 10px 30px rgba(37,211,102,.5); transition:.2s;
 }
+.whatsapp:active{ transform:scale(.9); }
 
-.whatsapp:active{
-    transform:scale(.92);
-}
-
-/* ================= SPARKLES ================= */
-
-.sparkle{
-    position:fixed;
-    pointer-events:none;
-
-    animation:
-        sparkle 2s infinite;
-}
-
-@keyframes sparkle{
-    0%,100%{
-        opacity:0;
-        transform:scale(.2);
-    }
-
-    50%{
-        opacity:1;
-        transform:scale(1);
-    }
-}
 </style>
 </head>
-
 <body>
 
-<!-- Floating background -->
+<audio id="bgMusic" loop>
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<button id="musicBtn" onclick="toggleMusic()">🎵</button>
+
 <div id="particles"></div>
+<div id="confetti"></div>
 
-
-<!-- ================= SCREEN 1 ================= -->
-
+<!-- SCREEN 1 -->
 <div class="screen active" id="screen1">
-
-    <div class="small">
-        A SPECIAL SURPRISE FOR YOU ✨
-    </div>
-
-    <div class="title">
-        HAPPY BIRTHDAY 🎉
-    </div>
-
-    <div
-        class="heart"
-        onclick="openLetter()"
-    >
-        ❤️
-    </div>
-
-    <div class="tap">
-        TAP THE HEART 💕
-    </div>
-
+    <div style="font-size:14px; letter-spacing:5px; opacity:.8; margin-bottom:20px;">A SPECIAL SURPRISE FOR YOU ✨</div>
+    <div class="title">HAPPY BIRTHDAY 🎉</div>
+    <div class="heart" onclick="openLetter()">❤️</div>
+    <div style="font-size:14px; letter-spacing:2px; animation:blink 1.4s infinite;">TAP THE HEART 💕</div>
 </div>
 
-
-<!-- ================= SCREEN 2 ================= -->
-
+<!-- SCREEN 2 -->
 <div class="screen" id="screen2">
-
     <div class="letter">
-
-        <h2>
-            💌 A Little Letter
-        </h2>
-
-        <p>
-            Today is a very special day because
-            someone very special was born today. ❤️
-        </p>
-
-        <p>
-            I hope your life is always filled with
-            happiness, beautiful memories, endless
-            smiles and lots of love. ✨
-        </p>
-
-        <p>
-            May every dream you have come true,
-            and may every new year of your life
-            bring you more beautiful moments.
-        </p>
-
-        <p>
-            Keep smiling, keep shining and always
-            stay the wonderful person you are. 🥹❤️
-        </p>
-
-        <div class="signature">
-            Happy Birthday once again! 🎂❤️
-        </div>
-
-        <button
-            class="button"
-            onclick="openCake()"
-        >
-            NEXT 🎁
-        </button>
-
+        <h2>💌 A Little Letter</h2>
+        <p>Today is a very special day because someone very special was born today. ❤️</p>
+        <p>I hope your life is always filled with happiness, beautiful memories, endless smiles and lots of love. ✨</p>
+        <p>May every dream you have come true, and may every new year bring you more beautiful moments.</p>
+        <p>Keep smiling, keep shining and always stay the wonderful person you are. 🥹❤️</p>
+        <div style="margin-top:20px; font-weight:bold;">Happy Birthday once again! 🎂❤️</div>
+        <button class="button" onclick="openCake()">NEXT 🎁</button>
     </div>
-
 </div>
 
-
-<!-- ================= SCREEN 3 ================= -->
-
+<!-- SCREEN 3 -->
 <div class="screen" id="screen3">
-
-    <div class="cakeTitle">
-        Make A Wish ✨
-    </div>
-
+    <div style="font-size:35px; font-weight:bold; margin-bottom:25px;">Make A Wish ✨</div>
     <div class="cake">
-
-        <div class="candle">
-
-            <div class="flame">
-                🔥
-            </div>
-
-        </div>
-
+        <div class="candle"><div class="flame">🔥</div></div>
         <div class="cakeTop"></div>
-
         <div class="cream"></div>
-
         <div class="cakeBase"></div>
-
     </div>
-
-    <div style="
-        font-size:17px;
-        line-height:1.8;
-    ">
-        One more year of beautiful memories,<br>
-        smiles and happiness. ❤️
-    </div>
-
-    <button
-        class="button"
-        onclick="openFinal()"
-    >
-        LAST SURPRISE ✨
-    </button>
-
+    <div style="font-size:18px; line-height:1.8;">One more year of beautiful memories,<br>smiles and happiness. ❤️</div>
+    <button class="button" onclick="openFinal()">LAST SURPRISE ✨</button>
 </div>
 
-
-<!-- ================= SCREEN 4 ================= -->
-
+<!-- SCREEN 4 -->
 <div class="screen" id="screen4">
-
-    <div class="finalSmall">
-        THIS SPECIAL MOMENT IS FOR
+    <div style="font-size:15px; letter-spacing:5px; margin-bottom:20px; opacity:.8;">THIS SPECIAL MOMENT IS FOR</div>
+    <div class="name">You.</div>
+    
+    <div class="photo-frame">
+        <img src="photo.jpg" alt="Birthday Pic">
     </div>
 
-    <div class="name">
-        You.
-    </div>
+    <div class="typewriter" id="typeText"></div>
 
-    <div class="message">
-
-        May your smile always stay beautiful,<br>
-
-        may your dreams keep shining,<br>
-
-        and may your life be filled with
-        countless happy moments. ❤️
-
-        <br><br>
-
-        <b>
-            HAPPY BIRTHDAY, Meri Jaan! 🎂🎉
-        </b>
-
-    </div>
-
-    <a
-        class="whatsapp"
-        href="https://wa.me/923149793116?text=I%20love%20you%20%E2%9D%A4%EF%B8%8F"
-        target="_blank"
-    >
-        💚 WhatsApp
-    </a>
-
+    <a class="whatsapp" href="https://wa.me/923149793116?text=I%20love%20you%20%E2%9D%A4%EF%B8%8F" target="_blank">💚 Send Love on WhatsApp</a>
 </div>
-
 
 <script>
-
-/* ==========================================
-   FLOATING HEARTS / STARS
-========================================== */
-
-const particleBox =
-    document.getElementById("particles");
-
-const symbols = [
-    "❤️",
-    "💖",
-    "💕",
-    "💗",
-    "✨",
-    "💓"
-];
-
-for(let i = 0; i < 40; i++){
-
-    const item =
-        document.createElement("div");
-
+// FLOATING PARTICLES
+const particleBox = document.getElementById("particles");
+const symbols = ["❤️","💖","💕","💗","✨","💓","🎂","🎈"];
+for(let i = 0; i < 50; i++){
+    const item = document.createElement("div");
     item.className = "particle";
-
-    item.innerText =
-        symbols[
-            Math.floor(
-                Math.random() * symbols.length
-            )
-        ];
-
-    item.style.left =
-        Math.random() * 100 + "%";
-
-    item.style.fontSize =
-        (12 + Math.random() * 25) + "px";
-
-    item.style.animationDuration =
-        (5 + Math.random() * 7) + "s";
-
-    item.style.animationDelay =
-        Math.random() * 7 + "s";
-
+    item.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+    item.style.left = Math.random() * 100 + "%";
+    item.style.fontSize = (14 + Math.random() * 25) + "px";
+    item.style.animationDuration = (5 + Math.random() * 7) + "s";
+    item.style.animationDelay = Math.random() * 7 + "s";
     particleBox.appendChild(item);
 }
 
+// CONFETTI
+function createConfetti(){
+    const confettiBox = document.getElementById("confetti");
+    for(let i=0; i<100; i++){
+        const c = document.createElement("div");
+        c.className = "confetti";
+        c.style.left = Math.random()*100 + "vw";
+        c.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 50%)`;
+        c.style.animationDelay = Math.random()*3 + "s";
+        confettiBox.appendChild(c);
+    }
+}
 
-/* ==========================================
-   CHANGE SCREEN
-========================================== */
-
+// SCREEN CHANGE
 function changeScreen(oldScreen,newScreen){
-
-    document
-        .getElementById(oldScreen)
-        .classList.remove("active");
-
+    document.getElementById(oldScreen).classList.remove("active");
     setTimeout(function(){
-
-        document
-            .getElementById(newScreen)
-            .classList.add("active");
-
+        document.getElementById(newScreen).classList.add("active");
+        if(newScreen === "screen4"){ 
+            createConfetti();
+            typeWriter();
+        }
     },400);
 }
 
+function openLetter(){ changeScreen("screen1","screen2"); }
+function openCake(){ changeScreen("screen2","screen3"); }
+function openFinal(){ changeScreen("screen3","screen4"); }
 
-/* ==========================================
-   HEART → LETTER
-========================================== */
-
-function openLetter(){
-
-    changeScreen(
-        "screen1",
-        "screen2"
-    );
-
-}
-
-
-/* ==========================================
-   LETTER → CAKE
-========================================== */
-
-function openCake(){
-
-    changeScreen(
-        "screen2",
-        "screen3"
-    );
-
-}
-
-
-/* ==========================================
-   CAKE → FINAL NAME
-========================================== */
-
-function openFinal(){
-
-    changeScreen(
-        "screen3",
-        "screen4"
-    );
-
-    setTimeout(
-        createSparkles,
-        600
-    );
-
-}
-
-
-/* ==========================================
-   FINAL SPARKLES
-========================================== */
-
-function createSparkles(){
-
-    for(let i = 0; i < 45; i++){
-
-        const s =
-            document.createElement("div");
-
-        s.className = "sparkle";
-
-        s.innerText =
-            Math.random() > .5
-            ? "✨"
-            : "💖";
-
-        s.style.left =
-            Math.random() * 100 + "vw";
-
-        s.style.top =
-            Math.random() * 100 + "vh";
-
-        s.style.fontSize =
-            (12 + Math.random() * 25) + "px";
-
-        s.style.animationDelay =
-            Math.random() * 2 + "s";
-
-        document.body.appendChild(s);
-
+// TYPEWRITER EFFECT
+function typeWriter(){
+    const text = "May your smile always stay beautiful,\nmay your dreams keep shining,\nand may your life be filled with countless happy moments. ❤️\n\nHAPPY BIRTHDAY, Meri Jaan! 🎂🎉";
+    let i = 0;
+    const speed = 50;
+    function type(){
+        if(i < text.length){
+            document.getElementById("typeText").innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        }
     }
-
+    type();
 }
 
+// MUSIC
+let isPlaying = false;
+function toggleMusic(){
+    const music = document.getElementById("bgMusic");
+    const btn = document.getElementById("musicBtn");
+    if(isPlaying){
+        music.pause();
+        btn.innerText = "🎵";
+        isPlaying = false;
+    } else {
+        music.play();
+        btn.innerText = "🔇";
+        isPlaying = true;
+    }
+}
 </script>
 
 </body>
