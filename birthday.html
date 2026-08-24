@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Meri Jaan ❤️</title>
+<title>Surprise For Meri Jaan 🎁</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Dancing+Script:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Dancing+Script:wght@700&display=swap');
 
 *{ margin:0; padding:0; box-sizing:border-box; }
 
@@ -13,269 +13,200 @@ body{
     width:100%;
     height:100vh;
     overflow:hidden;
-    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+    background: #000;
     font-family: 'Poppins', sans-serif;
 }
 
-/* LOVE PARTICLES */
-.particle{
+/* STARS BACKGROUND */
+#stars{
+    position:fixed;
+    inset:0;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+}
+.star{
     position:absolute;
-    bottom:-20px;
-    animation: floatUp 8s infinite ease-in;
-    pointer-events:none;
+    background:white;
+    border-radius:50%;
+    animation: twinkle 3s infinite;
 }
-@keyframes floatUp{
-    0%{ transform:translateY(0) scale(0); opacity:0; }
-    10%{ opacity:1; }
-    100%{ transform:translateY(-120vh) scale(1.5); opacity:0; }
-}
+@keyframes twinkle{ 0%,100%{ opacity:0; } 50%{ opacity:1; } }
 
-/* ========== PASSWORD SCREEN ========== */
+/* PASSWORD */
 #lockScreen{
     position:fixed;
     inset:0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     display:flex;
     justify-content:center;
     align-items:center;
     z-index:9999;
+    backdrop-filter: blur(10px);
 }
 .lock-box{
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(25px);
-    padding:50px 35px;
-    border-radius:25px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(30px);
+    padding:60px 40px;
+    border-radius:30px;
     text-align:center;
-    border:1px solid rgba(255,255,255,0.3);
-    box-shadow:0 25px 70px rgba(0,0,0,.4);
-    animation: fadeIn 1s ease;
+    border:2px solid rgba(255,255,255,0.2);
+    animation: popIn 1s ease;
 }
-@keyframes fadeIn{ from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
-.lock-box h2{
-    color:white;
-    font-size:30px;
-    margin-bottom:25px;
-    font-family: 'Dancing Script', cursive;
-}
+@keyframes popIn{ from{ transform:scale(0.5); opacity:0; } to{ transform:scale(1); opacity:1; } }
+.lock-box h2{ color:white; font-size:35px; margin-bottom:30px; font-family: 'Dancing Script', cursive; }
 .lock-box input{
-    width:220px;
-    padding:15px;
+    width:250px;
+    padding:18px;
     border:none;
     border-radius:50px;
-    font-size:22px;
+    font-size:25px;
     text-align:center;
-    letter-spacing:8px;
-    margin-bottom:25px;
-    outline:none;
+    letter-spacing:10px;
+    margin-bottom:30px;
     background: rgba(255,255,255,0.9);
 }
 .lock-box button{
-    padding:15px 45px;
+    padding:18px 50px;
     border:none;
     border-radius:50px;
-    background: linear-gradient(90deg,#ff0080,#ff4d94);
+    background: linear-gradient(90deg,#ff006e,#8338ec);
     color:white;
-    font-size:18px;
+    font-size:20px;
     font-weight:bold;
     cursor:pointer;
-    transition:.3s;
+    animation: glow 2s infinite;
 }
-.lock-box button:hover{ transform:scale(1.05); }
-.error{ color:#ffeb3b; margin-top:12px; display:none; font-weight:bold; }
+@keyframes glow{ 0%,100%{ box-shadow:0 0 20px #ff006e; } 50%{ box-shadow:0 0 40px #8338ec; } }
 
-/* ========== MAIN ========== */
+/* MAIN */
 #mainContent{ display:none; }
-.container{
-    width:100%;
-    height:100vh;
+.container{ width:100%; height:100vh; display:flex; justify-content:center; align-items:center; flex-direction:column; }
+
+/* SCREEN 1 - HEART BURST */
+.screen1 h1{
+    font-size:clamp(50px,15vw,100px);
+    color:white;
+    animation: rainbow 4s linear infinite;
+}
+@keyframes rainbow{
+    0%{ color:#ff006e } 25%{ color:#8338ec } 50%{ color:#3a86ff } 75%{ color:#ffbe0b } 100%{ color:#ff006e }
+}
+.heart-btn{
+    font-size:150px;
+    margin:40px 0;
+    cursor:pointer;
+    animation: bounce 1s infinite;
+    filter: drop-shadow(0 0 40px #ff006e);
+}
+@keyframes bounce{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-30px); } }
+
+/* SCREEN 2 - SCRATCH CARD LETTER */
+.screen2{ display:none; }
+.scratch-card{
+    width:350px;
+    height:400px;
+    background: linear-gradient(135deg,#ff9a9e,#fecfef);
+    border-radius:20px;
+    position:relative;
+    cursor: crosshair;
+    box-shadow:0 30px 80px rgba(255,0,128,.5);
+}
+.scratch-layer{
+    position:absolute;
+    inset:0;
+    background: #888;
+    border-radius:20px;
+    color:white;
     display:flex;
     justify-content:center;
     align-items:center;
-    flex-direction:column;
-    text-align:center;
-    color:white;
-    padding:20px;
-}
-
-/* SCREEN 1 */
-.screen1 h1{
-    font-size:clamp(45px,12vw,90px);
-    font-weight:900;
-    background: linear-gradient(90deg,#fff,#ffe0e9,#fff);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-    animation: shine 3s ease infinite;
-    text-shadow: 0 0 30px rgba(255,255,255,.3);
-}
-@keyframes shine{ 0%{background-position:0%} 50%{background-position:100%} 100%{background-position:0%} }
-
-.heart-btn{
-    font-size:130px;
-    margin:40px 0;
-    cursor:pointer;
-    animation: heartbeat 1.3s infinite;
-    filter: drop-shadow(0 0 25px #ff0080);
-}
-@keyframes heartbeat{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.25); } }
-.tap-text{ font-size:15px; letter-spacing:3px; opacity:.8; }
-
-/* SCREEN 2 - LETTER WITH BEAR */
-.screen2{ display:none; position:relative; }
-.bear{
-    font-size:110px;
-    position:absolute;
-    top:45%;
-    left:50%;
-    transform: translate(-50%, -50%) scale(0);
-    animation: bearHug 1.2s ease .4s forwards;
-    z-index:1;
-    filter: drop-shadow(0 0 40px rgba(255,255,255,.6));
-}
-@keyframes bearHug{
-    0%{ transform: translate(-50%, -50%) scale(0) rotate(-15deg); }
-    70%{ transform: translate(-50%, -50%) scale(1.15) rotate(8deg); }
-    100%{ transform: translate(-50%, -50%) scale(1) rotate(0); }
-}
-
-.letter{
-    background: linear-gradient(135deg, #fffdf5, #ffeef8);
-    color:#5a2a4a;
-    padding:45px 35px;
-    border-radius:25px;
-    max-width:520px;
-    cursor:pointer;
-    position:relative;
-    z-index:2;
-    box-shadow: 0 20px 60px rgba(255,0,128,.25);
-    transition: all .4s ease;
-}
-.letter:hover{ transform: translateY(-5px) scale(1.02); }
-.letter h2{
-    font-family: 'Dancing Script', cursive;
-    font-size:45px;
-    color:#d63384;
-    margin-bottom:25px;
-}
-.letter p{
-    font-size:18px;
-    line-height:2;
-    margin-bottom:18px;
-    text-align:left;
-}
-.tap-letter{
-    font-size:14px;
-    color:#ff0080;
-    margin-top:20px;
+    font-size:30px;
     font-weight:bold;
-    animation: blink 1.3s infinite;
 }
+.letter-content{
+    padding:30px;
+    color:#333;
+    text-align:center;
+}
+.letter-content h2{ font-family: 'Dancing Script', cursive; font-size:40px; color:#d63384; }
+.bear{ font-size:90px; margin:15px 0; animation: wiggle 1s infinite; }
+@keyframes wiggle{ 0%,100%{ transform:rotate(-10deg); } 50%{ transform:rotate(10deg); } }
 
-/* SCREEN 3 - CAKE */
+/* SCREEN 3 - GAME */
 .screen3{ display:none; }
+.cake-game{ text-align:center; }
 .cake{
-    width:260px;
-    height:210px;
-    margin:25px auto;
+    width:300px;
+    height:220px;
+    margin:20px auto;
     position:relative;
-    cursor:pointer;
 }
-.cake-layer{
-    position:absolute;
-    width:100%;
-    height:65px;
-    background: linear-gradient(#ff6b9d, #c44569);
-    border-radius:12px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.2);
-}
-.cake-layer:nth-child(2){ bottom:65px; background: linear-gradient(#feca57, #ff9f1c); }
-.cake-layer:nth-child(3){ bottom:130px; background: linear-gradient(#48dbfb, #0abde3); }
-.candle{
-    position:absolute;
-    top:-45px;
-    left:50%;
-    transform:translateX(-50%);
-    width:18px;
-    height:55px;
-    background: repeating-linear-gradient(45deg, #fff 0 6px, #ff9ecb 6px 12px);
-    border-radius:3px;
-}
-.flame{
-    position:absolute;
-    top:-35px;
-    left:-10px;
-    font-size:35px;
-    animation: flicker .4s infinite alternate;
-    transition: all .6s ease;
-}
-.flame.blow{ opacity:0; transform: scale(0) translateY(-20px); }
-@keyframes flicker{ from{ transform:scale(.9) rotate(-8deg); } to{ transform:scale(1.15) rotate(8deg); } }
-.wish-text{ font-size:16px; margin-top:15px; }
+.candle{ position:absolute; top:-50px; left:50%; transform:translateX(-50%); font-size:50px; cursor:pointer; }
+.flame{ animation: flicker .2s infinite alternate; }
+@keyframes flicker{ from{ transform:scale(1) rotate(-10deg); } to{ transform:scale(1.3) rotate(10deg); } }
+.blown{ animation: blowOut .8s forwards; }
+@keyframes blowOut{ to{ transform: scale(0) translateY(-100px); opacity:0; } }
+.tap-hint{ color:white; font-size:18px; margin-top:20px; }
 
-/* SCREEN 4 - FINAL */
-.screen4{ display:none; }
-.photo-frame{
-    width:260px;
-    height:260px;
-    border-radius:50%;
-    padding:10px;
-    background: conic-gradient(from 0deg, #ff0080, #ff8c00, #40e0d0, #ff0080);
-    animation: rotate 5s linear infinite;
-    margin:25px auto;
-    box-shadow:0 0 60px rgba(255,0,128,.6);
-}
-.photo-frame img{
-    width:100%;
-    height:100%;
-    border-radius:50%;
-    object-fit:cover;
-    border:6px solid white;
-}
-@keyframes rotate{ 100%{ transform:rotate(360deg); } }
-
+/* SCREEN 4 - FINAL BLAST */
+.screen4{ display:none; text-align:center; }
 .name{
     font-family: 'Dancing Script', cursive;
-    font-size:75px;
-    background: linear-gradient(90deg,#fff,#ff9ecb,#fff);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-    animation: nameGlow 2.5s ease infinite;
+    font-size:80px;
+    color:white;
+    animation: zoomIn 1s ease;
 }
-@keyframes nameGlow{ 0%,100%{ filter: brightness(1); } 50%{ filter: brightness(1.3); } }
+@keyframes zoomIn{ from{ transform:scale(0); } to{ transform:scale(1); } }
+.photo-frame{
+    width:280px;
+    height:280px;
+    border-radius:50%;
+    margin:30px auto;
+    border:8px solid white;
+    box-shadow:0 0 60px rgba(255,255,255,.8);
+    animation: pulseRing 2s infinite;
+}
+@keyframes pulseRing{ 0%{ box-shadow:0 0 0 0 rgba(255,255,255,.7); } 70%{ box-shadow:0 0 0 40px rgba(255,255,255,0); } 100%{ box-shadow:0 0 0 0 rgba(255,255,255,0); } }
+.photo-frame img{ width:100%; height:100%; border-radius:50%; object-fit:cover; }
+
+/* CONFETTI */
+.confetti{
+    position:absolute;
+    width:12px;
+    height:12px;
+    background:#ff0;
+    animation: confettiFall 3s linear infinite;
+}
+@keyframes confettiFall{
+    to{ transform:translateY(100vh) rotate(720deg); opacity:0; }
+}
 
 .btn{
     margin-top:30px;
-    padding:16px 45px;
+    padding:18px 50px;
     border:none;
     border-radius:50px;
-    background: linear-gradient(90deg,#ff0080,#ff4d94);
+    background: linear-gradient(90deg,#ff006e,#8338ec);
     color:white;
-    font-size:18px;
+    font-size:20px;
     font-weight:bold;
     cursor:pointer;
-    box-shadow:0 12px 35px rgba(255,0,128,.4);
-    transition:.3s;
 }
-.btn:hover{ transform: translateY(-3px); }
 </style>
 </head>
 <body>
 
-<div id="particles"></div>
+<div id="stars"></div>
 
-<!-- PASSWORD LOCK -->
+<!-- PASSWORD -->
 <div id="lockScreen">
     <div class="lock-box">
-        <h2>🔐 Ye Sirf Tumhare Liye Hai</h2>
+        <h2>Ek Secret Hai 🔐</h2>
         <input type="password" id="passwordInput" placeholder="0824" maxlength="4">
         <br>
-        <button onclick="checkPassword()">DIL KHOLO ❤️</button>
-        <div class="error" id="errorMsg">Galat Password Hai Jaan!</div>
+        <button onclick="checkPassword()">KHOLO AB!</button>
     </div>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <div id="mainContent">
     <audio id="bgMusic" loop autoplay>
         <source src="song.mp3" type="audio/mpeg">
@@ -284,49 +215,53 @@ body{
     <div class="container">
         <!-- SCREEN 1 -->
         <div class="screen1" id="s1">
-            <h1>HAPPY BIRTHDAY</h1>
-            <div class="heart-btn" onclick="next(1)">❤️</div>
-            <p class="tap-text">DIL PE CLICK KRO</p>
+            <h1>SURPRISE!</h1>
+            <div class="heart-btn" onclick="next(1)">💥</div>
+            <p style="color:white;">IS DIL KO PHORO</p>
         </div>
 
-        <!-- SCREEN 2 -->
+        <!-- SCREEN 2 - SCRATCH -->
         <div class="screen2" id="s2">
-            <div class="bear">🧸</div>
-            <div class="letter" onclick="next(2)">
-                <h2>Meri Pyaari Jaan Ke Naam</h2>
-                <p>Aaj ka din sab se khaas hai...<br>kyunki aaj "Meri Jaan" is duniya me aayi thi ✨</p>
-                <p>Tumhari har hansi me meri khushi hai.<br>Tumhare har sapne me mera dua hai.</p>
-                <p>May Allah tumhe hamesha khush rakhe,<br>aur tumhari zindagi pyaar se bhar de ❤️</p>
-                <p class="tap-letter">AAGE PADHNE KE LIYE CLICK KRO 🎂</p>
+            <div class="scratch-card" id="scratchCard">
+                <div class="scratch-layer">SCRATCH KARO 👇</div>
+                <div class="letter-content">
+                    <h2>Meri Jaan ❤️</h2>
+                    <div class="bear">🧸</div>
+                    <p style="font-size:18px; line-height:2;">
+                        Tum duniya ki sab se khaas ho.<br>
+                        Tumhari 1 smile = meri 100 khushiyan<br>
+                        I Love You To The Moon & Back 🌙
+                    </p>
+                </div>
             </div>
+            <button class="btn" onclick="next(2)" style="margin-top:20px;">NEXT</button>
         </div>
 
-        <!-- SCREEN 3 -->
+        <!-- SCREEN 3 - BLOW GAME -->
         <div class="screen3" id="s3">
-            <h1 style="font-size:42px;">Ek Khwahish Maango ✨</h1>
-            <div class="cake" onclick="blowCandle()">
-                <div class="candle">
-                    <div class="flame" id="flame">🕯️</div>
+            <h1 style="color:white; font-size:40px;">CAKE PHONKO! 🎂</h1>
+            <div class="cake-game">
+                <div class="cake">
+                    <div class="candle" onclick="blowCandle()">
+                        <div class="flame" id="flame">🔥</div>
+                    </div>
+                    <img src="https://i.imgur.com/8Km9tLL.png" style="width:100%;">
                 </div>
-                <div class="cake-layer"></div>
-                <div class="cake-layer"></div>
-                <div class="cake-layer"></div>
+                <p class="tap-hint">Candle ki aag pe tap karo!</p>
             </div>
-            <p class="wish-text">Candle pe phoonk maaro aur wish karo 🕯️</p>
-            <button class="btn" id="nextBtn3" onclick="next(3)" style="display:none;">AKHRI SURPRISE 🎁</button>
+            <button class="btn" id="nextBtn3" onclick="next(3)" style="display:none;">LAST WALA</button>
         </div>
 
         <!-- SCREEN 4 -->
         <div class="screen4" id="s4">
-            <p style="font-size:17px; letter-spacing:4px; opacity:.9;">YEH PAL SIRF TUMHARE LIYE</p>
+            <p style="color:white; font-size:20px;">FOR THE ONE I LOVE</p>
             <div class="name">Meri Jaan</div>
             <div class="photo-frame">
-                <img src="photo.jpg" alt="my love">
+                <img src="photo.jpg" alt="love">
             </div>
-            <p style="font-size:19px; max-width:550px; margin:25px auto; line-height:2;">
-                Tumhari muskurahat se meri duniya roshan hai.<br>
-                Tum saath ho to har din Eid hai ❤️<br><br>
-                <b>HAPPY BIRTHDAY MERI JAAN! 🎂🎉<br>I LOVE YOU SO MUCH</b>
+            <p style="color:white; font-size:20px; max-width:500px;">
+                Happy Birthday meri jaan!<br>
+                Tum mere liye duniya ho ❤️
             </p>
         </div>
     </div>
@@ -335,37 +270,40 @@ body{
 <script>
 const CORRECT_PASSWORD = "0824";
 
-// LOVE PARTICLES
-for(let i=0; i<30; i++){
-    let p = document.createElement('div');
-    p.className = 'particle';
-    p.innerHTML = ['❤️','✨','💕','🌸'][Math.floor(Math.random()*4)];
-    p.style.left = Math.random()*100 + '%';
-    p.style.fontSize = (15 + Math.random()*20) + 'px';
-    p.style.animationDelay = Math.random()*8 + 's';
-    document.getElementById('particles').appendChild(p);
+// STARS
+for(let i=0; i<100; i++){
+    let s = document.createElement('div');
+    s.className = 'star';
+    s.style.width = s.style.height = Math.random()*3 + 'px';
+    s.style.left = Math.random()*100 + '%';
+    s.style.top = Math.random()*100 + '%';
+    s.style.animationDelay = Math.random()*3 + 's';
+    document.getElementById('stars').appendChild(s);
 }
 
 function checkPassword(){
-    const input = document.getElementById('passwordInput').value;
-    if(input === CORRECT_PASSWORD){
+    if(document.getElementById('passwordInput').value === CORRECT_PASSWORD){
         document.getElementById('lockScreen').style.display = 'none';
         document.getElementById('mainContent').style.display = 'flex';
-        document.getElementById('bgMusic').play().catch(()=>{});
-    } else {
-        document.getElementById('errorMsg').style.display = 'block';
-        document.getElementById('passwordInput').value = '';
-    }
+        document.getElementById('bgMusic').play();
+    } else { alert('Galat password jaan 😢'); }
 }
 
-document.getElementById('passwordInput').addEventListener('keypress', e => {
-    if(e.key === 'Enter'){ checkPassword(); }
-});
-
 function blowCandle(){
-    document.getElementById('flame').classList.add('blow');
-    document.querySelector('.wish-text').innerText = 'Wish Qabool Ho Gayi! ✨';
+    document.getElementById('flame').classList.add('blown');
+    createConfetti();
     document.getElementById('nextBtn3').style.display = 'inline-block';
+}
+
+function createConfetti(){
+    for(let i=0; i<150; i++){
+        let c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.left = Math.random()*100 + 'vw';
+        c.style.backgroundColor = `hsl(${Math.random()*360},100%,50%)`;
+        c.style.animationDelay = Math.random()*2 + 's';
+        document.body.appendChild(c);
+    }
 }
 
 function next(n){
