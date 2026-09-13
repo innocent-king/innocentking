@@ -3,1734 +3,229 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>For You ❤️</title>
-
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <style>
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html {
-    min-height: 100%;
-}
-
+* {box-sizing: border-box; margin: 0; padding: 0;}
 body {
-    min-height: 100vh;
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 25px 0;
-
-    font-family: "Trebuchet MS", Arial, sans-serif;
-
-    background:
-        radial-gradient(
-            circle at 20% 20%,
-            #ffd1e3,
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at 80% 80%,
-            #ffc1dc,
-            transparent 35%
-        ),
-        linear-gradient(
-            135deg,
-            #fff0f6,
-            #ffd6e7
-        );
-
-    background-size: 200% 200%;
-
-    animation:
-        backgroundMove
-        8s ease-in-out infinite alternate;
+    min-height: 100vh; overflow-x: hidden; overflow-y: auto;
+    display: flex; justify-content: center; align-items: center;
+    padding: 25px 0; font-family: "Poppins", Arial, sans-serif;
+    background: radial-gradient(circle at 20% 20%, #ffd1e3, transparent 35%),
+                radial-gradient(circle at 80% 80%, #ffc1dc, transparent 35%),
+                linear-gradient(135deg, #fff0f6, #ffd6e7);
+    background-size: 200% 200%; animation: backgroundMove 8s ease-in-out infinite alternate;
 }
-
-@keyframes backgroundMove {
-
-    0% {
-        background-position: 0% 0%;
-    }
-
-    100% {
-        background-position: 100% 100%;
-    }
-
-}
-
-
-/* PARTICLES */
-
-.particle {
-    position: fixed;
-    bottom: -30px;
-
-    pointer-events: none;
-
-    opacity: 0.6;
-
-    z-index: 1;
-
-    animation:
-        particleUp
-        linear
-        forwards;
-}
-
-@keyframes particleUp {
-
-    0% {
-        transform:
-            translateY(0)
-            scale(0.5);
-
-        opacity: 0;
-    }
-
-    20% {
-        opacity: 0.7;
-    }
-
-    100% {
-        transform:
-            translateY(-110vh)
-            scale(1.2);
-
-        opacity: 0;
-    }
-
-}
-
-
-/* MAIN CARD */
+@keyframes backgroundMove {0%{background-position: 0% 0%;} 100%{background-position: 100% 100%;}}
 
 .container {
-
-    width: 90%;
-    max-width: 450px;
-
-    text-align: center;
-
-    padding: 38px 22px;
-
-    background:
-        rgba(255,255,255,0.45);
-
-    backdrop-filter:
-        blur(15px);
-
-    -webkit-backdrop-filter:
-        blur(15px);
-
-    border:
-        1px solid
-        rgba(255,255,255,0.7);
-
-    border-radius: 30px;
-
-    box-shadow:
-        0 20px 60px
-        rgba(255,59,120,0.2),
-
-        inset 0 0 25px
-        rgba(255,255,255,0.5);
-
-    position: relative;
-
-    z-index: 5;
-
-    animation:
-        cardAppear
-        1s ease;
+    width: 90%; max-width: 480px; text-align: center; padding: 40px 25px;
+    background: rgba(255,255,255,0.55); backdrop-filter: blur(20px);
+    border-radius: 35px; box-shadow: 0 25px 70px rgba(255,59,120,0.25); position: relative; z-index: 5;
 }
 
-@keyframes cardAppear {
-
-    0% {
-        opacity: 0;
-
-        transform:
-            translateY(40px)
-            scale(0.85);
-    }
-
-    100% {
-        opacity: 1;
-
-        transform:
-            translateY(0)
-            scale(1);
-    }
-
-}
-
-
-/* EMOJI */
-
-.emoji {
-
-    font-size: 75px;
-
-    margin-bottom: 15px;
-
-    filter:
-        drop-shadow(
-            0 8px 15px
-            rgba(255,59,120,0.25)
-        );
-
-    animation:
-        bounce 1.5s infinite,
-        glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes bounce {
-
-    0%,100% {
-        transform:
-            translateY(0)
-            rotate(0deg);
-    }
-
-    50% {
-        transform:
-            translateY(-12px)
-            rotate(3deg);
-    }
-
-}
-
-@keyframes glow {
-
-    from {
-        filter:
-            drop-shadow(
-                0 5px 10px
-                rgba(255,59,120,0.2)
-            );
-    }
-
-    to {
-        filter:
-            drop-shadow(
-                0 5px 25px
-                rgba(255,59,120,0.7)
-            );
-    }
-
-}
-
-
-/* HEADING */
-
-h1 {
-
-    font-size: 31px;
-
-    font-weight: 900;
-
-    letter-spacing: 0.6px;
-
-    line-height: 1.3;
-
-    margin-bottom: 16px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ff1761,
-            #ff4f87,
-            #ff9cbd,
-            #ff1761
-        );
-
-    background-size: 300% auto;
-
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    color: transparent;
-
-    filter:
-        drop-shadow(
-            0 4px 10px
-            rgba(255,59,120,0.25)
-        );
-
-    animation:
-        gradientText 4s linear infinite,
-        headingFloat 2.5s ease-in-out infinite alternate;
-}
-
-@keyframes gradientText {
-
-    0% {
-        background-position: 0% center;
-    }
-
-    100% {
-        background-position: 300% center;
-    }
-
-}
-
-@keyframes headingFloat {
-
-    0% {
-        transform: translateY(0);
-    }
-
-    100% {
-        transform: translateY(-4px);
-    }
-
-}
-
-
-/* TEXT */
-
-p {
-
-    font-size: 19px;
-
-    font-weight: 700;
-
-    letter-spacing: 0.4px;
-
-    line-height: 1.5;
-
-    color: #70495b;
-
-    margin-bottom: 30px;
-
-    text-shadow:
-        0 2px 8px
-        rgba(255,59,120,0.18);
-}
-
-
-/* MESSAGE */
-
-#message {
-
-    animation:
-        messageAppear 0.8s ease,
-        messageFloat 3s ease-in-out infinite alternate;
-}
-
-@keyframes messageAppear {
-
-    0% {
-        opacity: 0;
-
-        transform:
-            translateY(12px);
-    }
-
-    100% {
-        opacity: 1;
-
-        transform:
-            translateY(0);
-    }
-
-}
-
-@keyframes messageFloat {
-
-    0% {
-        transform:
-            translateY(0);
-    }
-
-    100% {
-        transform:
-            translateY(-2px);
-    }
-
-}
-
-
-/* BUTTONS */
-
-.buttons {
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    gap: 20px;
-
-    min-height: 60px;
-}
-
-button {
-
-    border: none;
-
-    border-radius: 15px;
-
-    padding:
-        14px 30px;
-
-    font-size: 18px;
-
-    font-weight: 900;
-
-    letter-spacing: 0.7px;
-
-    cursor: pointer;
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
-
-    box-shadow:
-        0 8px 20px
-        rgba(0,0,0,0.12);
-}
-
-
-/* YES */
-
-#yes {
-
-    background:
-        linear-gradient(
-            135deg,
-            #ff3b78,
-            #ff1761
-        );
-
-    color: white;
-
-    text-shadow:
-        0 2px 5px
-        rgba(0,0,0,0.15);
-
-    animation:
-        yesPulse 2s infinite;
-}
-
-#yes:hover {
-
-    transform:
-        scale(1.1);
-
-    box-shadow:
-        0 10px 30px
-        rgba(255,23,97,0.45);
-}
-
-#yes:active {
-
-    transform:
-        scale(0.92);
-}
-
-@keyframes yesPulse {
-
-    0%,100% {
-
-        box-shadow:
-            0 5px 15px
-            rgba(255,59,120,0.25);
-    }
-
-    50% {
-
-        box-shadow:
-            0 5px 30px
-            rgba(255,59,120,0.55);
-    }
-
-}
-
-
-/* NO */
-
-#no {
-
-    background:
-        rgba(255,255,255,0.9);
-
-    color:
-        #ff3b78;
-
-    text-shadow:
-        0 1px 3px
-        rgba(255,59,120,0.15);
-}
-
-#no:hover {
-
-    transform:
-        scale(1.05);
-}
-
-
-/* SUCCESS */
-
-.success {
-
-    display: none;
-
-    animation:
-        successAppear
-        0.8s ease;
-}
-
-.success h2 {
-
-    font-size: 40px;
-
-    font-weight: 900;
-
-    letter-spacing: 1px;
-
-    margin: 15px 0;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ff1761,
-            #ff4f87,
-            #ff9cbd,
-            #ff1761
-        );
-
-    background-size:
-        300% auto;
-
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    color: transparent;
-
-    filter:
-        drop-shadow(
-            0 5px 12px
-            rgba(255,59,120,0.3)
-        );
-
-    animation:
-        successGradient 3s linear infinite,
-        yay 1s ease-in-out infinite alternate;
-}
-
-@keyframes successGradient {
-
-    0% {
-        background-position:
-            0% center;
-    }
-
-    100% {
-        background-position:
-            300% center;
-    }
-
-}
-
-@keyframes successAppear {
-
-    0% {
-
-        transform:
-            scale(0.3)
-            rotate(-10deg);
-
-        opacity: 0;
-    }
-
-    70% {
-
-        transform:
-            scale(1.1)
-            rotate(3deg);
-    }
-
-    100% {
-
-        transform:
-            scale(1)
-            rotate(0);
-
-        opacity: 1;
-    }
-
-}
-
-@keyframes yay {
-
-    from {
-        transform:
-            scale(1);
-    }
-
-    to {
-        transform:
-            scale(1.08);
-    }
-
-}
-
-
-/* SUCCESS MESSAGE */
-
-.success p {
-
-    font-size: 19px;
-
-    font-weight: 700;
-
-    color: #70495b;
-
-    text-shadow:
-        0 2px 8px
-        rgba(255,59,120,0.15);
-
-    animation:
-        successMessage 1s ease;
-
-    margin-bottom: 20px;
-}
-
-@keyframes successMessage {
-
-    0% {
-
-        opacity: 0;
-
-        transform:
-            scale(0.8);
-    }
-
-    100% {
-
-        opacity: 1;
-
-        transform:
-            scale(1);
-    }
-
-}
-
-
-/* CONTACT */
-
-.contact-info {
-
-    margin-top: 10px;
-
-    animation:
-        fadeInUp
-        1s ease
-        0.5s both;
-}
-
-.contact-name {
-
-    font-size: 24px;
-
-    font-weight: 900;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ff1761,
-            #ff4f87
-        );
-
-    -webkit-background-clip:
-        text;
-
-    background-clip:
-        text;
-
-    color: transparent;
-
-    margin-bottom: 12px;
-
-    letter-spacing: 1px;
-}
-
-
-/* WHATSAPP */
-
-.whatsapp-btn {
-
-    display: inline-block;
-
-    background:
-        linear-gradient(
-            135deg,
-            #25D366,
-            #128C7E
-        );
-
-    color: white;
-
-    text-decoration: none;
-
-    padding:
-        14px 28px;
-
-    border-radius: 15px;
-
-    font-weight: 900;
-
-    font-size: 17px;
-
-    box-shadow:
-        0 8px 25px
-        rgba(37,211,102,0.4);
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
-
-    animation:
-        whatsappPulse 2s infinite;
-}
-
-.whatsapp-btn:hover {
-
-    transform:
-        scale(1.08);
-
-    box-shadow:
-        0 10px 35px
-        rgba(37,211,102,0.65);
-}
-
-@keyframes whatsappPulse {
-
-    0%,100% {
-        box-shadow:
-            0 8px 25px
-            rgba(37,211,102,0.35);
-    }
-
-    50% {
-        box-shadow:
-            0 8px 35px
-            rgba(37,211,102,0.65);
-    }
-
-}
-
-
-/* COUNTDOWN */
-
-.countdown {
-
-    margin-top: 15px;
-
-    font-size: 16px;
-
-    font-weight: 900;
-
-    color: #ff1761;
-
-    animation:
-        countdownPulse 1s infinite;
-}
-
-#countNumber {
-
-    display: inline-block;
-
-    min-width: 24px;
-
-    font-size: 22px;
-
-}
-
-@keyframes countdownPulse {
-
-    0%,100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.08);
-    }
-
-}
-
-
-/* VIDEO */
-
-.video-container {
-
-    display: none;
-
-    width: 100%;
-
-    margin-top: 28px;
-
-    animation:
-        videoAppear
-        1s ease;
-}
-
-.video-title {
-
-    font-size: 18px;
-
-    font-weight: 900;
-
-    color: #ff1761;
-
-    margin-bottom: 12px;
-
-    text-shadow:
-        0 2px 8px
-        rgba(255,59,120,0.2);
-}
-
-.video-container video {
-
-    display: block;
-
-    width: 100%;
-
-    height: auto;
-
-    max-height: 400px;
-
-    margin: 0 auto;
-
-    border-radius: 20px;
-
-    background: #000;
-
-    object-fit: contain;
-
-    border:
-        2px solid
-        rgba(255,255,255,0.9);
-
-    box-shadow:
-        0 10px 35px
-        rgba(255,59,120,0.4),
-
-        0 0 25px
-        rgba(255,59,120,0.2);
-}
-
-@keyframes videoAppear {
-
-    0% {
-
-        opacity: 0;
-
-        transform:
-            translateY(30px)
-            scale(0.9);
-    }
-
-    100% {
-
-        opacity: 1;
-
-        transform:
-            translateY(0)
-            scale(1);
-    }
-
-}
-
-
-/* HEARTS */
-
-.heart {
-
-    position: fixed;
-
-    bottom: -40px;
-
-    font-size: 25px;
-
-    pointer-events: none;
-
-    z-index: 10;
-
-    animation:
-        floatUp
-        4s linear
-        forwards;
-
-    filter:
-        drop-shadow(
-            0 0 8px
-            rgba(255,59,120,0.5)
-        );
-}
-
-@keyframes floatUp {
-
-    0% {
-
-        transform:
-            translateY(0)
-            rotate(0deg)
-            scale(0.7);
-
-        opacity: 0;
-    }
-
-    15% {
-        opacity: 1;
-    }
-
-    50% {
-
-        transform:
-            translateY(-50vh)
-            rotate(180deg)
-            scale(1);
-    }
-
-    100% {
-
-        transform:
-            translateY(-110vh)
-            rotate(360deg)
-            scale(1.3);
-
-        opacity: 0;
-    }
-
-}
-
-
-/* SPARKLES */
-
-.sparkle {
-
-    position: fixed;
-
-    pointer-events: none;
-
-    font-size: 18px;
-
-    z-index: 20;
-
-    animation:
-        sparkleAnim
-        1s ease-out
-        forwards;
-}
-
-@keyframes sparkleAnim {
-
-    0% {
-
-        transform:
-            scale(0)
-            rotate(0deg);
-
-        opacity: 1;
-    }
-
-    100% {
-
-        transform:
-            scale(1.5)
-            rotate(180deg);
-
-        opacity: 0;
-    }
-
-}
-
-
-/* SUCCESS FLASH */
-
-.success-flash {
-
-    position: fixed;
-
-    inset: 0;
-
-    pointer-events: none;
-
-    z-index: 100;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,255,255,0.8),
-            rgba(255,120,170,0.2),
-            transparent 70%
-        );
-
-    animation:
-        flashEffect
-        0.8s ease-out
-        forwards;
-}
-
-@keyframes flashEffect {
-
-    0% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-    }
-
-}
-
-
-/* MOBILE */
-
-@media (max-width: 500px) {
-
-    body {
-
-        padding:
-            20px 0;
-    }
-
-    .container {
-
-        width: 92%;
-
-        padding:
-            30px 18px;
-    }
-
-    h1 {
-
-        font-size: 26px;
-    }
-
-    p {
-
-        font-size: 17px;
-    }
-
-    .emoji {
-
-        font-size: 65px;
-    }
-
-    button {
-
-        padding:
-            13px 25px;
-
-        font-size: 17px;
-    }
-
-    .success h2 {
-
-        font-size: 34px;
-    }
-
-    .video-container video {
-
-        max-height: 350px;
-    }
-
-    .whatsapp-btn {
-
-        font-size: 16px;
-
-        padding:
-            13px 20px;
-    }
-
-}
-
+.emoji {font-size: 80px; margin-bottom: 15px;}
+h1 {font-size: 28px; font-weight: 900; margin-bottom: 16px; background: linear-gradient(90deg, #ff1761, #ff4f87); -webkit-background-clip: text; background-clip: text; color: transparent;}
+p {font-size: 18px; font-weight: 700; color: #70495b; margin-bottom: 30px;}
+.buttons {display: flex; justify-content: center; align-items: center; gap: 20px; min-height: 60px; position: relative; height: 60px;}
+button {border: none; border-radius: 18px; padding: 15px 32px; font-size: 18px; font-weight: 900; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 8px 20px rgba(0,0,0,0.12);}
+
+#yes {background: linear-gradient(135deg, #ff3b78, #ff1761); color: white;}
+#yes:hover {transform: scale(1.1);}
+#no {background: #fff; color: #ff3b78; position: absolute;}
+
+#no.hidden {display: none;}
+
+.success {display: none;}
+.success h2 {font-size: 42px; font-weight: 900; margin: 15px 0; color: #ff1761;}
+.contact-name {font-size: 24px; font-weight: 900; color: #ff1761; margin: 12px 0;}
+.whatsapp-btn {display: inline-block; background: #25D366; color: white; text-decoration: none; padding: 14px 28px; border-radius: 15px; font-weight: 900;}
+.video-container {display: none; margin-top: 28px;} 
+.video-container video {width: 100%; max-height: 400px; border-radius: 20px; background: #000; border: 2px solid #ff9cbd;}
+
+.heart {position: fixed; bottom: -40px; font-size: 25px; pointer-events: none; z-index: 10; animation: floatUp 4s linear forwards;}
+@keyframes floatUp {0%{transform: translateY(0) scale(0.7); opacity: 0;} 15%{opacity: 1;} 100%{transform: translateY(-110vh) rotate(360deg) scale(1.3); opacity: 0;}}
+
+/* PASSWORD POPUP */
+.password-popup {display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center;}
+.password-box {background: white; padding: 35px; border-radius: 25px; text-align: center;}
+.password-box h3 {color: #ff1761; margin-bottom: 15px; font-size: 22px;}
+.password-box input {padding: 12px 18px; border: 2px solid #ff9cbd; border-radius: 12px; font-size: 18px; width: 220px; text-align: center; margin-bottom: 15px;}
+.password-box button {background: #ff1761; color: white; border: none; padding: 12px 25px; border-radius: 12px; font-weight: 900; cursor: pointer;}
+.error-msg {color: red; font-size: 14px; margin-top: 10px; display: none;}
+.attempts {color: #ff1761; font-size: 14px; margin-top: 8px; font-weight: 700;}
 </style>
 </head>
-
-
 <body>
 
-
 <div class="container">
-
-
-    <!-- QUESTION -->
-
     <div id="question">
-
-        <div class="emoji">
-            🥺❤️
+        <div class="emoji">🥺❤️</div>
+        <h1>Kya Tum Mujh Se Pyar Karti Ho?</h1>
+        <p id="message">Sach sach batana... 🥺💕</p>
+        <div class="buttons" id="buttonsDiv">
+            <button id="yes">Yes ❤️</button>
+            <button id="no">No 😭</button>
         </div>
-
-        <h1>
-            Kya Tum Mujh Se Pyar Karti Ho?
-        </h1>
-
-        <p id="message">
-            Sach sach batana... 🥺💕
-        </p>
-
-        <div class="buttons">
-
-            <button id="yes">
-                Yes ❤️
-            </button>
-
-            <button id="no">
-                No 😭
-            </button>
-
-        </div>
-
     </div>
 
-
-    <!-- SUCCESS -->
-
-    <div
-        class="success"
-        id="success"
-    >
-
-        <div class="emoji">
-            🥰❤️
-        </div>
-
-        <h2>
-            Yayyy! ❤️
-        </h2>
-
-        <p>
-            Mujhe pata tha tum Yes bolo gi! 😭💕
-        </p>
-
-
-        <!-- NAME + WHATSAPP -->
-
-        <div class="contact-info">
-
-            <div class="contact-name">
-                Sadeem Umar
-            </div>
-
-            <div class="countdown">
-                WhatsApp <span id="countNumber">10</span> seconds mein open hoga... 💚
-            </div>
-
-            <a
-                href="https://wa.me/923149793116?text=I%20love%20you%20%E2%9D%A4%EF%B8%8F"
-                target="_blank"
-                class="whatsapp-btn"
-            >
-                💬 WhatsApp Pe Baat Kro
-            </a>
-
-        </div>
-
-
-        <!-- VIDEO -->
-
-        <div
-            class="video-container"
-            id="videoContainer"
-        >
-
-            <div class="video-title">
-                ❤️ Sirf Tumhare Liye ❤️
-            </div>
-
-            <video
-                id="loveVideo"
-                controls
-                playsinline
-                preload="auto"
-            >
-
-                <source
-                    src="./innocentking.mp4"
-                    type="video/mp4"
-                >
-
-                Tumhara browser video support nahi karta.
-
+    <div class="success" id="success">
+        <div class="emoji">🥰❤️</div>
+        <h2>Yayyy! ❤️</h2>
+        <p>Mujhe pata tha tum Yes bolo gi! 😭💕</p>
+        <div class="contact-name">Sadeem Umar</div>
+        <div class="countdown">WhatsApp <span id="countNumber">10</span> seconds mein open hoga... 💚</div>
+        <a href="https://wa.me/923149793116?text=I%20love%20you%20%E2%9D%A4%EF%B8%8F" target="_blank" class="whatsapp-btn">💬 WhatsApp Pe Baat Kro</a>
+        
+        <!-- VIDEO WAPIS ADD KAR DIYA -->
+        <div class="video-container" id="videoContainer">
+            <div style="font-weight:900; color:#ff1761; margin-bottom:12px;">❤️ Sirf Tumhare Liye ❤️</div>
+            <video id="loveVideo" controls playsinline preload="auto">
+                <source src="./innocentking.mp4" type="video/mp4">
+                Your browser does not support video.
             </video>
-
         </div>
-
     </div>
-
 </div>
 
+<div class="password-popup" id="passwordPopup">
+    <div class="password-box">
+        <h3>🔒 Password Daalo</h3>
+        <input type="password" id="passwordInput" placeholder="Password">
+        <br>
+        <button onclick="checkPassword()">Submit</button>
+        <div class="attempts" id="attemptsLeft">Attempts: 3</div>
+        <div class="error-msg" id="errorMsg">Galat Password!</div>
+    </div>
+</div>
 
 <script>
-
-/* ELEMENTS */
-
-const yesButton =
-    document.getElementById("yes");
-
-const noButton =
-    document.getElementById("no");
-
-const question =
-    document.getElementById("question");
-
-const success =
-    document.getElementById("success");
-
-const message =
-    document.getElementById("message");
-
-const loveVideo =
-    document.getElementById("loveVideo");
-
-const videoContainer =
-    document.getElementById("videoContainer");
-
-const countNumber =
-    document.getElementById("countNumber");
+const yesButton = document.getElementById("yes");
+const noButton = document.getElementById("no");
+const buttonsDiv = document.getElementById("buttonsDiv");
+const question = document.getElementById("question");
+const success = document.getElementById("success");
+const message = document.getElementById("message");
+const loveVideo = document.getElementById("loveVideo");
+const videoContainer = document.getElementById("videoContainer");
+const countNumber = document.getElementById("countNumber");
+const passwordPopup = document.getElementById("passwordPopup");
+const passwordInput = document.getElementById("passwordInput");
+const errorMsg = document.getElementById("errorMsg");
+const attemptsLeft = document.getElementById("attemptsLeft");
 
 let noCount = 0;
-
-
-/* WHATSAPP LINK */
-
-const whatsappLink =
-    "https://wa.me/923149793116?text=I%20love%20you%20%E2%9D%A4%EF%B8%8F";
-
-
-/* BACKGROUND PARTICLES */
-
-function createBackgroundParticles() {
-
-    const particle =
-        document.createElement("div");
-
-    particle.className =
-        "particle";
-
-    particle.innerHTML =
-        [
-            "♡",
-            "♥",
-            "✨",
-            "•",
-            "💕"
-        ][
-            Math.floor(
-                Math.random() * 5
-            )
-        ];
-
-    particle.style.left =
-        Math.random() * 100 + "vw";
-
-    particle.style.fontSize =
-        (10 + Math.random() * 20) + "px";
-
-    particle.style.animationDuration =
-        (5 + Math.random() * 6) + "s";
-
-    document.body.appendChild(
-        particle
-    );
-
-    setTimeout(
-        () => particle.remove(),
-        11000
-    );
-}
-
-setInterval(
-    createBackgroundParticles,
-    500
-);
-
-
-/* NO BUTTON */
-
-function moveNoButton() {
-
-    const buttonWidth =
-        noButton.offsetWidth;
-
-    const buttonHeight =
-        noButton.offsetHeight;
-
-    const maxX =
-        window.innerWidth -
-        buttonWidth -
-        15;
-
-    const maxY =
-        window.innerHeight -
-        buttonHeight -
-        15;
-
-    const x =
-        10 +
-        Math.random() *
-        Math.max(
-            maxX - 10,
-            10
-        );
-
-    const y =
-        10 +
-        Math.random() *
-        Math.max(
-            maxY - 10,
-            10
-        );
-
-    noButton.style.position =
-        "fixed";
-
-    noButton.style.left =
-        x + "px";
-
-    noButton.style.top =
-        y + "px";
-}
-
-
-noButton.addEventListener(
-    "click",
-    function() {
-
-        noCount++;
-
-        if (noCount === 1) {
-
-            message.innerHTML =
-                "Dobara Soch Kar Batao 🥺❤️";
-
-        }
-
-        else if (noCount === 2) {
-
-            message.innerHTML =
-                "Please Maan Jao Na 🥺💕";
-
-        }
-
-        else {
-
-            message.innerHTML =
-                "Ab No Pakarna Mushkil Hai 😂❤️";
-
-            moveNoButton();
-        }
-
-    }
-);
-
-
-noButton.addEventListener(
-    "mouseenter",
-    function() {
-
-        if (noCount >= 2) {
-
-            moveNoButton();
-
-        }
-
-    }
-);
-
-
-noButton.addEventListener(
-    "touchstart",
-    function(e) {
-
-        if (noCount >= 2) {
-
-            e.preventDefault();
-
-            moveNoButton();
-
-        }
-
-    }
-);
-
-
-/* SUCCESS FLASH */
-
-function createSuccessFlash() {
-
-    const flash =
-        document.createElement("div");
-
-    flash.className =
-        "success-flash";
-
-    document.body.appendChild(
-        flash
-    );
-
-    setTimeout(
-        () => flash.remove(),
-        900
-    );
-}
-
-
-/* YES BUTTON */
-
-yesButton.addEventListener(
-    "click",
-    async function() {
-
-        /* Prevent double click */
-
-        yesButton.disabled =
-            true;
-
-
-        /* BUTTON EFFECT */
-
-        yesButton.style.transform =
-            "scale(1.25)";
-
-        yesButton.style.boxShadow =
-            "0 0 50px rgba(255,23,97,0.9)";
-
-
-        /* SUCCESS FLASH */
-
-        createSuccessFlash();
-
-
-        /* Hide question */
-
-        question.style.display =
-            "none";
-
-
-        /* Show success */
-
-        success.style.display =
-            "block";
-
-
-        /* Show video */
-
-        videoContainer.style.display =
-            "block";
-
-
-        /* LOVE EFFECTS */
-
-        createHearts();
-
-        createSparkles();
-
-        createExtraHearts();
-
-
-        /* Reset video */
-
-        loveVideo.currentTime =
-            0;
-
-
-        /* Try video autoplay */
-
-        try {
-
-            await loveVideo.play();
-
-        }
-
-        catch (error) {
-
-            console.log(
-                "Autoplay blocked:",
-                error
-            );
-
-        }
-
-
-        /* Scroll video */
-
-        setTimeout(
-            function() {
-
-                videoContainer.scrollIntoView({
-                    behavior: "smooth",
-                    block: "center"
-                });
-
-            },
-            500
-        );
-
-
-        /*
-         * WHATSAPP COUNTDOWN
-         * EXACTLY 10 SECONDS
-         */
-
-        let seconds =
-            10;
-
-        countNumber.textContent =
-            seconds;
-
-
-        const countdownTimer =
-            setInterval(
-                function() {
-
-                    seconds--;
-
-                    countNumber.textContent =
-                        seconds;
-
-                    if (seconds <= 0) {
-
-                        clearInterval(
-                            countdownTimer
-                        );
-
-                    }
-
-                },
-                1000
-            );
-
-
-        /*
-         * OPEN WHATSAPP
-         * AFTER 10 SECONDS
-         */
-
-        setTimeout(
-            function() {
-
-                window.location.href =
-                    whatsappLink;
-
-            },
-            10000
-        );
-
-    }
-);
-
-
-/* HEARTS */
+let wrongPassAttempts = 0;
+let passwordShown = false;
+const MAX_NO_CLICKS = 12;
+const MAX_WRONG_PASS = 3; 
+const CORRECT_PASSWORD = "03149793";
+const whatsappLink = "https://wa.me/923149793116?text=I%20love%20you%20%E2%9D%A4%EF%B8%8F";
 
 function createHearts() {
-
-    for (
-        let i = 0;
-        i < 45;
-        i++
-    ) {
-
-        setTimeout(
-            () => {
-
-                const heart =
-                    document.createElement(
-                        "div"
-                    );
-
-                heart.className =
-                    "heart";
-
-                heart.innerHTML =
-                    [
-                        "❤️",
-                        "💕",
-                        "💖",
-                        "💗",
-                        "💓",
-                        "💞"
-                    ][
-                        Math.floor(
-                            Math.random() * 6
-                        )
-                    ];
-
-                heart.style.left =
-                    Math.random() * 100 +
-                    "vw";
-
-                heart.style.animationDuration =
-                    (
-                        3 +
-                        Math.random() * 4
-                    ) + "s";
-
-                heart.style.fontSize =
-                    (
-                        18 +
-                        Math.random() * 25
-                    ) + "px";
-
-                document.body.appendChild(
-                    heart
-                );
-
-                setTimeout(
-                    () => heart.remove(),
-                    7000
-                );
-
-            },
-            i * 80
-        );
-
+    for (let i = 0; i < 40; i++) {
+        setTimeout(() => {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }, i * 80);
     }
-
 }
 
-
-/* SPARKLES */
-
-function createSparkles() {
-
-    for (
-        let i = 0;
-        i < 35;
-        i++
-    ) {
-
-        setTimeout(
-            () => {
-
-                const sparkle =
-                    document.createElement(
-                        "div"
-                    );
-
-                sparkle.className =
-                    "sparkle";
-
-                sparkle.innerHTML =
-                    [
-                        "✨",
-                        "💫",
-                        "⭐",
-                        "💕"
-                    ][
-                        Math.floor(
-                            Math.random() * 4
-                        )
-                    ];
-
-                sparkle.style.left =
-                    Math.random() * 100 +
-                    "vw";
-
-                sparkle.style.top =
-                    Math.random() * 100 +
-                    "vh";
-
-                document.body.appendChild(
-                    sparkle
-                );
-
-                setTimeout(
-                    () => sparkle.remove(),
-                    1000
-                );
-
-            },
-            i * 100
-        );
-
-    }
-
+function moveNoButton() {
+    const rect = buttonsDiv.getBoundingClientRect();
+    const buttonWidth = noButton.offsetWidth; 
+    const buttonHeight = noButton.offsetHeight;
+    const maxX = rect.width - buttonWidth - 10;
+    const maxY = rect.height - buttonHeight - 10;
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+    noButton.style.left = x + "px"; 
+    noButton.style.top = y + "px";
 }
 
-
-/* EXTRA HEARTS */
-
-function createExtraHearts() {
-
-    const emojis =
-        [
-            "❤️",
-            "💗",
-            "💖",
-            "💕",
-            "💞"
-        ];
-
-    for (
-        let i = 0;
-        i < 25;
-        i++
-    ) {
-
-        const heart =
-            document.createElement(
-                "div"
-            );
-
-        heart.className =
-            "heart";
-
-        heart.innerHTML =
-            emojis[
-                Math.floor(
-                    Math.random() *
-                    emojis.length
-                )
-            ];
-
-        heart.style.left =
-            "50vw";
-
-        heart.style.bottom =
-            "45vh";
-
-        heart.style.fontSize =
-            (
-                18 +
-                Math.random() * 25
-            ) + "px";
-
-        heart.style.animationDuration =
-            (
-                2 +
-                Math.random() * 2
-            ) + "s";
-
-        document.body.appendChild(
-            heart
-        );
-
-        setTimeout(
-            () => heart.remove(),
-            4500
-        );
-
-    }
-
+function showSuccessScreen() {
+    question.style.display = "none";
+    success.style.display = "block";
+    videoContainer.style.display = "block"; // VIDEO SHOW
+    createHearts();
+    try {loveVideo.play();} catch (error) {}
+    
+    let seconds = 10; countNumber.textContent = seconds;
+    const countdownTimer = setInterval(() => {
+        seconds--; countNumber.textContent = seconds;
+        if (seconds <= 0) {clearInterval(countdownTimer);}
+    }, 1000);
+    
+    setTimeout(() => {window.location.href = whatsappLink;}, 10000);
 }
 
+// YES BUTTON
+yesButton.addEventListener("click", function() {
+    showSuccessScreen();
+});
+
+// NO BUTTON
+noButton.addEventListener("click", function() {
+    noCount++;
+    
+    if (noCount < 3) {
+        message.innerHTML = "Dobara Soch Kar Batao 🥺❤️";
+    } else if (noCount < 6) {
+        message.innerHTML = "Please Maan Jao Na 🥺💕";
+        moveNoButton();
+    } else if (noCount < MAX_NO_CLICKS) {
+        message.innerHTML = "Pakro mujhe! 😂❤️";
+        moveNoButton();
+    } else {
+        if(!passwordShown){
+            passwordShown = true;
+            message.innerHTML = "Acha ab Password Se Prove Kro 😏";
+            passwordPopup.style.display = "flex";
+            passwordInput.value = "";
+            errorMsg.style.display = "none";
+            wrongPassAttempts = 0;
+            attemptsLeft.textContent = `Attempts: ${MAX_WRONG_PASS}`;
+            setTimeout(() => passwordInput.focus(), 100);
+        }
+    }
+});
+
+noButton.addEventListener("mouseenter", function() {
+    if (noCount >= 3 && noCount < MAX_NO_CLICKS) {moveNoButton();}
+});
+
+// PASSWORD CHECK
+function checkPassword() {
+    if (passwordInput.value === CORRECT_PASSWORD) {
+        passwordPopup.style.display = "none";
+        passwordShown = false;
+        noCount = 6;
+        message.innerHTML = "Maan Jao Na Jaan 🥺❤️";
+        noButton.style.left = "0px";
+        noButton.style.top = "0px";
+        setTimeout(moveNoButton, 200);
+    } else {
+        wrongPassAttempts++;
+        errorMsg.style.display = "block";
+        let remaining = MAX_WRONG_PASS - wrongPassAttempts;
+        attemptsLeft.textContent = `Attempts: ${remaining}`;
+        passwordInput.value = "";
+        
+        if (wrongPassAttempts >= MAX_WRONG_PASS) {
+            passwordPopup.style.display = "none";
+            noButton.classList.add("hidden");
+            message.innerHTML = "apny Password sai ni lagaya 😔";
+        }
+    }
+}
+
+passwordInput.addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {checkPassword();}
+});
 </script>
-
 </body>
 </html>
