@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tapeball 5 Over - Full Umpire Kit</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+body{background:#020617;color:#fff;max-width:500px;margin:auto;padding:8px}
+h1{text-align:center;color:#facc15;font-size:22px;padding:8px}
+.card{background:#1e293b;border-radius:16px;padding:12px;margin-bottom:10px;border:1px solid #334155}
+.row{display:flex;gap:8px}
+input,select{width:100%;padding:10px;border-radius:10px;border:1px solid #475569;background:#0f172a;color:#fff;font-weight:700;text-align:center;outline:none}
+.team{flex:1;background:#0f172a;border-radius:14px;padding:10px;text-align:center;border:2px solid #334155}
+.team.active{border-color:#facc15;box-shadow:0 0 12px rgba(250,204,21,0.3)}
+.score{font-size:38px;font-weight:900}
+.ov{color:#94a3b8;font-size:13px}
+.batting{background:#facc15;color:#000;font-weight:900;padding:10px;border-radius:10px;text-align:center;margin:10px 0}
+.freehit{background:#ef4444;color:#fff;padding:8px;border-radius:8px;text-align:center;font-weight:900;display:none;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:0.5}}
+.balls{display:flex;gap:6px;flex-wrap:wrap;min-height:38px;margin:8px 0}
+.ball{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;border:2px solid #000}
+.b0{background:#334155}.b1{background:#e2e8f0;color:#000}.b4{background:#22c55e}.b6{background:#a855f7}.bW{background:#fbbf24;color:#000}.bOUT{background:#ef4444}.bNB{background:#fb923c;color:#000}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.btn{padding:18px 0;border:none;border-radius:14px;font-size:20px;font-weight:900;cursor:pointer}
+.btn:active{transform:scale(0.93)}
+.c0{background:#334155;color:#fff}.c1{background:#e2e8f0;color:#000}.c4{background:#22c55e;color:#fff}.c6{background:#a855f7;color:#fff}.cWD{background:#fbbf24;color:#000}.cOUT{background:#ef4444;color:#fff}
+.small{padding:12px;border-radius:10px;border:none;font-weight:800;cursor:pointer}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center;margin-top:8px}
+.stats div{background:#0f172a;padding:7px;border-radius:10px;font-size:13px}
+.stats b{color:#facc15;display:block;font-size:10px}
+.target{background:linear-gradient(90deg,#facc15,#f59e0b);color:#000;padding:12px;border-radius:12px;text-align:center;font-weight:900;font-size:17px;margin-top:8px}
+.history{font-size:12px;color:#cbd5e1;max-height:100px;overflow:auto;margin-top:8px;background:#0f172a;padding:8px;border-radius:8px}
+.share{background:#25D366;color:#fff;width:100%;padding:14px;border-radius:12px;border:none;font-weight:900;font-size:16px;margin-top:10px}
+</style>
+</head>
+<body>
+<h1>🏏 TAPEBALL 5 OVER - UMPIRE KIT</h1>
+
+<div class="card">
+<div class="row">
+<input id="teamA" value="Team A" placeholder="Pehli Team">
+<input id="teamB" value="Team B" placeholder="Dusri Team">
+</div>
+<div class="row" style="margin-top:8px">
+<select id="tossWon"><option>Toss Kaun Jeeta?</option><option>Team A</option><option>Team B</option></select>
+<select id="tossDec"><option>Kya Liya?</option><option>Batting</option><option>Bowling</option></select>
+</div>
+</div>
+
+<div class="card">
+<div class="row">
+<div class="team active" id="boxA"><div id="nameA">Team A</div><div class="score" id="scoreA">0/0</div><div class="ov" id="overA">0.0 / 5.0</div></div>
+<div class="team" id="boxB"><div id="nameB">Team B</div><div class="score" id="scoreB">0/0</div><div class="ov" id="overB">0.0 / 5.0</div></div>
+</div>
+<div class="batting" id="batInfo">Batting: Team A</div>
+<div class="freehit" id="freeHit">🔥 FREE HIT 🔥</div>
+<div class="balls" id="ballsView"></div>
+<div class="stats">
+<div><b>CRR</b><span id="crr">0.00</span></div>
+<div><b>RRR</b><span id="rrr">-</span></div>
+<div><b>Extras</b><span id="extras">0</span></div>
+<div><b>Balls Left</b><span id="ballsLeft">30</span></div>
+</div>
+<div class="target" id="targetBox" style="display:none">Target: 0</div>
+<div class="history" id="overHistory">Overs History: </div>
+</div>
+
+<div class="card">
+<div class="grid">
+<button class="btn c0" onclick="addRun(0)">0</button>
+<button class="btn c1" onclick="addRun(1)">1</button>
+<button class="btn c1" onclick="addRun(2)">2</button>
+<button class="btn c1" onclick="addRun(3)">3</button>
+<button class="btn c4" onclick="addRun(4)">4</button>
+<button class="btn c6" onclick="addRun(6)">6</button>
+<button class="btn cWD" onclick="addExtra('WD')">WD</button>
+<button class="btn cOUT" onclick="addWicket()">OUT</button>
+</div>
+<div class="row" style="margin-top:8px">
+<button class="small" style="flex:1;background:#fb923c" onclick="addExtra('NB')">NO BALL</button>
+<button class="small" style="flex:1;background:#a78bfa" onclick="addExtra('BYE')">BYE</button>
+<button class="small" style="flex:1;background:#475569;color:#fff" onclick="undo()">↩ UNDO</button>
+</div>
+<div class="row" style="margin-top:8px">
+<button class="small" style="flex:1;background:#0ea5e9;color:#fff" onclick="switchInnings()">SWITCH INNINGS</button>
+<button class="small" style="flex:1;background:#7f1d1d;color:#fff" onclick="resetAll()">RESET</button>
+</div>
+<button class="share" onclick="shareWA()">📲 WhatsApp pe Result Bhejo</button>
+</div>
+
+<script>
+let teams={
+A:{name:'Team A',runs:0,wickets:0,balls:0,extras:0,overs:[]},
+B:{name:'Team B',runs:0,wickets:0,balls:0,extras:0,overs:[]}
+};
+let bat='A',inn=1,target=0,currentOver=[],historyStack=[],isFreeHit=false;
+const TOTAL=30;
+
+function save(){let t=teams[bat];historyStack.push(JSON.parse(JSON.stringify({teams,bat,inn,target,currentOver,isFreeHit})))}
+function addRun(r){
+if(teams[bat].balls>=TOTAL){alert('5 Over Khatam! Switch dabao');return}
+save(); let t=teams[bat]; t.runs+=r; if(!isFreeHit || r>0) t.balls++; currentOver.push({v:r,t:'run'}); if(isFreeHit) isFreeHit=false;
+if(t.balls%6==0){ t.overs.push([...currentOver]); currentOver=[]} update();
+}
+function addExtra(type){
+save(); let t=teams[bat];
+if(type=='WD'){t.runs++;t.extras++;currentOver.push({v:'WD',t:'wide'})}
+if(type=='NB'){t.runs++;t.extras++;currentOver.push({v:'NB',t:'nb'});isFreeHit=true}
+if(type=='BYE'){let b=prompt('Bye pe kitne runs?','1'); t.runs+=parseInt(b)||1; t.extras+=parseInt(b)||1; t.balls++; currentOver.push({v:'B'+b,t:'wide'})}
+update();
+}
+function addWicket(){
+if(teams[bat].balls>=TOTAL)return;
+let how=prompt('Wicket kaise? (BOWLED,CATCH,RUNOUT)','CATCH');
+if(!how)return; save(); let t=teams[bat];
+if(isFreeHit && how!='RUNOUT'){alert('Free Hit pe sirf Run Out ho sakta hai!');return}
+t.wickets++; t.balls++; currentOver.push({v:'W',t:'out'}); isFreeHit=false;
+if(t.balls%6==0){ t.overs.push([...currentOver]); currentOver=[]}
+if(t.wickets>=7){alert('Tapeball Rule: 7 Wickets = All Out (Last Man)')} update();
+}
+function undo(){if(!historyStack.length)return; let last=historyStack.pop(); teams=last.teams;bat=last.bat;inn=last.inn;target=last.target;currentOver=last.currentOver;isFreeHit=last.isFreeHit; update()}
+function switchInnings(){
+if(inn==1){target=teams[bat].runs+1; bat=bat=='A'?'B':'A'; inn=2; currentOver=[]; isFreeHit=false; alert('Target: '+target)}else alert('Match Over'); update()}
+function resetAll(){if(confirm('Full Reset?')){teams.A.runs=0;teams.A.wickets=0;teams.A.balls=0;teams.A.extras=0;teams.A.overs=[];teams.B.runs=0;teams.B.wickets=0;teams.B.balls=0;teams.B.extras=0;teams.B.overs=[];bat='A';inn=1;target=0;currentOver=[];historyStack=[];update()}}
+function update(){
+teams.A.name=document.getElementById('teamA').value||'Team A'; teams.B.name=document.getElementById('teamB').value||'Team B';
+document.getElementById('nameA').innerText=teams.A.name; document.getElementById('nameB').innerText=teams.B.name;
+document.getElementById('scoreA').innerText=teams.A.runs+'/'+teams.A.wickets; document.getElementById('scoreB').innerText=teams.B.runs+'/'+teams.B.wickets;
+document.getElementById('overA').innerText=Math.floor(teams.A.balls/6)+'.'+(teams.A.balls%6)+' / 5.0'; document.getElementById('overB').innerText=Math.floor(teams.B.balls/6)+'.'+(teams.B.balls%6)+' / 5.0';
+document.getElementById('boxA').classList.toggle('active',bat=='A'); document.getElementById('boxB').classList.toggle('active',bat=='B');
+document.getElementById('batInfo').innerText='Batting: '+teams[bat].name+' - '+(inn==1?'1st':'2nd')+' Innings';
+document.getElementById('extras').innerText=teams[bat].extras; document.getElementById('ballsLeft').innerText=TOTAL-teams[bat].balls;
+let crr=teams[bat].balls? (teams[bat].runs/(teams[bat].balls/6)).toFixed(2):'0.00'; document.getElementById('crr').innerText=crr;
+document.getElementById('freeHit').style.display=isFreeHit?'block':'none';
+let tb=document.getElementById('targetBox');
+if(inn==2){tb.style.display='block'; let need=target-teams[bat].runs; let left=TOTAL-teams[bat].balls; let rrr=left>0?(need/(left/6)).toFixed(2):'0'; document.getElementById('rrr').innerText=rrr;
+if(need<=0) tb.innerText='🎉 '+teams[bat].name+' JEET GAYA!'; else tb.innerText=need+' Runs Chahiye '+left+' Balls Pe';} else {tb.style.display='none'; document.getElementById('rrr').innerText='-'}
+let bv=document.getElementById('ballsView'); bv.innerHTML=''; currentOver.forEach(b=>{let cls='b0'; if(b.t=='run'){if(b.v==4)cls='b4';else if(b.v==6)cls='b6';else if(b.v==0)cls='b0';else cls='b1'} if(b.t=='wide')cls='bW'; if(b.t=='nb')cls='bNB'; if(b.t=='out')cls='bOUT'; bv.innerHTML+=`<div class="ball ${cls}">${b.v}</div>`});
+let oh=document.getElementById('overHistory'); oh.innerHTML='Over History:<br>'; teams[bat].overs.forEach((ov,i)=>{oh.innerHTML+='Over '+(i+1)+': '+ov.map(x=>x.v).join(' ')+' = '+ov.filter(x=>typeof x.v=='number').reduce((a,b)=>a+b.v,0)+' runs<br>'});
+localStorage.setItem('tapeTeams',JSON.stringify({A:teams.A.name,B:teams.B.name}));
+}
+document.getElementById('teamA').value=JSON.parse(localStorage.getItem('tapeTeams')||'null')?.A||'Team A';
+document.getElementById('teamB').value=JSON.parse(localStorage.getItem('tapeTeams')||'null')?.B||'Team B';
+function shareWA(){
+let msg=`🏏 *TAPEBALL RESULT - 5 Overs* 🏏\n\n${teams.A.name}: ${teams.A.runs}/${teams.A.wickets} (${Math.floor(teams.A.balls/6)}.${teams.A.balls%6} Ov)\n${teams.B.name}: ${teams.B.runs}/${teams.B.wickets} (${Math.floor(teams.B.balls/6)}.${teams.B.balls%6} Ov)\n\nTarget: ${target}\nStatus: ${document.getElementById('targetBox').innerText}\n\nScored by Umpire Pro App`;
+window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+update();
+</script>
+</body>
+</html>
