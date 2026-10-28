@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tapeball 5 Over - Full Umpire Kit</title>
+<title>Tapeball Scorer - Custom Overs</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 body{background:#020617;color:#fff;max-width:500px;margin:auto;padding:8px}
@@ -37,12 +37,24 @@ input,select{width:100%;padding:10px;border-radius:10px;border:1px solid #475569
 </style>
 </head>
 <body>
-<h1>🏏 TAPEBALL 5 OVER - UMPIRE KIT</h1>
+<h1>🏏 TAPEBALL SCORER - CUSTOM OVERS</h1>
 
 <div class="card">
 <div class="row">
 <input id="teamA" value="Team A" placeholder="Pehli Team">
 <input id="teamB" value="Team B" placeholder="Dusri Team">
+</div>
+<div class="row" style="margin-top:8px">
+<select id="overSelect" onchange="changeOvers()" style="background:#facc15;color:#000;font-weight:900">
+<option value="2">2 Overs (12 Balls)</option>
+<option value="3">3 Overs (18 Balls)</option>
+<option value="4">4 Overs (24 Balls)</option>
+<option value="5" selected>5 Overs (30 Balls)</option>
+<option value="6">6 Overs (36 Balls)</option>
+<option value="8">8 Overs (48 Balls)</option>
+<option value="10">10 Overs (60 Balls)</option>
+<option value="20">20 Overs (120 Balls)</option>
+</select>
 </div>
 <div class="row" style="margin-top:8px">
 <select id="tossWon"><option>Toss Kaun Jeeta?</option><option>Team A</option><option>Team B</option></select>
@@ -66,7 +78,6 @@ input,select{width:100%;padding:10px;border-radius:10px;border:1px solid #475569
 </div>
 <div class="target" id="targetBox" style="display:none">Target: 0</div>
 
-<!-- YEH NAYA FEATURE HAI - FIRST INNINGS BAAR BAAR DEKHNE KE LIYE -->
 <div class="row" style="margin-top:10px">
 <button class="small" style="flex:1;background:#facc15;color:#000" onclick="viewFirst()">👁️ 1ST INNINGS</button>
 <button class="small" style="flex:1;background:#e2e8f0;color:#000" onclick="viewSecond()">👁️ 2ND INNINGS</button>
@@ -75,7 +86,6 @@ input,select{width:100%;padding:10px;border-radius:10px;border:1px solid #475569
 <b>📋 FULL SCORECARD:</b><br>
 <span id="fullScoreText">Match abhi shuru nahi hua</span>
 </div>
-
 <div class="history" id="overHistory">Overs History: </div>
 </div>
 
@@ -108,11 +118,22 @@ A:{name:'Team A',runs:0,wickets:0,balls:0,extras:0,overs:[]},
 B:{name:'Team B',runs:0,wickets:0,balls:0,extras:0,overs:[]}
 };
 let bat='A',inn=1,target=0,currentOver=[],historyStack=[],isFreeHit=false,firstInningsData=null;
-const TOTAL=30;
+let OVER_LIMIT=5;
+let TOTAL=30;
 
-function save(){historyStack.push(JSON.parse(JSON.stringify({teams,bat,inn,target,currentOver,isFreeHit,firstInningsData})))}
+function changeOvers(){
+let newOver = parseInt(document.getElementById('overSelect').value);
+if(teams.A.balls>0 || teams.B.balls>0){
+if(!confirm(newOver+" Overs pe shift karna hai? Sara score reset ho jayega!")){document.getElementById('overSelect').value=OVER_LIMIT;return}
+}
+OVER_LIMIT=newOver;
+TOTAL=OVER_LIMIT*6;
+resetAll(true);
+}
+
+function save(){historyStack.push(JSON.parse(JSON.stringify({teams,bat,inn,target,currentOver,isFreeHit,firstInningsData,OVER_LIMIT,TOTAL})))}
 function addRun(r){
-if(teams[bat].balls>=TOTAL){alert('5 Over Khatam! Switch dabao');return}
+if(teams[bat].balls>=TOTAL){alert(OVER_LIMIT+' Over Khatam! Switch dabao');return}
 save(); let t=teams[bat]; t.runs+=r; if(!isFreeHit || r>0) t.balls++; currentOver.push({v:r,t:'run'}); if(isFreeHit) isFreeHit=false;
 if(t.balls%6==0){ t.overs.push([...currentOver]); currentOver=[]} update();
 }
@@ -130,37 +151,37 @@ if(!how)return; save(); let t=teams[bat];
 if(isFreeHit && how!='RUNOUT'){alert('Free Hit pe sirf Run Out ho sakta hai!');return}
 t.wickets++; t.balls++; currentOver.push({v:'W',t:'out'}); isFreeHit=false;
 if(t.balls%6==0){ t.overs.push([...currentOver]); currentOver=[]}
-if(t.wickets>=7){alert('Tapeball Rule: 7 Wickets = All Out (Last Man)')} update();
+if(t.wickets>=7){alert('Tapeball Rule: 7 Wickets = All Out')} update();
 }
-function undo(){if(!historyStack.length)return; let last=historyStack.pop(); teams=last.teams;bat=last.bat;inn=last.inn;target=last.target;currentOver=last.currentOver;isFreeHit=last.isFreeHit;firstInningsData=last.firstInningsData; update()}
+function undo(){if(!historyStack.length)return; let last=historyStack.pop(); teams=last.teams;bat=last.bat;inn=last.inn;target=last.target;currentOver=last.currentOver;isFreeHit=last.isFreeHit;firstInningsData=last.firstInningsData;OVER_LIMIT=last.OVER_LIMIT;TOTAL=last.TOTAL;document.getElementById('overSelect').value=OVER_LIMIT; update()}
 function switchInnings(){
 if(inn==1){
 firstInningsData = JSON.parse(JSON.stringify(teams[bat]));
-target=teams[bat].runs+1; bat=bat=='A'?'B':'A'; inn=2; currentOver=[]; isFreeHit=false; alert('1st Innings Over! Target: '+target+'\n'+firstInningsData.name+' ne '+firstInningsData.runs+'/'+firstInningsData.wickets+' banaye')}else alert('Match Over'); update()}
-function resetAll(){if(confirm('Full Reset?')){teams.A.runs=0;teams.A.wickets=0;teams.A.balls=0;teams.A.extras=0;teams.A.overs=[];teams.B.runs=0;teams.B.wickets=0;teams.B.balls=0;teams.B.extras=0;teams.B.overs=[];bat='A';inn=1;target=0;currentOver=[];historyStack=[];firstInningsData=null;update()}}
-
+target=teams[bat].runs+1; bat=bat=='A'?'B':'A'; inn=2; currentOver=[]; isFreeHit=false; alert('1st Innings Over! Target: '+target)}else alert('Match Over'); update()}
+function resetAll(silent){
+if(!silent){if(!confirm('Full Reset?'))return}
+teams.A.runs=0;teams.A.wickets=0;teams.A.balls=0;teams.A.extras=0;teams.A.overs=[];teams.B.runs=0;teams.B.wickets=0;teams.B.balls=0;teams.B.extras=0;teams.B.overs=[];bat='A';inn=1;target=0;currentOver=[];historyStack=[];firstInningsData=null;TOTAL=OVER_LIMIT*6;update()
+}
 function viewFirst(){
 if(!firstInningsData && teams.A.balls==0){alert('1st Innings abhi shuru nahi hui!');return}
 let d = firstInningsData || teams.A;
-let msg = `🏏 1ST INNINGS DETAIL 🏏\n\nTeam: ${d.name}\nScore: ${d.runs}/${d.wickets}\nOvers: ${Math.floor(d.balls/6)}.${d.balls%6} / 5.0\nExtras: ${d.extras}\n\nOvers Breakdown:\n`;
+let msg = `🏏 1ST INNINGS (${OVER_LIMIT} Over Match) 🏏\n\nTeam: ${d.name}\nScore: ${d.runs}/${d.wickets}\nOvers: ${Math.floor(d.balls/6)}.${d.balls%6} / ${OVER_LIMIT}.0\nExtras: ${d.extras}\n\nOvers:\n`;
 d.overs.forEach((ov,i)=>{msg+=`Over ${i+1}: ${ov.map(x=>x.v).join(' ')} \n`});
-if(currentOver.length>0 && bat=='A'){msg+=`Current Over: ${currentOver.map(x=>x.v).join(' ')}`}
 alert(msg);
 }
 function viewSecond(){
-if(inn==1){alert('2nd Innings abhi shuru nahi hui! Pehle Switch dabao');return}
+if(inn==1){alert('2nd Innings abhi shuru nahi hui!');return}
 let d = teams[bat];
-let msg = `🏏 2ND INNINGS - LIVE 🏏\n\nTeam: ${d.name}\nScore: ${d.runs}/${d.wickets}\nOvers: ${Math.floor(d.balls/6)}.${d.balls%6} / 5.0\nTarget: ${target}\nNeed: ${target-d.runs} runs in ${TOTAL-d.balls} balls`;
+let msg = `🏏 2ND INNINGS 🏏\n\nTeam: ${d.name}\nScore: ${d.runs}/${d.wickets}\nOvers: ${Math.floor(d.balls/6)}.${d.balls%6} / ${OVER_LIMIT}.0\nTarget: ${target}\nNeed: ${target-d.runs} in ${TOTAL-d.balls} balls`;
 alert(msg);
 }
-
 function update(){
 teams.A.name=document.getElementById('teamA').value||'Team A'; teams.B.name=document.getElementById('teamB').value||'Team B';
 document.getElementById('nameA').innerText=teams.A.name; document.getElementById('nameB').innerText=teams.B.name;
 document.getElementById('scoreA').innerText=teams.A.runs+'/'+teams.A.wickets; document.getElementById('scoreB').innerText=teams.B.runs+'/'+teams.B.wickets;
-document.getElementById('overA').innerText=Math.floor(teams.A.balls/6)+'.'+(teams.A.balls%6)+' / 5.0'; document.getElementById('overB').innerText=Math.floor(teams.B.balls/6)+'.'+(teams.B.balls%6)+' / 5.0';
+document.getElementById('overA').innerText=Math.floor(teams.A.balls/6)+'.'+(teams.A.balls%6)+' / '+OVER_LIMIT+'.0'; document.getElementById('overB').innerText=Math.floor(teams.B.balls/6)+'.'+(teams.B.balls%6)+' / '+OVER_LIMIT+'.0';
 document.getElementById('boxA').classList.toggle('active',bat=='A'); document.getElementById('boxB').classList.toggle('active',bat=='B');
-document.getElementById('batInfo').innerText='Batting: '+teams[bat].name+' - '+(inn==1?'1st':'2nd')+' Innings';
+document.getElementById('batInfo').innerText='Batting: '+teams[bat].name+' - '+(inn==1?'1st':'2nd')+' Innings ('+OVER_LIMIT+' Over Match)';
 document.getElementById('extras').innerText=teams[bat].extras; document.getElementById('ballsLeft').innerText=TOTAL-teams[bat].balls;
 let crr=teams[bat].balls? (teams[bat].runs/(teams[bat].balls/6)).toFixed(2):'0.00'; document.getElementById('crr').innerText=crr;
 document.getElementById('freeHit').style.display=isFreeHit?'block':'none';
@@ -168,24 +189,14 @@ let tb=document.getElementById('targetBox');
 if(inn==2){tb.style.display='block'; let need=target-teams[bat].runs; let left=TOTAL-teams[bat].balls; let rrr=left>0?(need/(left/6)).toFixed(2):'0'; document.getElementById('rrr').innerText=rrr;
 if(need<=0) tb.innerText='🎉 '+teams[bat].name+' JEET GAYA!'; else tb.innerText=need+' Runs Chahiye '+left+' Balls Pe';} else {tb.style.display='none'; document.getElementById('rrr').innerText='-'}
 let bv=document.getElementById('ballsView'); bv.innerHTML=''; currentOver.forEach(b=>{let cls='b0'; if(b.t=='run'){if(b.v==4)cls='b4';else if(b.v==6)cls='b6';else if(b.v==0)cls='b0';else cls='b1'} if(b.t=='wide')cls='bW'; if(b.t=='nb')cls='bNB'; if(b.t=='out')cls='bOUT'; bv.innerHTML+=`<div class="ball ${cls}">${b.v}</div>`});
-let oh=document.getElementById('overHistory'); oh.innerHTML='Over History (Current Team):<br>'; teams[bat].overs.forEach((ov,i)=>{oh.innerHTML+='Over '+(i+1)+': '+ov.map(x=>x.v).join(' ')+' = '+ov.filter(x=>typeof x.v=='number' || !isNaN(parseInt(x.v))).reduce((a,b)=>{let v=typeof b.v=='number'?b.v:0;return a+v},0)+' runs<br>'});
-
-// FULL SCORECARD UPDATE
+let oh=document.getElementById('overHistory'); oh.innerHTML='Over History (Current):<br>'; teams[bat].overs.forEach((ov,i)=>{oh.innerHTML+='Over '+(i+1)+': '+ov.map(x=>x.v).join(' ')+'<br>'});
 let fst = document.getElementById('fullScoreText');
-if(firstInningsData){
-fst.innerHTML = `${firstInningsData.name}: ${firstInningsData.runs}/${firstInningsData.wickets} (${Math.floor(firstInningsData.balls/6)}.${firstInningsData.balls%6} Ov) - 1st Inn<br>${teams[bat].name}: ${teams[bat].runs}/${teams[bat].wickets} (${Math.floor(teams[bat].balls/6)}.${teams[bat].balls%6} Ov) - ${inn==2?'2nd Inn - Target '+target:'Live'}`;
-} else {
-fst.innerHTML = `${teams.A.name}: ${teams.A.runs}/${teams.A.wickets} (${Math.floor(teams.A.balls/6)}.${teams.A.balls%6})<br>${teams.B.name}: ${teams.B.runs}/${teams.B.wickets} (${Math.floor(teams.B.balls/6)}.${teams.B.balls%6})`;
-}
-
+if(firstInningsData){fst.innerHTML = `${firstInningsData.name}: ${firstInningsData.runs}/${firstInningsData.wickets} (${Math.floor(firstInningsData.balls/6)}.${firstInningsData.balls%6} Ov)<br>${teams[bat].name}: ${teams[bat].runs}/${teams[bat].wickets} (${Math.floor(teams[bat].balls/6)}.${teams[bat].balls%6} Ov) - Target ${target}`;} else {fst.innerHTML = `${teams.A.name}: ${teams.A.runs}/${teams.A.wickets} (${Math.floor(teams.A.balls/6)}.${teams.A.balls%6})<br>${teams.B.name}: ${teams.B.runs}/${teams.B.wickets} (${Math.floor(teams.B.balls/6)}.${teams.B.balls%6})<br>Match: ${OVER_LIMIT} Overs`;}
 localStorage.setItem('tapeTeams',JSON.stringify({A:teams.A.name,B:teams.B.name}));
 }
 document.getElementById('teamA').value=JSON.parse(localStorage.getItem('tapeTeams')||'null')?.A||'Team A';
 document.getElementById('teamB').value=JSON.parse(localStorage.getItem('tapeTeams')||'null')?.B||'Team B';
-function shareWA(){
-let msg=`🏏 *TAPEBALL RESULT - 5 Overs* 🏏\n\n${teams.A.name}: ${teams.A.runs}/${teams.A.wickets} (${Math.floor(teams.A.balls/6)}.${teams.A.balls%6} Ov)\n${teams.B.name}: ${teams.B.runs}/${teams.B.wickets} (${Math.floor(teams.B.balls/6)}.${teams.B.balls%6} Ov)\n\nTarget: ${target}\nStatus: ${document.getElementById('targetBox').innerText}\n\nFull Scorecard: ${document.getElementById('fullScoreText').innerText}\n\nScored by Umpire Pro App`;
-window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
-}
+function shareWA(){let msg=`🏏 *TAPEBALL ${OVER_LIMIT} Over RESULT* 🏏\n\n${teams.A.name}: ${teams.A.runs}/${teams.A.wickets}\n${teams.B.name}: ${teams.B.runs}/${teams.B.wickets}\n\nTarget: ${target}\n${document.getElementById('fullScoreText').innerText}`;window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
 update();
 </script>
 </body>
