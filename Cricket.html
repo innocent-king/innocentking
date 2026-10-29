@@ -11,7 +11,12 @@
 
 <div class="top-banner"><img src="cricket.jpg" alt="MSL Night League"></div>
 
-<div id="winnerOverlay"><div class="trophy">🏆</div><div class="winnerText" id="winnerName"></div><div class="winnerScore" id="winnerDetail"></div><button class="small" style="background:#facc15;color:#000;padding:14px 28px;font-size:16px;margin-top:12px" onclick="closeWinner()">✖ Close Result</button><button class="small" style="background:#25D366;color:#fff;padding:12px 28px;margin-top:8px" onclick="shareWinner()">📲 WhatsApp Share</button></div>
+<div id="winnerOverlay"><div class="trophy">🏆</div><div class="winnerText" id="winnerName"></div><div class="winnerScore" id="winnerDetail"></div>
+<button class="small" style="background:#facc15;color:#000;padding:14px 28px;font-size:16px;margin-top:12px" onclick="closeWinner()">✖ Close Result</button>
+<button class="small" style="background:#475569;color:#fff;padding:12px 28px;margin-top:8px" onclick="undoLastFromWin()">↩ UNDO LAST BALL</button>
+<button class="small" style="background:#25D366;color:#fff;padding:12px 28px;margin-top:8px" onclick="shareWinner()">📲 WhatsApp Share</button>
+</div>
+
 <h1>🏏 TAPEBALL <span class="saveBadge">CRICKET LIVESCORE ✓</span></h1>
 <div class="card">
 <div class="row"><input id="teamA" maxlength="40" placeholder="Team A name"><input id="teamB" maxlength="40" placeholder="Team B name"></div>
@@ -82,6 +87,7 @@ function closeWinner(){el('winnerOverlay').classList.remove('show');el('winnerOv
 function shareWinner(){shareText('🏏 TAPEBALL RESULT 🏏\n'+el('winnerName').textContent+'\n'+el('winnerDetail').innerText)}
 function restore(s){teams=s.teams;bat=s.bat;inn=s.inn;target=s.target;currentOver=s.currentOver;isFreeHit=s.isFreeHit;firstInningsData=s.firstInningsData;firstCurrentOver=s.firstCurrentOver||[];matchOver=s.matchOver;OVER_LIMIT=s.OVER_LIMIT;TOTAL=s.TOTAL;MAX_PLAYERS=s.MAX_PLAYERS||7;el('overSelect').value=OVER_LIMIT;el('playersSelect').value=MAX_PLAYERS;if(matchOver)lockButtons();else unlockButtons();closeWinner();update();if(matchOver)checkWin(true)}
 function undo(){if(!historyStack.length){alert('Undo ke liye kuch nahi!');return}restore(historyStack.pop())}
+function undoLastFromWin(){if(!historyStack.length){alert('Undo ke liye kuch nahi!');return}closeWinner();setTimeout(()=>restore(historyStack.pop()),100)}
 function switchInnings(){if(matchOver){alert('Match khatam! RESET ALL karein.');return}if(inn===1){if(teams[bat].balls===0&&teams[bat].runs===0&&teams[bat].wickets===0){alert('Pehle first innings mein koi ball/run record karein.');return}saveState();firstInningsData=JSON.parse(JSON.stringify(teams[bat]));firstInningsData.overLimit=OVER_LIMIT;firstCurrentOver=[...currentOver];target=teams[bat].runs+1;bat=bat==='A'?'B':'A';inn=2;currentOver=[];isFreeHit=false;alert('1st Innings: '+firstInningsData.name+' - '+firstInningsData.runs+'/'+firstInningsData.wickets+'\nTarget: '+target+'\nPlayers: '+MAX_PLAYERS);update();checkWin()}else alert('Already 2nd innings')}
 function resetAll(){if(!confirm('SARA DATA DELETE? Pakka reset?'))return;localStorage.removeItem(STORE);const a=safeName(el('teamA').value,'Team A'),b=safeName(el('teamB').value,'Team B');teams={A:newTeam(a),B:newTeam(b)};bat='A';inn=1;target=0;currentOver=[];historyStack=[];isFreeHit=false;firstInningsData=null;firstCurrentOver=[];matchOver=false;TOTAL=OVER_LIMIT*6;unlockButtons();closeWinner();update()}
 function overs(balls){return Math.floor(balls/6)+'.'+(balls%6)}
