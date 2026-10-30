@@ -5,17 +5,15 @@
 <title>MSL 10F/W LIVE SCORE</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#0f172a;color:#fff;max-width:650px;margin:auto}
+body{background:#000;color:#fff;max-width:650px;margin:auto}
 .header{background:#facc15;color:#000;font-weight:900;text-align:center;padding:14px;font-size:22px}
-.fb-wrap{background:#000;width:100%}
+.fb-wrap{background:#000;width:100%;min-height:380px}
 .score-bar{background:#1e293b;padding:10px;margin:8px;border-radius:14px;border:1px solid #facc15;display:flex;justify-content:space-between;align-items:center}
 .score{font-size:30px;font-weight:900;color:#facc15}
 .batting{background:#facc15;color:#000;font-weight:900;padding:8px;border-radius:8px;text-align:center;margin:8px}
 .balls{display:flex;gap:5px;flex-wrap:wrap;padding:0 8px}
 .ball{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px}
 .b0{background:#334155}.b1{background:#e2e8f0;color:#000}.b4{background:#22c55e}.b6{background:#a855f7}.bW{background:#fbbf24;color:#000}.bOUT{background:#ef4444}
-.action-bar{background:#1e293b;margin:8px;padding:10px;border-radius:10px;display:flex;gap:8px;justify-content:center}
-.comment-box{background:#fff;color:#000;margin:8px;border-radius:12px;padding:10px}
 </style>
 </head>
 <body>
@@ -25,23 +23,19 @@ body{background:#0f172a;color:#fff;max-width:650px;margin:auto}
 
 <div class="header">MSL 10F/W LIVE SCORE</div>
 
-<!-- 1. FACEBOOK LIVE VIDEO - Web pe hi Comment/Like ke sath -->
+<!-- 3:00 PM KE BAAD IS PAGE SE AUTO LIVE -->
 <div class="fb-wrap">
-<div class="fb-video" 
-data-href="https://www.facebook.com/61582021163459/videos/864088875423063/" 
+<div class="fb-page" 
+data-href="https://www.facebook.com/61582021163459" 
+data-tabs="live_videos" 
 data-width="650" 
-data-show-text="true"
-data-show-captions="false"
-data-allowfullscreen="true"
-data-autoplay="false"></div>
+data-height="380"
+data-small-header="false" 
+data-adapt-container-width="true" 
+data-hide-cover="false" 
+data-show-facepile="false"></div>
 </div>
 
-<!-- 2. Like & Share Buttons - Web pe hi -->
-<div class="action-bar">
-<div class="fb-like" data-href="https://www.facebook.com/share/1EnBhsjp2j/" data-width="" data-layout="button_count" data-action="like" data-size="large" data-share="true"></div>
-</div>
-
-<!-- 3. LIVE SCORE -->
 <div class="batting" id="batInfo">Loading Score...</div>
 <div class="score-bar">
   <div><b id="nameA">Team A</b><div style="font-size:11px;color:#94a3b8" id="overA">0.0</div></div>
@@ -55,12 +49,6 @@ data-autoplay="false"></div>
   <div style="flex:1">Target<br><b id="target" style="color:#facc15">-</b></div>
   <div style="flex:1">Need<br><b id="need" style="color:#facc15">-</b></div>
   <div style="flex:1">Balls<br><b id="ballsLeft">30</b></div>
-</div>
-
-<!-- 4. WEB PE HI COMMENT SECTION -->
-<div class="comment-box">
-<div style="font-weight:900;margin-bottom:8px;color:#000">💬 Web Pe Comment Karo - Facebook Pe Show Hoga!</div>
-<div class="fb-comments" data-href="https://www.facebook.com/share/1EnBhsjp2j/" data-width="100%" data-numposts="10" data-order-by="reverse_time"></div>
 </div>
 
 <script type="module">
