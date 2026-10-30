@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>MSL Admin</title>
+<style>
+body{font-family:Arial;background:#020617;color:#fff;padding:20px;max-width:500px;margin:auto}
+h2{text-align:center;color:#22c55e}
+input{width:100%;padding:14px;margin:8px 0;border-radius:10px;border:0;font-size:16px;box-sizing:border-box}
+button{width:100%;padding:16px;background:#22c55e;color:#000;font-weight:900;border:0;border-radius:12px;font-size:20px;margin-top:15px}
+#msg{text-align:center;color:#facc15;font-weight:bold;margin-top:10px}
+</style>
+</head><body>
+<h2>MSL LIVE - Admin 🔴</h2>
+<input id="title" placeholder="Match Title: e.g. MSL Final LIVE">
+<input id="team1" placeholder="Team Name: e.g. Muridke Kings">
+<input id="runs" type="number" placeholder="Runs: e.g. 85">
+<input id="wickets" type="number" placeholder="Wickets: e.g. 2">
+<input id="overs" placeholder="Overs: e.g. 10.2">
+<input id="status" placeholder="Status: e.g. Need 20 runs / Batting">
+<button onclick="updateScore()">UPDATE SCORE LIVE 🚀</button>
+<p id="msg"></p>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyAfdtWU8fHz-WQ-JnptfKDHoKcJyP2us4",
+  authDomain: "live-score-msl.firebaseapp.com",
+  databaseURL: "https://live-score-msl-default-rtdb.firebaseio.com",
+  projectId: "live-score-msl",
+  storageBucket: "live-score-msl.firebasestorage.app",
+  messagingSenderId: "905774460099",
+  appId: "1:905774460099:web:6b87f3c1c9fb0a67850676"
+};
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+window.updateScore=()=>{
+  const data={
+    matchTitle:document.getElementById('title').value,
+    team1:document.getElementById('team1').value,
+    runs:document.getElementById('runs').value,
+    wickets:document.getElementById('wickets').value,
+    overs:document.getElementById('overs').value,
+    status:document.getElementById('status').value
+  };
+  set(ref(db,'msl/live'), data);
+  document.getElementById('msg').innerText="✅ LIVE Updated! Viewer pe check karo";
+}
+</script>
+</body></html>
