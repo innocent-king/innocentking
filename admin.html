@@ -2,11 +2,12 @@
 <html lang="ur">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MSL ULTRA FINAL - HISTORY ADDED</title>
+<title>MSL ULTRA FINAL - HISTORY + VIEWERS</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 body{background:#020617;color:#fff;max-width:520px;margin:auto;padding:8px}
-h1{text-align:center;color:#facc15;font-size:20px;padding:10px}
+h1{text-align:center;color:#facc15;font-size:20px;padding:10px;display:flex;justify-content:space-between;align-items:center}
+.viewer-badge{background:#0f172a;border:1px solid #22c55e;color:#22c55e;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:900}
 .card{background:#1e293b;border-radius:16px;padding:12px;margin-bottom:10px;border:1px solid #334155}
 .row{display:flex;gap:8px}
 input,select{width:100%;padding:12px;border-radius:10px;border:1px solid #475569;background:#0f172a;color:#fff;font-weight:700;text-align:center}
@@ -28,7 +29,6 @@ input,select{width:100%;padding:12px;border-radius:10px;border:1px solid #475569
 .small{padding:10px;border-radius:10px;border:none;font-weight:800;cursor:pointer;flex:1;color:#fff}
 .label{font-size:11px;color:#facc15;font-weight:900;margin:12px 0 5px 2px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center;margin-top:8px}.stats div{background:#0f172a;padding:6px;border-radius:8px;font-size:11px}.stats b{color:#facc15;display:block;font-size:8px}
-/* HISTORY STYLE */
 .history-list{max-height:300px;overflow-y:auto;background:#0f172a;border-radius:10px;padding:8px}
 .history-item{display:flex;justify-content:space-between;align-items:center;padding:8px;border-bottom:1px solid #1e293b;font-size:12px}
 .history-item:last-child{border:none}
@@ -42,7 +42,7 @@ input,select{width:100%;padding:12px;border-radius:10px;border:1px solid #475569
 </style>
 </head>
 <body>
-<h1>🏏 MSL ULTRA FIXED ✅</h1>
+<h1><span>🏏 MSL ULTRA FIXED ✅</span><span class="viewer-badge">👁️ <b id="viewerCount">0</b></span></h1>
 <div class="card">
 <div class="row"><input id="teamA" placeholder="Team A Name" value="Team A"><input id="teamB" placeholder="Team B Name" value="Team B"></div>
 <div class="row" style="margin-top:8px"><input id="batterName" placeholder="Batter Name" value=""><input id="bowlerName" placeholder="Bowler Name" value=""></div>
@@ -55,7 +55,6 @@ input,select{width:100%;padding:12px;border-radius:10px;border:1px solid #475569
 <div class="stats"><div><b>BALLS LEFT</b><span id="ballsLeft">30</span></div><div><b>EXTRAS</b><span id="extras">0</span></div><div><b>THIS OVER</b><span id="thisOver">0</span></div><div><b>CRR</b><span id="crr">0.00</span></div></div><div style="text-align:center;color:#facc15;font-size:12px;font-weight:900;margin-top:8px" id="targetBox">Target: -</div>
 </div>
 
-<!-- FULL HISTORY CARD - NAYA -->
 <div class="card">
 <div class="row" style="justify-content:space-between;align-items:center">
 <div class="label" style="margin:0">📜 BALL BY BALL HISTORY</div>
@@ -79,9 +78,9 @@ input,select{width:100%;padding:12px;border-radius:10px;border:1px solid #475569
 </div>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getDatabase, ref, set, get, onValue, onDisconnect } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 const cfg={apiKey:"AIzaSyAfdtWU8fHz-WQ-JnptfKDHoKcJyP2us4",authDomain:"live-score-msl.firebaseapp.com",databaseURL:"https://live-score-msl-default-rtdb.firebaseio.com",projectId:"live-score-msl",storageBucket:"live-score-msl.firebasestorage.app",messagingSenderId:"905774460099",appId:"1:905774460099:web:6b87f3c1c9fb0a67850676"};
-let db,proRef,liveRef,loaded=false,history=[],saveQueue=Promise.resolve();
+let db,proRef,liveRef,viewersRef,myViewerRef,loaded=false,history=[],saveQueue=Promise.resolve();
 let teams={A:{name:'Team A',runs:0,wickets:0,balls:0,extras:0},B:{name:'Team B',runs:0,wickets:0,balls:0,extras:0}};
 let bat='A',inn=1,target=0,currentOver=[],OVER_LIMIT=5,TOTAL=30,MAX_PLAYERS=7,isSuper=false,matchFinished=false;
 let batterName='',bowlerName='',fullBallHistory=[];
@@ -161,7 +160,20 @@ el('overSelect').addEventListener('change',()=>{if(!loaded)return;save();OVER_LI
 el('playersSelect').addEventListener('change',()=>{if(!loaded)return;save();MAX_PLAYERS=Number(el('playersSelect').value);commit();});
 el('teamA').addEventListener('input',()=>{if(!loaded)return;teams.A.name=el('teamA').value.trim()||'Team A';render();push();});
 el('teamB').addEventListener('input',()=>{if(!loaded)return;teams.B.name=el('teamB').value.trim()||'Team B';render();push();});
-async function init(){try{const app=initializeApp(cfg);db=getDatabase(app);proRef=ref(db,'msl/pro');liveRef=ref(db,'msl/live');const result=await get(proRef);if(result.exists())restore(result.val());loaded=true;render();el('status').textContent='✅ Connected - HISTORY ADDED';}catch(err){loaded=true;render();el('status').textContent='⚠️ Firebase error';}}
+async function init(){
+ try{
+  const app=initializeApp(cfg);db=getDatabase(app);proRef=ref(db,'msl/pro');liveRef=ref(db,'msl/live');viewersRef=ref(db,'msl/viewers');
+  // VIEWER COUNT SYSTEM - ADMIN
+  myViewerRef=ref(db,'msl/viewers/admin_'+Date.now()+'_'+Math.random().toString(36).substr(2,5));
+  set(myViewerRef,{type:'admin',time:Date.now()});
+  onDisconnect(myViewerRef).remove();
+  onValue(viewersRef,snap=>{
+    const count = snap.exists()?Object.keys(snap.val()).length:0;
+    el('viewerCount').innerText=count;
+  });
+  const result=await get(proRef);if(result.exists())restore(result.val());loaded=true;render();el('status').textContent='✅ Connected - VIEWERS: '+Object.keys((await get(viewersRef)).val()||{}).length;
+ }catch(err){loaded=true;render();el('status').textContent='⚠️ Firebase error';}
+}
 render();init();
 </script>
 </body>
