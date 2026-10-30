@@ -41,16 +41,22 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getDatabase, ref, set, onValue, onDisconnect } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 const cfg={apiKey:"AIzaSyAfdtWU8fHz-WQ-JnptfKDHoKcJyP2us4",authDomain:"live-score-msl.firebaseapp.com",databaseURL:"https://live-score-msl-default-rtdb.firebaseio.com",projectId:"live-score-msl",storageBucket:"live-score-msl.firebasestorage.app",messagingSenderId:"905774460099",appId:"1:905774460099:web:6b87f3c1c9fb0a67850676"};
 const app=initializeApp(cfg); const db=getDatabase(app);
-// VIEWER COUNT SYSTEM
+
+// SIRF VIEWER KA COUNT - ADMIN COUNT NAHI HOGA
 const myId = 'viewer_'+Date.now()+'_'+Math.random().toString(36).substr(2,5);
 const myRef = ref(db,'msl/viewers/'+myId);
-set(myRef,{type:'viewer',time:Date.now(),ua:navigator.userAgent.substr(0,30)});
+set(myRef,{type:'viewer',time:Date.now()});
 onDisconnect(myRef).remove();
 window.addEventListener('beforeunload',()=>{set(myRef,null)});
+
 onValue(ref(db,'msl/viewers'),snap=>{
- const count = snap.exists()?Object.keys(snap.val()).length:0;
- document.getElementById('viewerCount').innerText=count;
+ if(!snap.exists()){document.getElementById('viewerCount').innerText=0;return;}
+ const all = Object.values(snap.val());
+ // Sirf viewer type gino, admin ko ignore karo
+ const onlyViewers = all.filter(v=>v.type==='viewer').length;
+ document.getElementById('viewerCount').innerText=onlyViewers;
 });
+
 // SCORE SYSTEM
 onValue(ref(db,'msl/pro'),s=>{
  const d=s.val();if(!d)return;
