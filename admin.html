@@ -70,7 +70,6 @@ input,select{width:100%;padding:12px;border-radius:10px;border:1px solid #475569
 <div class="label">LEG BYE 1-9 (Ball Count Hogi)</div><div class="grid"><button class="btn cLB" onclick="addBye(1,'LB')">LB1</button><button class="btn cLB" onclick="addBye(2,'LB')">LB2</button><button class="btn cLB" onclick="addBye(3,'LB')">LB3</button><button class="btn cLB" onclick="addBye(4,'LB')">LB4</button><button class="btn cLB" onclick="addBye(5,'LB')">LB5</button><button class="btn cLB" onclick="addBye(6,'LB')">LB6</button><button class="btn cLB" onclick="addBye(7,'LB')">LB7</button><button class="btn cLB" onclick="addBye(8,'LB')">LB8</button><button class="btn cLB" onclick="addBye(9,'LB')">LB9</button><button class="btn cWDB" style="background:#a78bfa" onclick="addWideBye(1,'LB')">WD+LB1</button><button class="btn cWDB" style="background:#a78bfa" onclick="addWideBye(2,'LB')">WD+LB2</button><button class="btn cWDB" style="background:#a78bfa" onclick="addWideBye(4,'LB')">WD+LB4</button></div>
 <div class="label">⚡ SUPER BALL - Next Ball Double</div><div class="grid"><button class="btn cSUPER" id="superBtn" onclick="activateSuper()">⚡ SUPER ON</button><button class="btn cSUPER" style="background:#334155;color:#facc15;border:2px solid #facc15" onclick="deactivateSuper()">SUPER OFF</button><button class="btn cSUPER" onclick="addRun(4,true)">SUPER 4=8</button><button class="btn cSUPER" onclick="addRun(6,true)">SUPER 6=12</button></div>
 
-<!-- CUSTOM OPTION - NAYA -->
 <div class="label" style="color:#06b6d4">✏️ CUSTOM - Jo Board Pe Na Ho Khud Likho</div>
 <div style="background:#0f172a;padding:10px;border-radius:10px;border:1px solid #06b6d4">
 <div class="row">
@@ -97,9 +96,9 @@ input,select{width:100%;padding:12px;border-radius:10px;border:1px solid #475569
 </div>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, set, get, onValue, onDisconnect } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 const cfg={apiKey:"AIzaSyAfdtWU8fHz-WQ-JnptfKDHoKcJyP2us4",authDomain:"live-score-msl.firebaseapp.com",databaseURL:"https://live-score-msl-default-rtdb.firebaseio.com",projectId:"live-score-msl",storageBucket:"live-score-msl.firebasestorage.app",messagingSenderId:"905774460099",appId:"1:905774460099:web:6b87f3c1c9fb0a67850676"};
-let db,proRef,liveRef,viewersRef,myViewerRef,loaded=false,history=[],saveQueue=Promise.resolve();
+let db,proRef,liveRef,viewersRef,loaded=false,history=[],saveQueue=Promise.resolve();
 let teams={A:{name:'Team A',runs:0,wickets:0,balls:0,extras:0},B:{name:'Team B',runs:0,wickets:0,balls:0,extras:0}};
 let bat='A',inn=1,target=0,currentOver=[],OVER_LIMIT=5,TOTAL=30,MAX_PLAYERS=7,isSuper=false,matchFinished=false;
 let batterName='',bowlerName='',fullBallHistory=[];
@@ -181,10 +180,13 @@ el('teamB').addEventListener('input',()=>{if(!loaded)return;teams.B.name=el('tea
 async function init(){
  try{
   const app=initializeApp(cfg);db=getDatabase(app);proRef=ref(db,'msl/pro');liveRef=ref(db,'msl/live');viewersRef=ref(db,'msl/viewers');
-  myViewerRef=ref(db,'msl/viewers/admin_'+Date.now()+'_'+Math.random().toString(36).substr(2,5));
-  set(myViewerRef,{type:'admin',time:Date.now()});onDisconnect(myViewerRef).remove();
-  onValue(viewersRef,snap=>{const count = snap.exists()?Object.keys(snap.val()).length:0;el('viewerCount').innerText=count;});
-  const result=await get(proRef);if(result.exists())restore(result.val());loaded=true;render();el('status').textContent='✅ Connected';
+  // ADMIN KA VIEW COUNT NAHI HOGA - SIRF VIEWER PAGE KA HOGA
+  onValue(viewersRef,snap=>{
+    if(!snap.exists()){el('viewerCount').innerText=0;return;}
+    const onlyViewers = Object.values(snap.val()).filter(v=>v.type==='viewer').length;
+    el('viewerCount').innerText=onlyViewers;
+  });
+  const result=await get(proRef);if(result.exists())restore(result.val());loaded=true;render();el('status').textContent='✅ Connected - Admin view not counted';
  }catch(err){loaded=true;render();el('status').textContent='⚠️ Firebase error';}
 }
 render();init();
