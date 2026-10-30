@@ -2,7 +2,7 @@
 <html lang="ur">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MSL ULTRA FINAL - BATTER BOWLER ADDED</title>
+<title>MSL ULTRA FINAL - HISTORY ADDED</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 body{background:#020617;color:#fff;max-width:520px;margin:auto;padding:8px}
@@ -23,39 +23,54 @@ input,select{width:100%;padding:12px;border-radius:10px;border:1px solid #475569
 .ball{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px;border:2px solid #000}
 .b0{background:#334155}.b1{background:#e2e8f0;color:#000}.b4{background:#22c55e}.b6{background:#a855f7}.bW{background:#fbbf24;color:#000}.bOUT{background:#ef4444}.bBYE{background:#38bdf8;color:#000}.bLB{background:#0ea5e9;color:#fff}.bRO{background:#f97316;color:#fff}.bSUPER{background:linear-gradient(135deg,#facc15,#ec4899);color:#000;border-color:#fff}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.btn{padding:14px 2px;border:none;border-radius:10px;font-size:15px;font-weight:900;cursor:pointer}.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn{padding:14px 2px;border:none;border-radius:10px;font-size:15px;font-weight:900;cursor:pointer}
 .c0{background:#334155;color:#fff}.c1{background:#e2e8f0;color:#000}.c4{background:#22c55e;color:#fff}.c6{background:#a855f7;color:#fff}.cWD{background:#fbbf24;color:#000}.cOUT{background:#ef4444;color:#fff}.cBYE{background:#38bdf8;color:#000}.cLB{background:#0ea5e9;color:#fff}.cWDB{background:#c084fc;color:#fff}.cMINUS{background:#1f2937;color:#ef4444;border:1px solid #ef4444}.cRO{background:#f97316;color:#fff}.cSUPER{background:linear-gradient(90deg,#facc15,#f43f5e);color:#000}
 .small{padding:10px;border-radius:10px;border:none;font-weight:800;cursor:pointer;flex:1;color:#fff}
 .label{font-size:11px;color:#facc15;font-weight:900;margin:12px 0 5px 2px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center;margin-top:8px}.stats div{background:#0f172a;padding:6px;border-radius:8px;font-size:11px}.stats b{color:#facc15;display:block;font-size:8px}
+/* HISTORY STYLE */
+.history-list{max-height:300px;overflow-y:auto;background:#0f172a;border-radius:10px;padding:8px}
+.history-item{display:flex;justify-content:space-between;align-items:center;padding:8px;border-bottom:1px solid #1e293b;font-size:12px}
+.history-item:last-child{border:none}
+.history-item.wicket{background:#7f1d1d44;border-left:3px solid #ef4444}
+.history-item.four{background:#22c55e22}
+.history-item.six{background:#a855f722}
+.history-left{display:flex;gap:8px;align-items:center}
+.history-over{background:#334155;color:#facc15;padding:2px 6px;border-radius:6px;font-size:10px;font-weight:900}
+.history-ball{font-weight:900;min-width:50px}
+.history-right{color:#94a3b8;font-size:10px;text-align:right}
 </style>
 </head>
 <body>
 <h1>🏏 MSL ULTRA FIXED ✅</h1>
 <div class="card">
 <div class="row"><input id="teamA" placeholder="Team A Name" value="Team A"><input id="teamB" placeholder="Team B Name" value="Team B"></div>
-<div class="row" style="margin-top:8px">
-<input id="batterName" placeholder="Batter Name" value="">
-<input id="bowlerName" placeholder="Bowler Name" value="">
-</div>
+<div class="row" style="margin-top:8px"><input id="batterName" placeholder="Batter Name" value=""><input id="bowlerName" placeholder="Bowler Name" value=""></div>
 <div class="row" style="margin-top:8px"><select id="overSelect"><option value="5" selected>5 Overs</option><option value="10">10 Overs</option><option value="15">15 Overs</option><option value="20">20 Overs</option><option value="25">25 Overs</option><option value="30">30 Overs</option></select><select id="playersSelect"><option value="6">6 Players</option><option value="7" selected>7 Players</option><option value="8">8 Players</option><option value="9">9 Players</option><option value="10">10 Players</option><option value="11">11 Players</option></select></div>
 </div>
 <div class="card">
 <div class="row"><div class="team active" id="boxA"><div id="nameA">Team A</div><div class="score" id="scoreA">0/0</div><div class="ov" id="overA">0.0 / 5.0</div></div><div class="team" id="boxB"><div id="nameB">Team B</div><div class="score" id="scoreB">0/0</div><div class="ov" id="overB">0.0 / 5.0</div></div></div>
-
-<div class="batter-bowler">
-<div><b>BATTER</b><span id="showBatter">-</span></div>
-<div><b>BOWLER</b><span id="showBowler">-</span></div>
-</div>
-
+<div class="batter-bowler"><div><b>BATTER</b><span id="showBatter">-</span></div><div><b>BOWLER</b><span id="showBowler">-</span></div></div>
 <div class="batting" id="batInfo">Batting: Team A</div><div class="superball" id="superBallBanner">⚡ SUPER BALL ACTIVE - Next Ball Double! ⚡</div><div class="balls" id="ballsView"></div>
 <div class="stats"><div><b>BALLS LEFT</b><span id="ballsLeft">30</span></div><div><b>EXTRAS</b><span id="extras">0</span></div><div><b>THIS OVER</b><span id="thisOver">0</span></div><div><b>CRR</b><span id="crr">0.00</span></div></div><div style="text-align:center;color:#facc15;font-size:12px;font-weight:900;margin-top:8px" id="targetBox">Target: -</div>
 </div>
+
+<!-- FULL HISTORY CARD - NAYA -->
+<div class="card">
+<div class="row" style="justify-content:space-between;align-items:center">
+<div class="label" style="margin:0">📜 BALL BY BALL HISTORY</div>
+<button onclick="clearHistory()" style="background:#7f1d1d;color:#fff;border:none;padding:4px 10px;border-radius:6px;font-size:10px;font-weight:800">CLEAR HISTORY</button>
+</div>
+<div class="history-list" id="fullHistory">
+<span style="color:#64748b;font-size:12px">No balls yet - History yahan ayegi</span>
+</div>
+</div>
+
 <div class="card">
 <div class="label">NORMAL RUNS 1-9 (Ball Count Hogi)</div>
 <div class="grid"><button class="btn c1" onclick="addRun(1)">1</button><button class="btn c1" onclick="addRun(2)">2</button><button class="btn c1" onclick="addRun(3)">3</button><button class="btn c4" onclick="addRun(4)">4</button><button class="btn c1" onclick="addRun(5)">5</button><button class="btn c6" onclick="addRun(6)">6</button><button class="btn c1" onclick="addRun(7)">7</button><button class="btn c1" onclick="addRun(8)">8</button><button class="btn c1" onclick="addRun(9)">9</button><button class="btn c0" onclick="addRun(0)">0 Dot</button><button class="btn cWD" onclick="addExtra('WD')">WD</button><button class="btn cOUT" onclick="addWicket()">OUT</button></div>
-<div class="label" style="color:#fb923c">RUNOUT + NO BALL 6</div><div class="grid"><button class="btn cRO" onclick="addRunout(1)">RO+1</button><button class="btn cRO" onclick="addRunout(2)">RO+2</button><button class="btn cRO" onclick="addRunout(3)">RO+3</button><button class="btn cWD" style="background:#fb923c" onclick="addExtra('NB',7)">NB+6</button></div>
-<div class="label">WIDE / NO BALL (Ball Count Nahi Hogi)</div><div class="grid"><button class="btn cWD" onclick="addExtra('WD',2)">WD+1</button><button class="btn cWD" onclick="addExtra('WD',3)">WD+2</button><button class="btn cWD" style="background:#fb923c" onclick="addExtra('NB',1)">NB</button><button class="btn cWD" style="background:#fb923c" onclick="addExtra('NB',2)">NB+1</button></div>
+<div class="label" style="color:#fb923c">RUNOUT + NO BALL</div><div class="grid"><button class="btn cRO" onclick="addRunout(1)">RO+1</button><button class="btn cRO" onclick="addRunout(2)">RO+2</button><button class="btn cRO" onclick="addRunout(3)">RO+3</button><button class="btn cWD" style="background:#fb923c" onclick="addExtra('NB',7)">NB+6</button></div>
+<div class="label">WIDE / NO BALL (Ball Count Nahi Hogi)</div><div class="grid"><button class="btn cWD" onclick="addExtra('WD',2)">WD+1</button><button class="btn cWD" onclick="addExtra('WD',3)">WD+2</button><button class="btn cWD" style="background:#fb923c" onclick="addExtra('NB',1)">NB</button><button class="btn cWD" style="background:#fb923c" onclick="addExtra('NB',2)">NB+1</button><button class="btn cWD" style="background:#fb923c" onclick="addExtra('NB',5)">NB+4</button><button class="btn cWD" style="background:#fb923c" onclick="addExtra('NB',7)">NB+6</button></div>
 <div class="label">BYE 1-9 (Ball Count Hogi)</div><div class="grid"><button class="btn cBYE" onclick="addBye(1,'B')">B1</button><button class="btn cBYE" onclick="addBye(2,'B')">B2</button><button class="btn cBYE" onclick="addBye(3,'B')">B3</button><button class="btn cBYE" onclick="addBye(4,'B')">B4</button><button class="btn cBYE" onclick="addBye(5,'B')">B5</button><button class="btn cBYE" onclick="addBye(6,'B')">B6</button><button class="btn cBYE" onclick="addBye(7,'B')">B7</button><button class="btn cBYE" onclick="addBye(8,'B')">B8</button><button class="btn cBYE" onclick="addBye(9,'B')">B9</button><button class="btn cWDB" onclick="addWideBye(1,'B')">WD+B1</button><button class="btn cWDB" onclick="addWideBye(2,'B')">WD+B2</button><button class="btn cWDB" onclick="addWideBye(4,'B')">WD+B4</button></div>
 <div class="label">LEG BYE 1-9 (Ball Count Hogi)</div><div class="grid"><button class="btn cLB" onclick="addBye(1,'LB')">LB1</button><button class="btn cLB" onclick="addBye(2,'LB')">LB2</button><button class="btn cLB" onclick="addBye(3,'LB')">LB3</button><button class="btn cLB" onclick="addBye(4,'LB')">LB4</button><button class="btn cLB" onclick="addBye(5,'LB')">LB5</button><button class="btn cLB" onclick="addBye(6,'LB')">LB6</button><button class="btn cLB" onclick="addBye(7,'LB')">LB7</button><button class="btn cLB" onclick="addBye(8,'LB')">LB8</button><button class="btn cLB" onclick="addBye(9,'LB')">LB9</button><button class="btn cWDB" style="background:#a78bfa" onclick="addWideBye(1,'LB')">WD+LB1</button><button class="btn cWDB" style="background:#a78bfa" onclick="addWideBye(2,'LB')">WD+LB2</button><button class="btn cWDB" style="background:#a78bfa" onclick="addWideBye(4,'LB')">WD+LB4</button></div>
 <div class="label">⚡ SUPER BALL - Next Ball Double</div><div class="grid"><button class="btn cSUPER" id="superBtn" onclick="activateSuper()">⚡ SUPER ON</button><button class="btn cSUPER" style="background:#334155;color:#facc15;border:2px solid #facc15" onclick="deactivateSuper()">SUPER OFF</button><button class="btn cSUPER" onclick="addRun(4,true)">SUPER 4=8</button><button class="btn cSUPER" onclick="addRun(6,true)">SUPER 6=12</button></div>
@@ -69,11 +84,11 @@ const cfg={apiKey:"AIzaSyAfdtWU8fHz-WQ-JnptfKDHoKcJyP2us4",authDomain:"live-scor
 let db,proRef,liveRef,loaded=false,history=[],saveQueue=Promise.resolve();
 let teams={A:{name:'Team A',runs:0,wickets:0,balls:0,extras:0},B:{name:'Team B',runs:0,wickets:0,balls:0,extras:0}};
 let bat='A',inn=1,target=0,currentOver=[],OVER_LIMIT=5,TOTAL=30,MAX_PLAYERS=7,isSuper=false,matchFinished=false;
-let batterName='',bowlerName='';
+let batterName='',bowlerName='',fullBallHistory=[];
 const el=id=>document.getElementById(id);
-function snap(){return JSON.parse(JSON.stringify({teams,bat,inn,target,currentOver,OVER_LIMIT,TOTAL,MAX_PLAYERS,isSuper,matchFinished,batterName,bowlerName,teamAInput:el('teamA').value,teamBInput:el('teamB').value,batterInput:el('batterName').value,bowlerInput:el('bowlerName').value}));}
+function snap(){return JSON.parse(JSON.stringify({teams,bat,inn,target,currentOver,OVER_LIMIT,TOTAL,MAX_PLAYERS,isSuper,matchFinished,batterName,bowlerName,fullBallHistory,teamAInput:el('teamA').value,teamBInput:el('teamB').value,batterInput:el('batterName').value,bowlerInput:el('bowlerName').value}));}
 function save(){history.push(snap());if(history.length>100)history.shift();}
-function restore(s){teams=s.teams;bat=s.bat||'A';inn=s.inn||1;target=s.target||0;currentOver=s.currentOver||[];OVER_LIMIT=s.OVER_LIMIT||5;TOTAL=s.TOTAL||OVER_LIMIT*6;MAX_PLAYERS=s.MAX_PLAYERS||7;isSuper=!!s.isSuper;matchFinished=!!s.matchFinished;batterName=s.batterName||'';bowlerName=s.bowlerName||'';el('teamA').value=s.teamAInput||teams.A.name;el('teamB').value=s.teamBInput||teams.B.name;el('batterName').value=s.batterInput||batterName;el('bowlerName').value=s.bowlerInput||bowlerName;el('overSelect').value=String(OVER_LIMIT);el('playersSelect').value=String(MAX_PLAYERS);}
+function restore(s){teams=s.teams;bat=s.bat||'A';inn=s.inn||1;target=s.target||0;currentOver=s.currentOver||[];OVER_LIMIT=s.OVER_LIMIT||5;TOTAL=s.TOTAL||OVER_LIMIT*6;MAX_PLAYERS=s.MAX_PLAYERS||7;isSuper=!!s.isSuper;matchFinished=!!s.matchFinished;batterName=s.batterName||'';bowlerName=s.bowlerName||'';fullBallHistory=s.fullBallHistory||[];el('teamA').value=s.teamAInput||teams.A.name;el('teamB').value=s.teamBInput||teams.B.name;el('batterName').value=s.batterInput||batterName;el('bowlerName').value=s.bowlerInput||bowlerName;el('overSelect').value=String(OVER_LIMIT);el('playersSelect').value=String(MAX_PLAYERS);}
 function legalBallsInOver(){return currentOver.filter(x=>x.t!=='wide'&&x.t!=='nb').length;}
 function overs(b){return `${Math.floor(b/6)}.${b%6} / ${OVER_LIMIT}.0`;}
 function wicketsLimit(){return Math.max(1,MAX_PLAYERS-1);}
@@ -84,6 +99,35 @@ function beginDelivery(){if(!loaded||matchFinished)return false;const t=teams[ba
 function finishMatch(){matchFinished=true;isSuper=false;const a=teams.A,b=teams.B;el('status').textContent='🏆 '+(a.runs===b.runs?'Match tied':`${a.runs>b.runs?a.name:b.name} wins`);}
 function syncMatch(){if(inn===2&&(teams[bat].runs>=target||inningsOver()))finishMatch();}
 function push(){if(!loaded||!db)return;const s=snap(),t=teams[bat];const live={matchTitle:`${teams.A.name} vs ${teams.B.name}`,team1:t.name,runs:t.runs,wickets:t.wickets,overs:`${Math.floor(t.balls/6)}.${t.balls%6}/${OVER_LIMIT}`,balls:t.balls,target:inn===2?target:null,innings:inn,batter:batterName||'-',bowler:bowlerName||'-',status:matchFinished?'Match finished':isSuper?'SUPER BALL ACTIVE':inn===2?`Need ${needRuns()} from ${ballsRemaining()} balls`:`${t.runs}/${t.wickets}`};saveQueue=saveQueue.then(()=>Promise.all([set(proRef,s),set(liveRef,live)])).then(()=>{el('status').textContent='✅ Connected · '+new Date().toLocaleTimeString();}).catch(()=>{el('status').textContent='⚠️ Sync failed';});}
+function addToHistory(ballData){
+ const overNum = Math.floor(teams[bat].balls/6);
+ const ballNum = teams[bat].balls%6===0?6:teams[bat].balls%6;
+ fullBallHistory.unshift({
+  over: `${overNum}.${ballNum}`,
+  innings: inn,
+  team: teams[bat].name,
+  batter: batterName||'-',
+  bowler: bowlerName||'-',
+  ...ballData,
+  time: new Date().toLocaleTimeString()
+ });
+ if(fullBallHistory.length>100) fullBallHistory.pop();
+}
+function renderHistory(){
+ const div = el('fullHistory');
+ if(!fullBallHistory.length){div.innerHTML='<span style="color:#64748b;font-size:12px">No balls yet - History yahan ayegi</span>';return;}
+ div.innerHTML='';
+ fullBallHistory.forEach(h=>{
+  const item = document.createElement('div');
+  let cls = 'history-item';
+  if(h.t==='out'||h.t==='ro') cls+=' wicket';
+  else if(h.v===4||h.v===8) cls+=' four';
+  else if(h.v===6||h.v===12||h.v==='NB+6') cls+=' six';
+  item.className=cls;
+  item.innerHTML=`<div class="history-left"><span class="history-over">Ov ${h.over}</span><span class="history-ball">${h.v}${h.super?'⚡':''}</span><span style="color:#e2e8f0">${h.team}</span></div><div class="history-right">${h.batter} vs ${h.bowler}<br><span style="color:#facc15">${h.t}</span></div>`;
+  div.appendChild(item);
+ });
+}
 function render(){
  for(const id of ['A','B']){el('name'+id).textContent=teams[id].name;el('score'+id).textContent=`${teams[id].runs}/${teams[id].wickets}`;el('over'+id).textContent=`${overs(teams[id].balls)} (${teams[id].balls} balls)`;el('box'+id).classList.toggle('active',bat===id);}
  const t=teams[bat];
@@ -95,28 +139,29 @@ function render(){
  el('targetBox').textContent=inn===1?`1st Innings - ${overs(t.balls)}`:`Target ${target} | Need ${needRuns()} from ${ballsRemaining()} balls`;
  const bv=el('ballsView');bv.replaceChildren();if(!currentOver.length){bv.innerHTML='<span style="color:#64748b;font-size:12px">No balls yet</span>';}
  currentOver.forEach(x=>{const d=document.createElement('div');let cls='b1';if(x.t==='out')cls='bOUT';else if(x.t==='bye')cls='bBYE';else if(x.t==='lb')cls='bLB';else if(x.t==='wide'||x.t==='nb')cls='bW';else if(x.t==='ro')cls='bRO';else if(x.super)cls='bSUPER';else if(x.v===0)cls='b0';else if(x.v===4||x.v===8)cls='b4';else if(x.v===6||x.v==12)cls='b6';d.className='ball '+cls;d.textContent=String(x.v)+(x.super?'⚡':'');bv.appendChild(d);});
+ renderHistory();
 }
-window.addRun=function(r,forceSuper=false){if(!beginDelivery())return;const t=teams[bat],doubled=forceSuper||isSuper,actual=doubled?r*2:r;t.runs+=actual;t.balls++;currentOver.push({v:actual,t:'run',super:doubled});isSuper=false;commit();};
-window.addExtra=function(type,extra=1){if(!beginDelivery())return;const t=teams[bat],doubled=isSuper,actual=doubled?extra*2:extra;t.runs+=actual;t.extras+=actual;let label=type==='WD'?(extra===1?'WD':'WD+'+(extra-1)):(extra===1?'NB':extra===7?'NB+6':'NB+'+(extra-1));currentOver.push({v:label+(doubled?'⚡':''),t:type==='WD'?'wide':'nb',super:doubled});isSuper=false;commit();};
-window.addBye=function(run,type){if(!beginDelivery())return;const t=teams[bat],doubled=isSuper,actual=doubled?run*2:run;t.runs+=actual;t.extras+=actual;t.balls++;currentOver.push({v:type+actual,t:type==='B'?'bye':'lb',super:doubled});isSuper=false;commit();};
-window.addWideBye=function(run,type){if(!beginDelivery())return;const t=teams[bat],doubled=isSuper,total=(run+1)*(doubled?2:1);t.runs+=total;t.extras+=total;currentOver.push({v:`WD+${type}${run}`,t:'wide',super:doubled});isSuper=false;commit();};
-window.addWicket=function(){if(!beginDelivery())return;const t=teams[bat];t.wickets++;t.balls++;currentOver.push({v:'W',t:'out'});isSuper=false;commit();};
-window.addRunout=function(r){if(!beginDelivery())return;const t=teams[bat],doubled=isSuper,actual=doubled?r*2:r;t.runs+=actual;t.wickets++;t.balls++;currentOver.push({v:'RO+'+actual,t:'ro',super:doubled});isSuper=false;commit();};
+window.addRun=function(r,forceSuper=false){if(!beginDelivery())return;const t=teams[bat],doubled=forceSuper||isSuper,actual=doubled?r*2:r;t.runs+=actual;t.balls++;currentOver.push({v:actual,t:'run',super:doubled});addToHistory({v:actual,t:'run',super:doubled});isSuper=false;commit();};
+window.addExtra=function(type,extra=1){if(!beginDelivery())return;const t=teams[bat],doubled=isSuper,actual=doubled?extra*2:extra;t.runs+=actual;t.extras+=actual;let label=type==='WD'?(extra===1?'WD':'WD+'+(extra-1)):(extra===1?'NB':extra==5?'NB+4':extra==7?'NB+6':'NB+'+(extra-1));currentOver.push({v:label+(doubled?'⚡':''),t:type==='WD'?'wide':'nb',super:doubled});addToHistory({v:label,t:type==='WD'?'wide':'nb',super:doubled});isSuper=false;commit();};
+window.addBye=function(run,type){if(!beginDelivery())return;const t=teams[bat],doubled=isSuper,actual=doubled?run*2:run;t.runs+=actual;t.extras+=actual;t.balls++;currentOver.push({v:type+actual,t:type==='B'?'bye':'lb',super:doubled});addToHistory({v:type+actual,t:type==='B'?'bye':'lb',super:doubled});isSuper=false;commit();};
+window.addWideBye=function(run,type){if(!beginDelivery())return;const t=teams[bat],doubled=isSuper,total=(run+1)*(doubled?2:1);t.runs+=total;t.extras+=total;currentOver.push({v:`WD+${type}${run}`,t:'wide',super:doubled});addToHistory({v:`WD+${type}${run}`,t:'wide',super:doubled});isSuper=false;commit();};
+window.addWicket=function(){if(!beginDelivery())return;const t=teams[bat];t.wickets++;t.balls++;currentOver.push({v:'W',t:'out'});addToHistory({v:'W',t:'out'});isSuper=false;commit();};
+window.addRunout=function(r){if(!beginDelivery())return;const t=teams[bat],doubled=isSuper,actual=doubled?r*2:r;t.runs+=actual;t.wickets++;t.balls++;currentOver.push({v:'RO+'+actual,t:'ro',super:doubled});addToHistory({v:'RO+'+actual,t:'ro',super:doubled});isSuper=false;commit();};
 window.minusRun=function(r){if(!loaded||matchFinished)return;save();const t=teams[bat];t.runs=Math.max(0,t.runs-r);t.extras=Math.max(0,t.extras-r);commit();};
 window.activateSuper=function(){if(!loaded||matchFinished||isSuper||inningsOver())return;save();isSuper=true;commit();};
 window.deactivateSuper=function(){if(!loaded||!isSuper)return;save();isSuper=false;commit();};
-window.undo=function(){if(!history.length)return alert('Nothing to undo');restore(history.pop());render();push();};
+window.undo=function(){if(!history.length)return alert('Nothing to undo');if(fullBallHistory.length) fullBallHistory.shift();restore(history.pop());render();push();};
 window.switchInnings=function(){if(!loaded||inn!==1)return alert('Innings already switched');if(teams.A.balls===0&&teams.A.wickets===0)return alert('Pehle first innings mein ball khelo');save();target=teams.A.runs+1;bat='B';inn=2;currentOver=[];isSuper=false;matchFinished=false;commit();};
-window.resetAll=function(){if(!confirm('Full Reset?'))return;save();teams={A:{name:el('teamA').value.trim()||'Team A',runs:0,wickets:0,balls:0,extras:0},B:{name:el('teamB').value.trim()||'Team B',runs:0,wickets:0,balls:0,extras:0}};bat='A';inn=1;target=0;currentOver=[];isSuper=false;matchFinished=false;batterName='';bowlerName='';el('batterName').value='';el('bowlerName').value='';commit();};
+window.resetAll=function(){if(!confirm('Full Reset?'))return;save();teams={A:{name:el('teamA').value.trim()||'Team A',runs:0,wickets:0,balls:0,extras:0},B:{name:el('teamB').value.trim()||'Team B',runs:0,wickets:0,balls:0,extras:0}};bat='A';inn=1;target=0;currentOver=[];fullBallHistory=[];isSuper=false;matchFinished=false;batterName='';bowlerName='';el('batterName').value='';el('bowlerName').value='';commit();};
+window.clearHistory=function(){if(!confirm('Clear History?'))return;fullBallHistory=[];render();push();};
 function commit(){syncMatch();render();push();}
-// BATTER BOWLER INPUT LISTENERS
 el('batterName').addEventListener('input',()=>{batterName=el('batterName').value.trim();render();push();});
 el('bowlerName').addEventListener('input',()=>{bowlerName=el('bowlerName').value.trim();render();push();});
 el('overSelect').addEventListener('change',()=>{if(!loaded)return;save();OVER_LIMIT=Number(el('overSelect').value);TOTAL=OVER_LIMIT*6;commit();});
 el('playersSelect').addEventListener('change',()=>{if(!loaded)return;save();MAX_PLAYERS=Number(el('playersSelect').value);commit();});
 el('teamA').addEventListener('input',()=>{if(!loaded)return;teams.A.name=el('teamA').value.trim()||'Team A';render();push();});
 el('teamB').addEventListener('input',()=>{if(!loaded)return;teams.B.name=el('teamB').value.trim()||'Team B';render();push();});
-async function init(){try{const app=initializeApp(cfg);db=getDatabase(app);proRef=ref(db,'msl/pro');liveRef=ref(db,'msl/live');const result=await get(proRef);if(result.exists())restore(result.val());loaded=true;render();el('status').textContent='✅ Connected - BATTER BOWLER ADDED';}catch(err){loaded=true;render();el('status').textContent='⚠️ Firebase error';}}
+async function init(){try{const app=initializeApp(cfg);db=getDatabase(app);proRef=ref(db,'msl/pro');liveRef=ref(db,'msl/live');const result=await get(proRef);if(result.exists())restore(result.val());loaded=true;render();el('status').textContent='✅ Connected - HISTORY ADDED';}catch(err){loaded=true;render();el('status').textContent='⚠️ Firebase error';}}
 render();init();
 </script>
 </body>
