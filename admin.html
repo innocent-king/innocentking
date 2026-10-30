@@ -2,7 +2,7 @@
 <html lang="ur">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MSL ULTRA FINAL - CUSTOM ADDED</title>
+<title>MSL ULTRA FINAL - CUSTOM FULL CONTROL</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 body{background:#020617;color:#fff;max-width:520px;margin:auto;padding:8px}
@@ -70,25 +70,43 @@ input,select{width:100%;padding:12px;border-radius:10px;border:1px solid #475569
 <div class="label">LEG BYE 1-9 (Ball Count Hogi)</div><div class="grid"><button class="btn cLB" onclick="addBye(1,'LB')">LB1</button><button class="btn cLB" onclick="addBye(2,'LB')">LB2</button><button class="btn cLB" onclick="addBye(3,'LB')">LB3</button><button class="btn cLB" onclick="addBye(4,'LB')">LB4</button><button class="btn cLB" onclick="addBye(5,'LB')">LB5</button><button class="btn cLB" onclick="addBye(6,'LB')">LB6</button><button class="btn cLB" onclick="addBye(7,'LB')">LB7</button><button class="btn cLB" onclick="addBye(8,'LB')">LB8</button><button class="btn cLB" onclick="addBye(9,'LB')">LB9</button><button class="btn cWDB" style="background:#a78bfa" onclick="addWideBye(1,'LB')">WD+LB1</button><button class="btn cWDB" style="background:#a78bfa" onclick="addWideBye(2,'LB')">WD+LB2</button><button class="btn cWDB" style="background:#a78bfa" onclick="addWideBye(4,'LB')">WD+LB4</button></div>
 <div class="label">⚡ SUPER BALL - Next Ball Double</div><div class="grid"><button class="btn cSUPER" id="superBtn" onclick="activateSuper()">⚡ SUPER ON</button><button class="btn cSUPER" style="background:#334155;color:#facc15;border:2px solid #facc15" onclick="deactivateSuper()">SUPER OFF</button><button class="btn cSUPER" onclick="addRun(4,true)">SUPER 4=8</button><button class="btn cSUPER" onclick="addRun(6,true)">SUPER 6=12</button></div>
 
-<div class="label" style="color:#06b6d4">✏️ CUSTOM - Jo Board Pe Na Ho Khud Likho</div>
+<!-- CUSTOM FULL CONTROL -->
+<div class="label" style="color:#06b6d4">✏️ CUSTOM - FULL CONTROL (Apni Marzi)</div>
 <div style="background:#0f172a;padding:10px;border-radius:10px;border:1px solid #06b6d4">
 <div class="row">
-<input id="customRuns" type="number" placeholder="Runs (0-100)" style="flex:1">
-<input id="customLabel" type="text" placeholder="Label: FREE HIT / PENALTY" style="flex:1.5">
+<input id="customRuns" type="number" placeholder="Runs" style="flex:1">
+<input id="customLabel" type="text" placeholder="Label: WD, NB, FREE HIT" style="flex:1.5">
 </div>
 <div class="row" style="margin-top:6px">
 <select id="customType" style="flex:1">
-<option value="run">Run (Ball Hogi)</option>
-<option value="wide">Wide (Ball Nahi)</option>
-<option value="nb">No Ball (Ball Nahi)</option>
-<option value="bye">Bye (Ball Hogi)</option>
-<option value="lb">Leg Bye (Ball Hogi)</option>
-<option value="out">Wicket (Ball Hogi)</option>
-<option value="ro">Runout (Ball Hogi)</option>
+<option value="run">Run</option>
+<option value="wide">Wide</option>
+<option value="nb">No Ball</option>
+<option value="bye">Bye</option>
+<option value="lb">Leg Bye</option>
+<option value="out">Wicket</option>
+<option value="ro">Runout</option>
 </select>
-<button class="btn cCUSTOM" onclick="addCustom()" style="flex:1">ADD CUSTOM</button>
+<select id="customBall" style="flex:1">
+<option value="auto">Ball: Auto</option>
+<option value="yes">Ball: Hogi ✅</option>
+<option value="no">Ball: Nahi ❌</option>
+</select>
 </div>
-<div style="color:#64748b;font-size:9px;margin-top:4px">Example: 5 runs + FREE HIT, ya 0 run + DEAD BALL</div>
+<div class="row" style="margin-top:6px">
+<select id="customExtra" style="flex:1">
+<option value="auto">Extra: Auto</option>
+<option value="yes">Extra: Yes</option>
+<option value="no">Extra: No</option>
+</select>
+<select id="customWicket" style="flex:1">
+<option value="auto">Wicket: Auto</option>
+<option value="yes">Wicket: Yes</option>
+<option value="no">Wicket: No</option>
+</select>
+<button class="btn cCUSTOM" onclick="addCustom()" style="flex:1">ADD</button>
+</div>
+<div style="color:#22c55e;font-size:9px;margin-top:6px">✅ Ab WD + Ball Hogi, NB + Wicket No, Run + No Ball sab kar sakte ho!</div>
 </div>
 
 <div class="label" style="color:#ef4444">MINUS SCORE</div><div class="grid"><button class="btn cMINUS" onclick="minusRun(1)">-1</button><button class="btn cMINUS" onclick="minusRun(2)">-2</button><button class="btn cMINUS" onclick="minusRun(4)">-4</button><button class="btn cMINUS" onclick="minusRun(6)">-6</button></div>
@@ -141,28 +159,65 @@ window.addBye=function(run,type){if(!beginDelivery())return;const t=teams[bat],d
 window.addWideBye=function(run,type){if(!beginDelivery())return;const t=teams[bat],doubled=isSuper,total=(run+1)*(doubled?2:1);t.runs+=total;t.extras+=total;currentOver.push({v:`WD+${type}${run}`,t:'wide',super:doubled});addToHistory({v:`WD+${type}${run}`,t:'wide',super:doubled});isSuper=false;commit();};
 window.addWicket=function(){if(!beginDelivery())return;const t=teams[bat];t.wickets++;t.balls++;currentOver.push({v:'W',t:'out'});addToHistory({v:'W',t:'out'});isSuper=false;commit();};
 window.addRunout=function(r){if(!beginDelivery())return;const t=teams[bat],doubled=isSuper,actual=doubled?r*2:r;t.runs+=actual;t.wickets++;t.balls++;currentOver.push({v:'RO+'+actual,t:'ro',super:doubled});addToHistory({v:'RO+'+actual,t:'ro',super:doubled});isSuper=false;commit();};
+
+// CUSTOM FULL CONTROL - APNI MARZI
 window.addCustom=function(){
  if(!beginDelivery())return;
  const runs = parseInt(el('customRuns').value)||0;
  const label = el('customLabel').value.trim()||'CUSTOM';
  const type = el('customType').value;
+ const ballOpt = el('customBall').value; // auto, yes, no
+ const extraOpt = el('customExtra').value; // auto, yes, no
+ const wicketOpt = el('customWicket').value; // auto, yes, no
  const t=teams[bat];
  const doubled=isSuper;
  const actual=doubled?runs*2:runs;
+
+ // Runs hamesha add
  t.runs+=actual;
- if(type==='wide'||type==='nb'||type==='bye'||type==='lb') t.extras+=actual;
- if(type!=='wide'&&type!=='nb'){
-   if(type==='out'||type==='ro'){ t.wickets++; }
-   t.balls++;
+
+ // Extra ka control
+ let isExtra = false;
+ if(extraOpt==='yes') isExtra=true;
+ else if(extraOpt==='no') isExtra=false;
+ else isExtra = (type==='wide'||type==='nb'||type==='bye'||type==='lb');
+ if(isExtra) t.extras+=actual;
+
+ // Ball ka control
+ let isBall = false;
+ if(ballOpt==='yes') isBall=true;
+ else if(ballOpt==='no') isBall=false;
+ else isBall = (type!=='wide'&&type!=='nb');
+
+ if(isBall) t.balls++;
+
+ // Wicket ka control
+ let isWicket = false;
+ if(wicketOpt==='yes') isWicket=true;
+ else if(wicketOpt==='no') isWicket=false;
+ else isWicket = (type==='out'||type==='ro');
+ if(isWicket) t.wickets++;
+
+ // Display ke liye type
+ let displayType = type;
+ let finalT = type;
+ if(!isBall && (type==='run'||type==='bye'||type==='lb')){
+   finalT = 'wide'; // taki over me ball na gine
  }
+ if(isBall && (type==='wide'||type==='nb')){
+   finalT = 'run'; // wide ko ball banana hai
+ }
+
  let vText = label ? `${label}(${actual})` : `${actual}`;
- if(type==='out') vText='W('+label+')';
- currentOver.push({v:vText,t:type,super:doubled,customLabel:label});
- addToHistory({v:vText,t:type,super:doubled,customLabel:label});
+ if(type==='out' && label) vText=`W(${label})`;
+
+ currentOver.push({v:vText,t:finalT,super:doubled,customLabel:label});
+ addToHistory({v:vText,t:displayType + (isBall?' Ball':' NoBall') + (isExtra?' Extra':'') + (isWicket?' W':'') ,super:doubled,customLabel:label});
  isSuper=false;
  el('customRuns').value='';el('customLabel').value='';
  commit();
 };
+
 window.minusRun=function(r){if(!loaded||matchFinished)return;save();const t=teams[bat];t.runs=Math.max(0,t.runs-r);t.extras=Math.max(0,t.extras-r);commit();};
 window.activateSuper=function(){if(!loaded||matchFinished||isSuper||inningsOver())return;save();isSuper=true;commit();};
 window.deactivateSuper=function(){if(!loaded||!isSuper)return;save();isSuper=false;commit();};
@@ -180,13 +235,12 @@ el('teamB').addEventListener('input',()=>{if(!loaded)return;teams.B.name=el('tea
 async function init(){
  try{
   const app=initializeApp(cfg);db=getDatabase(app);proRef=ref(db,'msl/pro');liveRef=ref(db,'msl/live');viewersRef=ref(db,'msl/viewers');
-  // ADMIN KA VIEW COUNT NAHI HOGA - SIRF VIEWER PAGE KA HOGA
   onValue(viewersRef,snap=>{
     if(!snap.exists()){el('viewerCount').innerText=0;return;}
     const onlyViewers = Object.values(snap.val()).filter(v=>v.type==='viewer').length;
     el('viewerCount').innerText=onlyViewers;
   });
-  const result=await get(proRef);if(result.exists())restore(result.val());loaded=true;render();el('status').textContent='✅ Connected - Admin view not counted';
+  const result=await get(proRef);if(result.exists())restore(result.val());loaded=true;render();el('status').textContent='✅ Connected - CUSTOM FULL CONTROL';
  }catch(err){loaded=true;render();el('status').textContent='⚠️ Firebase error';}
 }
 render();init();
