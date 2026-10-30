@@ -1,47 +1,75 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MSL LIVE Score - Muridke</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MSL 10F/W LIVE SCORE</title>
 <style>
-body{margin:0;background:#000;color:#fff;font-family:Arial;text-align:center}
-.score-box{background:linear-gradient(90deg,#0f172a,#14532d);padding:15px;border-bottom:4px solid #22c55e}
-.team{font-size:22px;font-weight:bold}
-.runs{font-size:44px;color:#22c55e;font-weight:900;margin:5px 0}
-.ov{font-size:16px;color:#facc15}
-.fb-box{width:100%;height:85vh;background:#000}
-.fb-box iframe{width:100%;height:100%;border:0}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#000;color:#fff;max-width:650px;margin:auto}
+.header{background:#facc15;color:#000;font-weight:900;text-align:center;padding:14px;font-size:22px}
+.fb-wrap{width:100%;background:#000;min-height:360px;display:flex;align-items:center;justify-content:center}
+.score-bar{background:#1e293b;padding:10px;margin:8px;border-radius:14px;border:1px solid #facc15;display:flex;justify-content:space-between;align-items:center}
+.score{font-size:30px;font-weight:900;color:#facc15}
+.batting{background:#facc15;color:#000;font-weight:900;padding:8px;border-radius:8px;text-align:center;margin:8px}
+.balls{display:flex;gap:5px;flex-wrap:wrap;padding:0 8px}
+.ball{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px}
+.b0{background:#334155}.b1{background:#e2e8f0;color:#000}.b4{background:#22c55e}.b6{background:#a855f7}.bW{background:#fbbf24;color:#000}.bOUT{background:#ef4444}
+.live-tag{background:#ef4444;color:#fff;padding:2px 8px;border-radius:20px;font-size:10px;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.4}}
 </style>
 </head>
 <body>
-<div class="score-box">
-  <div class="team" id="title">Muridke Super League LIVE</div>
-  <div class="runs" id="score">Waiting for Score...</div>
-  <div class="ov" id="over">--</div>
+
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0"></script>
+
+<div class="header">MSL 10F/W LIVE SCORE <span class="live-tag">● LIVE 3:00 PM</span></div>
+
+<!-- AUTO LIVE FROM YOUR PAGE -->
+<div class="fb-wrap">
+<div class="fb-page" 
+data-href="https://www.facebook.com/61582021163459" 
+data-tabs="live_videos" 
+data-width="650" 
+data-height="400"
+data-small-header="false" 
+data-adapt-container-width="true" 
+data-hide-cover="false" 
+data-show-facepile="false"></div>
 </div>
-<div class="fb-box">
-  <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/share/19hpcCV2m1/&show_text=0&width=560" allowfullscreen></iframe>
+
+<div style="text-align:center;padding:6px;background:#1877F2"><a href="https://www.facebook.com/share/1EnBhsjp2j/" target="_blank" style="color:#fff;text-decoration:none;font-weight:900">📺 Facebook Page Pe Live Dekho - Like & Follow Karo</a></div>
+
+<div class="batting" id="batInfo">Loading Score...</div>
+
+<div class="score-bar">
+  <div><b id="nameA">Team A</b><div style="font-size:11px;color:#94a3b8" id="overA">0.0</div></div>
+  <div class="score" id="scoreA">0/0</div>
+  <div><b id="nameB">Team B</b><div style="font-size:11px;color:#94a3b8" id="overB">0.0</div></div>
+  <div class="score" id="scoreB">0/0</div>
 </div>
+
+<div class="balls" id="balls"></div>
+
+<div style="background:#1e293b;margin:8px;padding:10px;border-radius:10px;display:flex;gap:10px;text-align:center;font-size:13px">
+  <div style="flex:1">CRR<br><b id="crr" style="color:#facc15">0.00</b></div>
+  <div style="flex:1">Target<br><b id="target" style="color:#facc15">-</b></div>
+  <div style="flex:1">Need<br><b id="need" style="color:#facc15">-</b></div>
+  <div style="flex:1">Balls<br><b id="ballsLeft">30</b></div>
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-const firebaseConfig = {
-  apiKey: "AIzaSyAfdtWU8fHz-WQ-JnptfKDHoKcJyP2us4",
-  authDomain: "live-score-msl.firebaseapp.com",
-  databaseURL: "https://live-score-msl-default-rtdb.firebaseio.com",
-  projectId: "live-score-msl",
-  storageBucket: "live-score-msl.firebasestorage.app",
-  messagingSenderId: "905774460099",
-  appId: "1:905774460099:web:6b87f3c1c9fb0a67850676"
-};
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-onValue(ref(db,'msl/live'),(snap)=>{
-  const d=snap.val(); if(!d) return;
-  document.getElementById('title').innerText=d.matchTitle || "MSL LIVE";
-  document.getElementById('score').innerText=`${d.team1} ${d.runs}/${d.wickets}`;
-  document.getElementById('over').innerText=`Overs: ${d.overs} | ${d.status}`;
-});
+const cfg={apiKey:"AIzaSyAfdtWU8fHz-WQ-JnptfKDHoKcJyP2us4",authDomain:"live-score-msl.firebaseapp.com",databaseURL:"https://live-score-msl-default-rtdb.firebaseio.com",projectId:"live-score-msl",storageBucket:"live-score-msl.firebasestorage.app",messagingSenderId:"905774460099",appId:"1:905774460099:web:6b87f3c1c9fb0a67850676"};
+const app=initializeApp(cfg); const db=getDatabase(app);
+onValue(ref(db,'msl/pro'),s=>{const d=s.val();if(!d)return;const a=d.teams.A,b=d.teams.B;
+document.getElementById('nameA').innerText=a.name;document.getElementById('nameB').innerText=b.name;
+document.getElementById('scoreA').innerText=a.runs+'/'+a.wickets;document.getElementById('scoreB').innerText=b.runs+'/'+b.wickets;
+document.getElementById('overA').innerText=Math.floor(a.balls/6)+'.'+a.balls%6+' / '+d.OVER_LIMIT;document.getElementById('overB').innerText=Math.floor(b.balls/6)+'.'+b.balls%6+' / '+d.OVER_LIMIT;
+const cur=d.bat=='A'?a:b;document.getElementById('batInfo').innerText=`${cur.name} ${cur.runs}/${cur.wickets} (${Math.floor(cur.balls/6)}.${cur.balls%6} Ov) Target ${d.target||'-'}`;
+document.getElementById('crr').innerText=cur.balls?(cur.runs/(cur.balls/6)).toFixed(2):'0.00';document.getElementById('target').innerText=d.target||'-';document.getElementById('need').innerText=d.inn==2?Math.max(0,d.target-cur.runs):'-';document.getElementById('ballsLeft').innerText=d.TOTAL-cur.balls;
+const ballsDiv=document.getElementById('balls');ballsDiv.innerHTML='';d.currentOver.forEach(x=>{const div=document.createElement('div');div.className='ball '+(x.t=='run'?(x.v==4?'b4':x.v==6?'b6':x.v==0?'b0':'b1'):x.t=='out'?'bOUT':'bW');div.innerText=x.v;ballsDiv.appendChild(div);});});
 </script>
 </body>
 </html>
