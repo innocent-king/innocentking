@@ -2,121 +2,82 @@
 <html>
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MSL 10F/W LIVE SCORE - Full Facebook</title>
+<title>MSL LIVE - Facebook Live Same Page</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#020617;color:#fff;max-width:650px;margin:auto;padding-top:0}
+body{background:#020617;color:#fff;max-width:650px;margin:auto}
 .header{background:linear-gradient(90deg,#facc15,#f97316);color:#000;font-weight:900;text-align:center;padding:14px;font-size:20px;display:flex;justify-content:space-between;align-items:center}
 .viewer-badge{background:#000;color:#22c55e;padding:4px 10px;border-radius:20px;font-size:12px;border:1px solid #22c55e}
-.score-bar{background:linear-gradient(135deg,#1e293b,#0f172a);padding:14px;margin:8px;border-radius:16px;border:1px solid #facc15;display:flex;justify-content:space-between;align-items:center}
-.score{font-size:32px;font-weight:900;color:#facc15}
-.batting{background:#facc15;color:#000;font-weight:900;padding:10px;border-radius:10px;text-align:center;margin:8px}
-.batter-bowler{display:flex;gap:8px;margin:8px}
-.batter-bowler div{flex:1;background:#1e293b;border:1px solid #facc15;border-radius:12px;padding:10px;text-align:center}
-.batter-bowler b{color:#facc15;font-size:9px;display:block}
-.batter-bowler span{font-weight:900;font-size:14px}
-.superball{background:linear-gradient(90deg,#a855f7,#ec4899,#facc15);color:#fff;padding:12px;border-radius:10px;text-align:center;font-weight:900;margin:8px;animation:blink 0.8s infinite;display:none}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0.8}}
-.balls{display:flex;gap:6px;flex-wrap:wrap;padding:8px;background:#0f172a;margin:8px;border-radius:12px;min-height:44px}
-.ball{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px;border:2px solid #000}
-.b0{background:#334155}.b1{background:#e2e8f0;color:#000}.b4{background:#22c55e}.b6{background:#a855f7}.bW{background:#fbbf24;color:#000}.bOUT{background:#ef4444}.bBYE{background:#38bdf8}.bLB{background:#0ea5e9}.bRO{background:#f97316}.bSUPER{background:linear-gradient(135deg,#facc15,#ec4899);color:#000;border-color:#fff}
-.stats-bar{background:#1e293b;margin:8px;padding:12px;border-radius:12px;display:flex;gap:10px;text-align:center;font-size:13px;border:1px solid #334155}
-.stats-bar div{flex:1}.stats-bar b{color:#facc15;font-size:16px;display:block}
-.history-card{background:#1e293b;margin:8px;border-radius:12px;padding:10px;border:1px solid #334155}
-.history-item{display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #0f172a;font-size:12px}
-.history-item.wicket{background:#7f1d1d33;border-left:3px solid #ef4444}
-.fb-card{background:#1e293b;margin:8px;border-radius:12px;padding:12px;border:1px solid #1877F2}
-.fb-btn{background:#1877F2;color:#fff;border:none;padding:12px 20px;border-radius:8px;font-weight:900;width:100%;cursor:pointer;font-size:14px}
-.fb-tabs{display:flex;gap:6px;margin-top:10px}
-.fb-tab{flex:1;padding:10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#fff;font-size:12px;font-weight:800;cursor:pointer;text-align:center}
+.fb-card{background:#1e293b;margin:8px;border-radius:12px;padding:10px;border:2px solid #1877F2}
+.fb-btn{background:#1877F2;color:#fff;border:none;padding:12px;border-radius:8px;font-weight:900;width:100%;cursor:pointer}
+.fb-browser{margin-top:10px;border-radius:12px;overflow:hidden;background:#fff;border:2px solid #1877F2;height:600px}
+.fb-browser iframe{width:100%;height:100%;border:none}
+.fb-tabs{display:flex;gap:5px;margin-top:8px}
+.fb-tab{flex:1;padding:9px;border-radius:6px;background:#0f172a;color:#fff;border:1px solid #334155;font-size:11px;font-weight:800;cursor:pointer;text-align:center}
 .fb-tab.active{background:#1877F2;border-color:#1877F2}
-.fb-search-row{display:flex;gap:6px;margin-top:8px}
-.fb-search-row input{flex:1;padding:10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#fff;font-size:12px}
-.fb-search-row button{padding:10px 12px;border-radius:8px;border:none;background:#facc15;color:#000;font-weight:900;cursor:pointer;font-size:12px}
-/* FLOATING SCORE - Full Facebook ke saath */
-#floatingScore{position:fixed;top:0;left:0;right:0;background:linear-gradient(90deg,#facc15,#f97316);color:#000;font-weight:900;padding:10px 12px;z-index:99999;display:none;justify-content:space-between;align-items:center;font-size:13px;box-shadow:0 4px 12px rgba(0,0,0,0.5)}
+.score-bar{background:linear-gradient(135deg,#1e293b,#0f172a);padding:14px;margin:8px;border-radius:16px;border:1px solid #facc15;display:flex;justify-content:space-between;align-items:center}
+.score{font-size:28px;font-weight:900;color:#facc15}
+.batting{background:#facc15;color:#000;font-weight:900;padding:8px;border-radius:8px;text-align:center;margin:8px;font-size:13px}
+.balls{display:flex;gap:5px;flex-wrap:wrap;padding:8px;background:#0f172a;margin:8px;border-radius:12px}
+.ball{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px}
+.b0{background:#334155}.b1{background:#e2e8f0;color:#000}.b4{background:#22c55e}.b6{background:#a855f7}.bW{background:#fbbf24;color:#000}.bOUT{background:#ef4444}
+.stats-bar{background:#1e293b;margin:8px;padding:10px;border-radius:12px;display:flex;gap:8px;text-align:center;font-size:12px;border:1px solid #334155}
+.stats-bar div{flex:1}.stats-bar b{color:#facc15;display:block}
+.history-card{background:#1e293b;margin:8px;border-radius:12px;padding:10px;border:1px solid #334155}
+.history-item{display:flex;justify-content:space-between;padding:6px;border-bottom:1px solid #0f172a;font-size:11px}
 </style>
 </head>
 <body>
-
-<div id="floatingScore">
-<span id="floatingText">🏏 MSL LIVE - Loading...</span>
-<div style="display:flex;gap:6px">
-<button onclick="window.open('https://www.facebook.com/','_blank')" style="background:#1877F2;color:#fff;border:none;padding:5px 10px;border-radius:5px;font-size:10px;font-weight:900">FB</button>
-<button onclick="document.getElementById('floatingScore').style.display='none'" style="background:#000;color:#fff;border:none;padding:5px 8px;border-radius:4px;font-size:10px">X</button>
-</div>
-</div>
-
 <div class="header"><span>🏏 MSL LIVE</span><span class="viewer-badge">👁️ <b id="viewerCount">0</b> Watching</span></div>
 
-<div class="fb-card" id="fbCard">
-<div style="display:flex;justify-content:space-between;align-items:center">
-<span style="color:#1877F2;font-weight:900;font-size:13px">📘 Full Facebook + Floating Score</span>
-<span id="fbStatus" style="color:#94a3b8;font-size:11px">Not Logged In</span>
-</div>
-
-<div id="fbLoginDiv" style="margin-top:10px">
-<button class="fb-btn" onclick="openFullFacebook()">🔵 Full Facebook Chalao - www.facebook.com</button>
-<div style="color:#94a3b8;font-size:10px;margin-top:6px;text-align:center">Click karte hi full Facebook khulega - Score upar floating rahega</div>
-</div>
-
-<div id="fbLoggedDiv" style="display:none">
-<div style="background:#0f172a;padding:10px;border-radius:8px;margin:10px 0;text-align:center;border:1px solid #22c55e">
-<div style="color:#22c55e;font-weight:900;font-size:13px">✅ Full Facebook Opened</div>
-<div style="color:#94a3b8;font-size:10px;margin-top:4px">Facebook new tab me khul gaya - Wahan login karke video dekho<br>Score upar floating bar me LIVE rahega</div>
+<div class="fb-card">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+<span style="color:#1877F2;font-weight:900;font-size:13px">📘 Facebook LIVE - Isi Page Pe</span>
+<span style="color:#22c55e;font-size:10px">✅ Live Chalega</span>
 </div>
 
 <div class="fb-tabs">
-<button class="fb-tab active" onclick="window.open('https://www.facebook.com/','_blank')">🏠 Full Facebook</button>
-<button class="fb-tab" onclick="window.open('https://www.facebook.com/watch/','_blank')">🎬 Full Watch</button>
-<button class="fb-tab" onclick="fbVideoSearchFull()">🔍 Video Search</button>
-</div>
-
-<div class="fb-search-row">
-<input id="fbSearchInput" placeholder="Facebook pe search: cricket, MSL live..." />
-<button onclick="fbVideoSearchFull()">Search Full FB</button>
+<div class="fb-tab active" id="tLive" onclick="loadFB('live')">🔴 LIVE Videos</div>
+<div class="fb-tab" id="tFb" onclick="loadFB('fb')">🏠 Facebook</div>
+<div class="fb-tab" id="tWatch" onclick="loadFB('watch')">🎬 Watch</div>
+<div class="fb-tab" id="tSearch" onclick="loadFB('search')">🔍 Search</div>
 </div>
 
 <div style="display:flex;gap:6px;margin-top:8px">
-<button onclick="document.getElementById('floatingScore').style.display='flex'" style="flex:1;padding:8px;border-radius:6px;border:none;background:#facc15;color:#000;font-weight:900;font-size:11px">📌 Show Floating Score</button>
-<button onclick="fbLogout()" style="flex:1;padding:8px;border-radius:6px;border:none;background:#7f1d1d;color:#fff;font-weight:900;font-size:11px">Logout</button>
-</div>
-</div>
+<input id="fbInput" placeholder="Live search: MSL, cricket live..." style="flex:1;padding:9px;border-radius:6px;border:1px solid #334155;background:#0f172a;color:#fff;font-size:12px" />
+<button onclick="fbSearch()" style="padding:9px 12px;border-radius:6px;border:none;background:#facc15;color:#000;font-weight:900;font-size:11px">Search</button>
 </div>
 
-<div class="superball" id="superBanner">⚡ SUPER BALL ACTIVE! ⚡</div>
+<div class="fb-browser">
+<iframe id="fbFrame" src="https://m.facebook.com/watch/live/?_rdr" allow="autoplay; fullscreen; encrypted-media" allowfullscreen></iframe>
+</div>
+<div style="color:#22c55e;font-size:10px;text-align:center;margin-top:6px">✅ Facebook isi page pe chal rahi hai - Yahan login karke LIVE video dekho<br>Score neeche LIVE update hota rahega</div>
+</div>
+
 <div class="batting" id="batInfo">Loading...</div>
-<div class="batter-bowler"><div><b>BATTER</b><span id="batter">-</span></div><div><b>BOWLER</b><span id="bowler">-</span></div></div>
 <div class="score-bar"><div><b id="nameA">Team A</b><div style="font-size:11px;color:#94a3b8" id="overA">0.0</div></div><div class="score" id="scoreA">0/0</div><div>VS</div><div class="score" id="scoreB">0/0</div><div style="text-align:right"><b id="nameB">Team B</b><div style="font-size:11px;color:#94a3b8" id="overB">0.0</div></div></div>
 <div class="balls" id="balls"></div>
 <div class="stats-bar"><div>CRR<br><b id="crr">0.00</b></div><div>TARGET<br><b id="target">-</b></div><div>NEED<br><b id="need">-</b></div><div>BALLS<br><b id="ballsLeft">30</b></div></div>
-<div class="history-card"><div style="color:#facc15;font-weight:900;font-size:12px;margin-bottom:6px;display:flex;justify-content:space-between"><span>📜 HISTORY</span><span id="extras">Extras: 0</span></div><div id="history"></div></div>
+<div class="history-card"><div style="color:#facc15;font-weight:900;font-size:12px;margin-bottom:6px">📜 HISTORY</div><div id="history"></div></div>
 
 <script>
-// FULL FACEBOOK + FLOATING SCORE LOGIC
-function openFullFacebook(){
-  document.getElementById('fbLoginDiv').style.display='none';
-  document.getElementById('fbLoggedDiv').style.display='block';
-  document.getElementById('fbStatus').innerText='Full Facebook Opened';
-  document.getElementById('fbStatus').style.color='#22c55e';
-  document.getElementById('floatingScore').style.display='flex';
-  document.body.style.paddingTop='44px';
-  // Full Facebook open in new tab
-  window.open('https://www.facebook.com/', '_blank');
+function loadFB(type){
+  document.querySelectorAll('.fb-tab').forEach(e=>e.classList.remove('active'));
+  const frame = document.getElementById('fbFrame');
+  if(type==='live'){ document.getElementById('tLive').classList.add('active'); frame.src='https://m.facebook.com/watch/live/'; }
+  if(type==='fb'){ document.getElementById('tFb').classList.add('active'); frame.src='https://m.facebook.com/'; }
+  if(type==='watch'){ document.getElementById('tWatch').classList.add('active'); frame.src='https://m.facebook.com/watch/'; }
+  if(type==='search'){
+    document.getElementById('tSearch').classList.add('active');
+    const q=document.getElementById('fbInput').value.trim()||'cricket live';
+    frame.src='https://m.facebook.com/search/videos/?q='+encodeURIComponent(q);
+  }
 }
-function fbVideoSearchFull(){
-  const q = document.getElementById('fbSearchInput').value.trim() || 'cricket live';
-  window.open('https://www.facebook.com/watch/search/?q='+encodeURIComponent(q), '_blank');
-  document.getElementById('floatingScore').style.display='flex';
-  document.body.style.paddingTop='44px';
-}
-function fbLogout(){
-  document.getElementById('fbLoginDiv').style.display='block';
-  document.getElementById('fbLoggedDiv').style.display='none';
-  document.getElementById('fbStatus').innerText='Not Logged In';
-  document.getElementById('fbStatus').style.color='#94a3b8';
-  document.getElementById('floatingScore').style.display='none';
-  document.body.style.paddingTop='0';
+function fbSearch(){
+  const q=document.getElementById('fbInput').value.trim()||'cricket live';
+  document.getElementById('fbFrame').src='https://m.facebook.com/search/videos/?q='+encodeURIComponent(q);
+  document.querySelectorAll('.fb-tab').forEach(e=>e.classList.remove('active'));
+  document.getElementById('tSearch').classList.add('active');
 }
 </script>
 
@@ -129,29 +90,16 @@ const myId='viewer_'+Date.now()+'_'+Math.random().toString(36).substr(2,5);
 const myRef=ref(db,'msl/viewers/'+myId);
 set(myRef,{type:'viewer',time:Date.now()});
 onDisconnect(myRef).remove();
-window.addEventListener('beforeunload',()=>{set(myRef,null)});
-onValue(ref(db,'msl/viewers'),snap=>{
- if(!snap.exists()){document.getElementById('viewerCount').innerText=0;return;}
- const all=Object.values(snap.val());
- document.getElementById('viewerCount').innerText=all.filter(v=>v.type==='viewer').length;
-});
+onValue(ref(db,'msl/viewers'),s=>{ if(!s.exists()){document.getElementById('viewerCount').innerText=0;return;} document.getElementById('viewerCount').innerText=Object.values(s.val()).filter(v=>v.type==='viewer').length; });
 onValue(ref(db,'msl/pro'),s=>{
- const d=s.val();if(!d)return;
- const a=d.teams.A,b=d.teams.B;
+ const d=s.val();if(!d)return; const a=d.teams.A,b=d.teams.B;
  document.getElementById('nameA').innerText=a.name;document.getElementById('nameB').innerText=b.name;
  document.getElementById('scoreA').innerText=a.runs+'/'+a.wickets;document.getElementById('scoreB').innerText=b.runs+'/'+b.wickets;
  document.getElementById('overA').innerText=Math.floor(a.balls/6)+'.'+a.balls%6+' / '+d.OVER_LIMIT;document.getElementById('overB').innerText=Math.floor(b.balls/6)+'.'+b.balls%6+' / '+d.OVER_LIMIT;
  const cur=d.bat=='A'?a:b;
- const batTxt = `${cur.name} ${cur.runs}/${cur.wickets} (${Math.floor(cur.balls/6)}.${cur.balls%6} Ov) ${d.target?'Target '+d.target:''}`;
- document.getElementById('batInfo').innerText=batTxt;
- document.getElementById('superBanner').style.display=d.isSuper?'block':'none';
- document.getElementById('batter').innerText=d.batterName||'-';document.getElementById('bowler').innerText=d.bowlerName||'-';
- document.getElementById('crr').innerText=cur.balls?(cur.runs/(cur.balls/6)).toFixed(2):'0.00';document.getElementById('target').innerText=d.target||'-';document.getElementById('need').innerText=d.inn==2?Math.max(0,d.target-cur.runs):'-';document.getElementById('ballsLeft').innerText=d.TOTAL-cur.balls;document.getElementById('extras').innerText='Extras: '+(cur.extras||0);
- // FLOATING SCORE UPDATE
- document.getElementById('floatingText').innerText = `🏏 ${batTxt} | CRR ${cur.balls?(cur.runs/(cur.balls/6)).toFixed(2):'0.00'}`;
- const ballsDiv=document.getElementById('balls');ballsDiv.innerHTML='';(d.currentOver||[]).forEach(x=>{const div=document.createElement('div');let cls='b1';if(x.t=='out')cls='bOUT';else if(x.t=='bye')cls='bBYE';else if(x.t=='lb')cls='bLB';else if(x.t=='wide'||x.t=='nb')cls='bW';else if(x.t=='ro')cls='bRO';else if(x.super)cls='bSUPER';else if(x.v==0)cls='b0';else if(x.v==4||x.v==8)cls='b4';else if(x.v==6||x.v==12)cls='b6';div.className='ball '+cls;div.innerText=x.v+(x.super?'⚡':'');ballsDiv.appendChild(div);});
- const histDiv=document.getElementById('history');
- if(d.fullBallHistory && d.fullBallHistory.length){histDiv.innerHTML='';d.fullBallHistory.slice(0,20).forEach(h=>{const item=document.createElement('div');item.className='history-item '+(h.t=='out'||h.t=='ro'?'wicket':'');item.innerHTML=`<span><b style="color:#facc15">${h.over}</b> ${h.v} - ${h.batter} vs ${h.bowler}</span><span style="color:#94a3b8;font-size:10px">${h.t}</span>`;histDiv.appendChild(item);});} else {histDiv.innerHTML='<span style="color:#64748b;font-size:11px">No balls yet</span>';}
+ document.getElementById('batInfo').innerText=`${cur.name} ${cur.runs}/${cur.wickets} (${Math.floor(cur.balls/6)}.${cur.balls%6} Ov) ${d.target?'Target '+d.target:''}`;
+ document.getElementById('crr').innerText=cur.balls?(cur.runs/(cur.balls/6)).toFixed(2):'0.00';document.getElementById('target').innerText=d.target||'-';document.getElementById('need').innerText=d.inn==2?Math.max(0,d.target-cur.runs):'-';document.getElementById('ballsLeft').innerText=d.TOTAL-cur.balls;
+ const ballsDiv=document.getElementById('balls');ballsDiv.innerHTML='';(d.currentOver||[]).forEach(x=>{const div=document.createElement('div');let cls='b1';if(x.t=='out')cls='bOUT';else if(x.v==0)cls='b0';else if(x.v==4)cls='b4';else if(x.v==6)cls='b6';div.className='ball '+cls;div.innerText=x.v;ballsDiv.appendChild(div);});
 });
 </script>
 </body>
