@@ -25,10 +25,46 @@ body{background:#020617;color:#fff;max-width:650px;margin:auto}
 .history-card{background:#1e293b;margin:8px;border-radius:12px;padding:10px;border:1px solid #334155}
 .history-item{display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #0f172a;font-size:12px}
 .history-item.wicket{background:#7f1d1d33;border-left:3px solid #ef4444}
+/* FACEBOOK LOGIN + VIDEO SEARCH - NAYA */
+.fb-card{background:#1e293b;margin:8px;border-radius:12px;padding:12px;border:1px solid #1877F2}
+.fb-btn{background:#1877F2;color:#fff;border:none;padding:12px 20px;border-radius:8px;font-weight:900;width:100%;cursor:pointer;font-size:14px}
+.fb-btn:hover{background:#166fe5}
+.video-search-box{display:flex;gap:6px;margin-top:10px}
+.video-search-box input{flex:1;padding:10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#fff}
+.video-search-box button{padding:10px 14px;border-radius:8px;border:none;background:#facc15;color:#000;font-weight:900;cursor:pointer}
+.video-frame{margin-top:10px;border-radius:10px;overflow:hidden;background:#000;min-height:200px;display:flex;align-items:center;justify-content:center;color:#64748b;font-size:12px}
 </style>
 </head>
 <body>
 <div class="header"><span>🏏 MSL LIVE</span><span class="viewer-badge">👁️ <b id="viewerCount">0</b> Watching</span></div>
+
+<!-- FACEBOOK LOGIN + VIDEO SEARCH - NAYA SECTION - BAKI SAME -->
+<div class="fb-card" id="fbCard">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+<span style="color:#1877F2;font-weight:900;font-size:13px">📘 Facebook Login & Video Search</span>
+<span id="fbStatus" style="color:#22c55e;font-size:11px">Not Logged In</span>
+</div>
+
+<div id="fbLoginDiv">
+<button class="fb-btn" onclick="fbLogin()">🔵 Login with Facebook</button>
+<div style="color:#94a3b8;font-size:10px;margin-top:6px;text-align:center">Login karke video search karo</div>
+</div>
+
+<div id="fbLoggedDiv" style="display:none">
+<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+<img id="fbPic" src="" style="width:36px;height:36px;border-radius:50%;background:#334155">
+<div><b id="fbName" style="font-size:13px">User</b><div style="font-size:10px;color:#22c55e">● Facebook Connected</div></div>
+<button onclick="fbLogout()" style="margin-left:auto;background:#7f1d1d;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:10px">Logout</button>
+</div>
+
+<div class="video-search-box">
+<input id="videoSearchInput" placeholder="Video search: MSL Live, Cricket..." />
+<button onclick="searchVideo()">Search</button>
+</div>
+<div class="video-frame" id="videoFrame">Video yahan ayegi - Search karo</div>
+</div>
+</div>
+
 <div class="superball" id="superBanner">⚡ SUPER BALL ACTIVE! ⚡</div>
 <div class="batting" id="batInfo">Loading...</div>
 <div class="batter-bowler"><div><b>BATTER</b><span id="batter">-</span></div><div><b>BOWLER</b><span id="bowler">-</span></div></div>
@@ -36,13 +72,72 @@ body{background:#020617;color:#fff;max-width:650px;margin:auto}
 <div class="balls" id="balls"></div>
 <div class="stats-bar"><div>CRR<br><b id="crr">0.00</b></div><div>TARGET<br><b id="target">-</b></div><div>NEED<br><b id="need">-</b></div><div>BALLS<br><b id="ballsLeft">30</b></div></div>
 <div class="history-card"><div style="color:#facc15;font-weight:900;font-size:12px;margin-bottom:6px;display:flex;justify-content:space-between"><span>📜 HISTORY</span><span id="extras">Extras: 0</span></div><div id="history"></div></div>
+
+<!-- FACEBOOK SDK -->
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+<script>
+// FACEBOOK LOGIN LOGIC
+window.fbAsyncInit = function() {
+  FB.init({
+    appId      : 'YOUR_FACEBOOK_APP_ID', // <-- Yahan apna App ID dalna hai
+    cookie     : true,
+    xfbml      : true,
+    version    : 'v18.0'
+  });
+  FB.getLoginStatus(function(response) { checkLoginState(response); });
+};
+
+function fbLogin(){
+  FB.login(function(response){ checkLoginState(response); }, {scope: 'public_profile,email'});
+}
+function fbLogout(){
+  FB.logout(function(){ 
+    document.getElementById('fbLoginDiv').style.display='block';
+    document.getElementById('fbLoggedDiv').style.display='none';
+    document.getElementById('fbStatus').innerText='Not Logged In';
+  });
+}
+function checkLoginState(res){
+  if(res.status==='connected'){
+    document.getElementById('fbLoginDiv').style.display='none';
+    document.getElementById('fbLoggedDiv').style.display='block';
+    document.getElementById('fbStatus').innerText='Logged In';
+    FB.api('/me', {fields: 'name,picture'}, function(user){
+      document.getElementById('fbName').innerText=user.name;
+      if(user.picture) document.getElementById('fbPic').src=user.picture.data.url;
+    });
+  }
+}
+function searchVideo(){
+  const q = document.getElementById('videoSearchInput').value.trim();
+  if(!q) return alert('Search likho');
+  const frame = document.getElementById('videoFrame');
+  // YouTube search embed - Viewer khud video dekh lega
+  frame.innerHTML = `<iframe width="100%" height="220" src="https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(q)}" frameborder="0" allowfullscreen></iframe>`;
+}
+// Simple demo login agar Facebook App ID nahi hai
+if(typeof FB==='undefined'){
+  window.fbLogin = function(){
+    const name = prompt('Facebook Name (Demo):')||'Viewer';
+    document.getElementById('fbLoginDiv').style.display='none';
+    document.getElementById('fbLoggedDiv').style.display='block';
+    document.getElementById('fbName').innerText=name;
+    document.getElementById('fbStatus').innerText='Logged In (Demo)';
+  }
+  window.fbLogout = function(){
+    document.getElementById('fbLoginDiv').style.display='block';
+    document.getElementById('fbLoggedDiv').style.display='none';
+    document.getElementById('fbStatus').innerText='Not Logged In';
+  }
+}
+</script>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, set, onValue, onDisconnect } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 const cfg={apiKey:"AIzaSyAfdtWU8fHz-WQ-JnptfKDHoKcJyP2us4",authDomain:"live-score-msl.firebaseapp.com",databaseURL:"https://live-score-msl-default-rtdb.firebaseio.com",projectId:"live-score-msl",storageBucket:"live-score-msl.firebasestorage.app",messagingSenderId:"905774460099",appId:"1:905774460099:web:6b87f3c1c9fb0a67850676"};
 const app=initializeApp(cfg); const db=getDatabase(app);
 
-// SIRF VIEWER KA COUNT - ADMIN COUNT NAHI HOGA
 const myId = 'viewer_'+Date.now()+'_'+Math.random().toString(36).substr(2,5);
 const myRef = ref(db,'msl/viewers/'+myId);
 set(myRef,{type:'viewer',time:Date.now()});
@@ -52,12 +147,10 @@ window.addEventListener('beforeunload',()=>{set(myRef,null)});
 onValue(ref(db,'msl/viewers'),snap=>{
  if(!snap.exists()){document.getElementById('viewerCount').innerText=0;return;}
  const all = Object.values(snap.val());
- // Sirf viewer type gino, admin ko ignore karo
  const onlyViewers = all.filter(v=>v.type==='viewer').length;
  document.getElementById('viewerCount').innerText=onlyViewers;
 });
 
-// SCORE SYSTEM
 onValue(ref(db,'msl/pro'),s=>{
  const d=s.val();if(!d)return;
  const a=d.teams.A,b=d.teams.B;
