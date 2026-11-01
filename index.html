@@ -2,55 +2,52 @@
 <html>
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MSL LIVE - Split Screen</title>
+<title>MSL LIVE - Final Fixed</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#020617;color:#fff;max-width:700px;margin:auto;height:100vh;display:flex;flex-direction:column}
-.header{background:linear-gradient(90deg,#facc15,#f97316);color:#000;font-weight:900;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+body{background:#020617;color:#fff;max-width:700px;margin:auto}
+.header{background:linear-gradient(90deg,#facc15,#f97316);color:#000;font-weight:900;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:1000}
 .viewer-badge{background:#000;color:#22c55e;padding:4px 10px;border-radius:20px;font-size:12px;border:1px solid #22c55e}
-/* ICC PIN SCORE - TOP PE STICKY */
-.iccTop{background:linear-gradient(135deg,#0f172a,#1e293b);border-bottom:3px solid #facc15;padding:8px 10px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:999}
-.iccTop .team{font-size:12px;font-weight:900}.iccTop .sc{font-size:18px;color:#facc15;font-weight:900}
-.iccTop .info{font-size:10px;color:#94a3b8;text-align:center}
-.ballsMini{display:flex;gap:3px}.ballMini{width:20px;height:20px;border-radius:50%;font-size:9px;display:flex;align-items:center;justify-content:center;font-weight:900}
-.b0{background:#334155}.b1{background:#e2e8f0;color:#000}.b4{background:#22c55e}.b6{background:#a855f7}.bOUT{background:#ef4444}
-/* FACEBOOK LIVE - BOTTOM PE - SAME PAGE ME */
-.fbFrameWrap{flex:1;background:#000;position:relative}
-.fbFrameWrap iframe{width:100%;height:100%;border:none}
-.fbOverlay{position:absolute;top:8px;left:8px;background:#ef4444;color:#fff;padding:4px 8px;border-radius:20px;font-size:10px;font-weight:900;z-index:10}
-.score-bar{background:#1e293b;padding:8px;margin:4px;border-radius:10px;display:flex;justify-content:space-between;font-size:11px;border:1px solid #334155}
+.iccTop{background:#0f172a;border-bottom:3px solid #facc15;padding:10px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:46px;z-index:999}
+.sc{font-size:18px;color:#facc15;font-weight:900}.team{font-size:12px;font-weight:900}
+.fbWrap{background:#000;min-height:700px;position:relative}
+.fbWrap iframe{width:100%;height:700px;border:none;background:#111}
+.liveBadge{position:absolute;top:10px;left:10px;background:#22c55e;color:#fff;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:900;z-index:10}
+.fallbackBox{background:linear-gradient(135deg,#1e293b,#0f172a);border:2px solid #1877F2;margin:10px;border-radius:12px;padding:14px;text-align:center}
 </style>
 </head>
 <body>
 
 <div class="header"><span>🏏 MSL LIVE - Asif Amin Studio</span><span class="viewer-badge">👁️ <b id="viewerCount">0</b></span></div>
 
-<!-- TOP - ICC SCORE - HAMESHA DIKHEGA -->
-<div class="iccTop" id="iccTop">
-<div style="flex:1">
-<div class="team" id="tA">Team A <span class="sc" id="sA">0/0</span></div>
-<div style="font-size:9px;color:#94a3b8" id="oA">0.0 ov</div>
-<div class="team" id="tB" style="margin-top:4px">Team B <span class="sc" id="sB">0/0</span></div>
-<div style="font-size:9px;color:#94a3b8" id="oB">0.0 ov</div>
+<div class="iccTop">
+<div><div class="team" id="tA">Team A <span class="sc" id="sA">0/0</span></div><div style="font-size:9px;color:#94a3b8" id="oA">0.0 / 5</div><div class="team" id="tB" style="margin-top:4px">Team B <span class="sc" id="sB">0/0</span></div><div style="font-size:9px;color:#94a3b8" id="oB">0.0 / 5</div></div>
+<div style="text-align:center"><div style="font-size:10px;color:#94a3b8" id="batInfoTop">Loading...</div><div style="color:#facc15;font-size:10px;margin-top:4px" id="needTop">Target -</div></div>
+<div><button onclick="document.getElementById('fbVideo').src=document.getElementById('fbVideo').src" style="background:#1877F2;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:10px;font-weight:900">↻ Reload FB</button></div>
 </div>
-<div style="text-align:center;flex:1.2">
-<div class="info" id="batInfoTop">Loading...</div>
-<div class="ballsMini" id="ballsTop" style="justify-content:center;margin-top:4px"></div>
-<div class="info" style="color:#facc15;margin-top:4px" id="needTop">Target -</div>
-</div>
-<div style="text-align:right">
-<button onclick="reloadFB()" style="background:#1877F2;color:#fff;border:none;padding:6px 8px;border-radius:6px;font-size:9px;font-weight:900">↻ FB Reload</button>
-<div style="margin-top:4px"><button onclick="window.open('https://facebook.com/asifaminstudio/','_blank')" style="background:#000;color:#fff;border:1px solid #334155;padding:4px 6px;border-radius:4px;font-size:8px">Open in FB App</button></div>
+
+<div class="fallbackBox" id="fallbackBox" style="display:none">
+<div style="font-size:40px">📺</div>
+<div style="color:#facc15;font-weight:900;margin-top:6px">Facebook Ne Video Block Kar Diya</div>
+<div style="color:#94a3b8;font-size:11px;margin-top:4px">Ye Facebook ka rule hai - GitHub pe Live iframe block hota hai</div>
+<div id="fbLinkText" style="color:#64748b;font-size:10px;margin-top:6px;word-break:break-all"></div>
+<button onclick="openFB()" style="margin-top:12px;width:100%;padding:14px;border-radius:10px;background:#1877F2;color:#fff;border:none;font-weight:900;font-size:14px">🔵 Facebook App Me LIVE Dekho - 1 Tap</button>
+<a id="fbDirect" href="#" target="_blank" style="display:block;margin-top:8px;padding:12px;border-radius:10px;background:#000;color:#fff;text-decoration:none;border:1px solid #334155;font-weight:900;font-size:13px;text-align:center">🌐 Browser Me Facebook Kholo</a>
+<div style="background:#020617;padding:8px;border-radius:6px;margin-top:10px;border:1px solid #22c55e;text-align:left">
+<div style="color:#22c55e;font-size:10px;font-weight:900">✅ Trick - Score Kabhi Gaib Nahi Hoga:</div>
+<div style="color:#94a3b8;font-size:10px">1. Blue button dabao - Facebook App me Live khulega<br>2. Wapas is tab pe aao (Recent Apps se) - Upar score LIVE rahega<br>3. Android Split Screen use karo - Upar Facebook, Neeche Score!</div>
 </div>
 </div>
 
-<!-- BOTTOM - FACEBOOK LIVE - SAME PAGE ME - BLOCK NAHI HOGA -->
-<div class="fbFrameWrap">
-<div class="fbOverlay" id="liveBadge">🔴 WAITING FOR ADMIN</div>
-<iframe id="fbPageFrame" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fasifaminstudio&tabs=timeline&width=700&height=800&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
+<div class="fbWrap" id="fbWrap">
+<div class="liveBadge" id="liveBadge">🔴 LIVE ON - Asif Amin Studio</div>
+<iframe id="fbVideo" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
 
-<div class="score-bar"><div>CRR <b id="crr" style="color:#facc15">0.00</b></div><div>TARGET <b id="target" style="color:#facc15">-</b></div><div>NEED <b id="need" style="color:#facc15">-</b></div><div>BALLS <b id="ballsLeft" style="color:#facc15">30</b></div></div>
+<script>
+let currentFbLink='';
+function openFB(){ if(currentFbLink) window.open(currentFbLink,'_blank'); else window.open('https://www.facebook.com/asifaminstudio','_blank'); }
+</script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -61,8 +58,6 @@ const myId='viewer_'+Date.now(); const myRef=ref(db,'msl/viewers/'+myId);
 set(myRef,{type:'viewer',time:Date.now()}); onDisconnect(myRef).remove();
 onValue(ref(db,'msl/viewers'),s=>{document.getElementById('viewerCount').innerText=s.exists()?Object.values(s.val()).filter(v=>v.type==='viewer').length:0;});
 
-function reloadFB(){ document.getElementById('fbPageFrame').src=document.getElementById('fbPageFrame').src; }
-
 onValue(ref(db,'msl/pro'),s=>{
  const d=s.val();if(!d)return; const a=d.teams.A,b=d.teams.B;
  const cur=d.bat=='A'?a:b;
@@ -72,30 +67,38 @@ onValue(ref(db,'msl/pro'),s=>{
  document.getElementById('oA').innerText=`${Math.floor(a.balls/6)}.${a.balls%6} / ${d.OVER_LIMIT}`;
  document.getElementById('oB').innerText=`${Math.floor(b.balls/6)}.${b.balls%6} / ${d.OVER_LIMIT}`;
  document.getElementById('batInfoTop').innerText=batText;
- document.getElementById('crr').innerText=cur.balls?(cur.runs/(cur.balls/6)).toFixed(2):'0.00';
- document.getElementById('target').innerText=d.target||'-';
- document.getElementById('need').innerText=d.inn==2?Math.max(0,d.target-cur.runs):'-';
- document.getElementById('ballsLeft').innerText=d.TOTAL-cur.balls;
- document.getElementById('needTop').innerText=d.inn==1?`CRR ${(cur.balls?(cur.runs/(cur.balls/6)).toFixed(2):'0.00')}`:`Need ${d.inn==2?Math.max(0,d.target-cur.runs):'-'} from ${d.TOTAL-cur.balls}`;
+ document.getElementById('needTop').innerText=d.inn==2?`Need ${Math.max(0,d.target-cur.runs)} from ${d.TOTAL-cur.balls}`:`CRR ${(cur.balls?(cur.runs/(cur.balls/6)).toFixed(2):'0.00')}`;
 
- const ballsDiv=document.getElementById('ballsTop'); ballsDiv.innerHTML='';
- (d.currentOver||[]).slice(-6).forEach(x=>{ const div=document.createElement('div'); let cls='b1'; if(x.t=='out')cls='bOUT'; else if(x.v==0)cls='b0'; else if(x.v==4)cls='b4'; else if(x.v==6)cls='b6'; div.className='ballMini '+cls; div.innerText=x.v; ballsDiv.appendChild(div); });
-
- // FB LIVE LINK AYE TO PAGE KO LIVE TAB PE SWITCH KARO
+ currentFbLink=d.fbLiveLink||'';
+ const fbVideo=document.getElementById('fbVideo');
+ const fallback=document.getElementById('fallbackBox');
  const badge=document.getElementById('liveBadge');
- const fbFrame=document.getElementById('fbPageFrame');
- if(d.fbLiveLink && d.fbLiveLink.includes('facebook.com')){
-   badge.innerText='🔴 LIVE ON - Asif Amin Studio';
-   badge.style.background='#22c55e';
-   // Agar admin ne direct video link bheja to us video ko embed karo - nahi to page ka live tab dikhao
-   if(d.fbLiveLink.includes('/videos/')){
-     const enc=encodeURIComponent(d.fbLiveLink);
-     // Page plugin live videos tab - Ye block nahi hota
-     fbFrame.src=`https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fasifaminstudio&tabs=live_videos&width=700&height=800&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false`;
-   }
+ const linkText=document.getElementById('fbLinkText');
+ const direct=document.getElementById('fbDirect');
+
+ if(currentFbLink && currentFbLink.includes('facebook.com')){
+   linkText.innerText=currentFbLink;
+   direct.href=currentFbLink;
+   badge.innerText='🔴 LIVE ON - Trying to Load...';
+   badge.style.background='#f59e0b';
+   
+   // Try to load - but Facebook will likely block after 3-4 sec
+   const enc=encodeURIComponent(currentFbLink);
+   const trySrc=`https://www.facebook.com/plugins/video.php?href=${enc}&show_text=0&width=700&height=700&autoplay=1&mute=0`;
+   if(fbVideo.src!==trySrc) fbVideo.src=trySrc;
+
+   // After 4 seconds, if black screen, show fallback buttons - This is normal!
+   setTimeout(()=>{
+     fallback.style.display='block';
+     badge.innerText='⚠️ FB Blocked - Use Buttons Below';
+     badge.style.background='#ef4444';
+   },4000);
+
  } else {
+   fallback.style.display='none';
+   fbVideo.src='https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fasifaminstudio&tabs=timeline&width=700&height=700&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false';
    badge.innerText='🔴 WAITING FOR ADMIN';
-   badge.style.background='#ef4444';
+   badge.style.background='#334155';
  }
 });
 </script>
