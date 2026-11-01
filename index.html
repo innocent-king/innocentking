@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MSL LIVE - Final Fixed Split</title>
+<title>MSL LIVE - Final Fixed</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
 body{background:#020617;color:#fff;max-width:700px;margin:auto}
@@ -10,15 +10,10 @@ body{background:#020617;color:#fff;max-width:700px;margin:auto}
 .viewer-badge{background:#000;color:#22c55e;padding:4px 10px;border-radius:20px;font-size:12px;border:1px solid #22c55e}
 .iccTop{background:#0f172a;border-bottom:3px solid #facc15;padding:10px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:46px;z-index:999}
 .sc{font-size:18px;color:#facc15;font-weight:900}.team{font-size:12px;font-weight:900}
-.fbWrap{background:#000;min-height:500px;position:relative}
+.fbWrap{background:#000;min-height:700px;position:relative}
 .fbWrap iframe{width:100%;height:700px;border:none;background:#111}
 .liveBadge{position:absolute;top:10px;left:10px;background:#22c55e;color:#fff;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:900;z-index:10}
 .fallbackBox{background:linear-gradient(135deg,#1e293b,#0f172a);border:2px solid #1877F2;margin:10px;border-radius:12px;padding:14px;text-align:center}
-.batterBox{background:#1e293b;border:1px solid #facc15;margin:8px;border-radius:10px;padding:8px;display:flex;justify-content:space-between;font-size:11px}
-.batterBox b{color:#facc15}
-.waitBox{padding:80px 20px;text-align:center;color:#94a3b8}
-.splitBar{background:#020617;border:1px solid #22c55e;border-radius:8px;padding:8px;margin-top:10px;display:flex;gap:6px}
-.splitBtn{flex:1;padding:10px;border:none;border-radius:6px;font-weight:900;font-size:11px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -28,74 +23,30 @@ body{background:#020617;color:#fff;max-width:700px;margin:auto}
 <div class="iccTop">
 <div><div class="team" id="tA">Team A <span class="sc" id="sA">0/0</span></div><div style="font-size:9px;color:#94a3b8" id="oA">0.0 / 5</div><div class="team" id="tB" style="margin-top:4px">Team B <span class="sc" id="sB">0/0</span></div><div style="font-size:9px;color:#94a3b8" id="oB">0.0 / 5</div></div>
 <div style="text-align:center"><div style="font-size:10px;color:#94a3b8" id="batInfoTop">Loading...</div><div style="color:#facc15;font-size:10px;margin-top:4px" id="needTop">Target -</div></div>
-<div><button onclick="document.getElementById('fbVideo').src=document.getElementById('fbVideo').src" style="background:#1877F2;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:10px;font-weight:900">↻ Reload</button></div>
-</div>
-
-<!-- BATTER / BOWLER BOX - ADMIN SET KAREGA TO AAYEGA -->
-<div class="batterBox" id="batterBox" style="display:none">
-<div>🏏 Batter: <b id="batterName">-</b> <span id="batterRuns" style="color:#94a3b8"></span></div>
-<div>⚾ Bowler: <b id="bowlerName">-</b></div>
-</div>
-
-<!-- WAIT FOR ADMIN - JAB LINK NA HO -->
-<div id="waitAdminBox" class="waitBox" style="display:none">
-<div style="font-size:50px">📺</div>
-<div style="margin-top:10px;color:#facc15;font-weight:900;font-size:16px">Admin Live Ka Intezar Hai</div>
-<div style="font-size:11px;margin-top:8px">Jab Admin FB Live link lagayega to yahan Live chalegi<br>Score upar LIVE rahega</div>
+<div><button onclick="document.getElementById('fbVideo').src=document.getElementById('fbVideo').src" style="background:#1877F2;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:10px;font-weight:900">↻ Reload FB</button></div>
 </div>
 
 <div class="fallbackBox" id="fallbackBox" style="display:none">
-<div style="font-size:40px">🔴</div>
-<div style="color:#22c55e;font-weight:900;margin-top:6px;font-size:15px">Admin Ne Live Lagayi Hai!</div>
-<div id="fbLinkText" style="color:#64748b;font-size:10px;margin-top:6px;word-break:break-all;background:#020617;padding:6px;border-radius:6px"></div>
-<button onclick="openFB()" style="margin-top:12px;width:100%;padding:14px;border-radius:10px;background:#1877F2;color:#fff;border:none;font-weight:900;font-size:14px">🔵 Facebook App Me LIVE Dekho</button>
+<div style="font-size:40px">📺</div>
+<div style="color:#facc15;font-weight:900;margin-top:6px">Facebook Ne Video Block Kar Diya</div>
+<div style="color:#94a3b8;font-size:11px;margin-top:4px">Ye Facebook ka rule hai - GitHub pe Live iframe block hota hai</div>
+<div id="fbLinkText" style="color:#64748b;font-size:10px;margin-top:6px;word-break:break-all"></div>
+<button onclick="openFB()" style="margin-top:12px;width:100%;padding:14px;border-radius:10px;background:#1877F2;color:#fff;border:none;font-weight:900;font-size:14px">🔵 Facebook App Me LIVE Dekho - 1 Tap</button>
 <a id="fbDirect" href="#" target="_blank" style="display:block;margin-top:8px;padding:12px;border-radius:10px;background:#000;color:#fff;text-decoration:none;border:1px solid #334155;font-weight:900;font-size:13px;text-align:center">🌐 Browser Me Facebook Kholo</a>
-
-<!-- SPLIT SCREEN BAR - ISME VIDEO BLOCK NAHI HOTA -->
-<div class="splitBar">
-<button class="splitBtn" style="background:#facc15;color:#000" onclick="openSplit()">📱 SPLIT SCREEN ME DEKHO</button>
-<button class="splitBtn" style="background:#334155;color:#fff" onclick="tryEmbed()">📺 Yahi Pe Try Karo</button>
-</div>
-<div style="background:#020617;padding:8px;border-radius:6px;margin-top:8px;border:1px solid #22c55e;text-align:left">
-<div style="color:#22c55e;font-size:10px;font-weight:900">✅ Split Screen me Block Nahi Hota:</div>
-<div style="color:#94a3b8;font-size:10px">
-1. Blue button dabao - FB App me Live khulega<br>
-2. □ Recent Apps dabao → FB App pe 3 dots → Split Screen<br>
-3. Neeche MSL LIVE select karo<br>
-4. Upar FB Live, Neeche Score - Dono LIVE!
-</div>
+<div style="background:#020617;padding:8px;border-radius:6px;margin-top:10px;border:1px solid #22c55e;text-align:left">
+<div style="color:#22c55e;font-size:10px;font-weight:900">✅ Trick - Score Kabhi Gaib Nahi Hoga:</div>
+<div style="color:#94a3b8;font-size:10px">1. Blue button dabao - Facebook App me Live khulega<br>2. Wapas is tab pe aao (Recent Apps se) - Upar score LIVE rahega<br>3. Android Split Screen use karo - Upar Facebook, Neeche Score!</div>
 </div>
 </div>
 
 <div class="fbWrap" id="fbWrap">
-<div class="liveBadge" id="liveBadge">🔴 WAITING FOR ADMIN</div>
+<div class="liveBadge" id="liveBadge">🔴 LIVE ON - Asif Amin Studio</div>
 <iframe id="fbVideo" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
 
 <script>
 let currentFbLink='';
 function openFB(){ if(currentFbLink) window.open(currentFbLink,'_blank'); else window.open('https://www.facebook.com/asifaminstudio','_blank'); }
-function openSplit(){
-  openFB();
-  setTimeout(()=>{ alert('Facebook App khul gaya hoga!\\n\\nAb:\\n1. Recent Apps (□) dabao\\n2. Facebook App ke upar Split Screen select karo\\n3. Neeche MSL LIVE select karo\\n\\nUpar Video, Neeche Score - Block nahi hoga!'); },500);
-}
-function tryEmbed(){
-  if(!currentFbLink) return;
-  const fbVideo=document.getElementById('fbVideo');
-  const enc=encodeURIComponent(currentFbLink);
-  const trySrc=`https://www.facebook.com/plugins/video.php?href=${enc}&show_text=0&width=700&height=700&autoplay=1&mute=0`;
-  fbVideo.src=trySrc;
-  document.getElementById('fbWrap').style.display='block';
-  document.getElementById('fallbackBox').style.display='none';
-  document.getElementById('waitAdminBox').style.display='none';
-  fbVideo.scrollIntoView({behavior:'smooth'});
-  setTimeout(()=>{
-    // Agar 4 sec baad bhi black hai to wapas fallback dikhao
-    document.getElementById('fallbackBox').style.display='block';
-    document.getElementById('liveBadge').innerText='⚠️ FB Blocked - Split Screen Use Karo';
-    document.getElementById('liveBadge').style.background='#ef4444';
-  },5000);
-}
 </script>
 
 <script type="module">
@@ -118,45 +69,36 @@ onValue(ref(db,'msl/pro'),s=>{
  document.getElementById('batInfoTop').innerText=batText;
  document.getElementById('needTop').innerText=d.inn==2?`Need ${Math.max(0,d.target-cur.runs)} from ${d.TOTAL-cur.balls}`:`CRR ${(cur.balls?(cur.runs/(cur.balls/6)).toFixed(2):'0.00')}`;
 
- // BATTER / BOWLER
- const batterBox=document.getElementById('batterBox');
- const bName=d.batterName || d.strikerName || d.batsman || d.currentBatter || d.batter || '';
- const bwName=d.bowlerName || d.currentBowler || d.bowler || '';
- if(bName || bwName){
-   batterBox.style.display='flex';
-   document.getElementById('batterName').innerText=bName || '-';
-   document.getElementById('batterRuns').innerText=d.batterRuns ? `(${d.batterRuns})` : '';
-   document.getElementById('bowlerName').innerText=bwName || '-';
- } else { batterBox.style.display='none'; }
-
  currentFbLink=d.fbLiveLink||'';
  const fbVideo=document.getElementById('fbVideo');
  const fallback=document.getElementById('fallbackBox');
  const badge=document.getElementById('liveBadge');
  const linkText=document.getElementById('fbLinkText');
  const direct=document.getElementById('fbDirect');
- const waitBox=document.getElementById('waitAdminBox');
- const fbWrap=document.getElementById('fbWrap');
 
  if(currentFbLink && currentFbLink.includes('facebook.com')){
    linkText.innerText=currentFbLink;
    direct.href=currentFbLink;
-   waitBox.style.display='none';
-   fbWrap.style.display='none';
-   fallback.style.display='block';
-   badge.innerText='🔴 LIVE ON - Split Screen Ready';
-   badge.style.background='#22c55e';
-   badge.style.display='none';
-   // Default me iframe hide - taaki Video Unavailable na dikhe, Split Screen se khulega
-   fbVideo.src='';
+   badge.innerText='🔴 LIVE ON - Trying to Load...';
+   badge.style.background='#f59e0b';
+   
+   // Try to load - but Facebook will likely block after 3-4 sec
+   const enc=encodeURIComponent(currentFbLink);
+   const trySrc=`https://www.facebook.com/plugins/video.php?href=${enc}&show_text=0&width=700&height=700&autoplay=1&mute=0`;
+   if(fbVideo.src!==trySrc) fbVideo.src=trySrc;
+
+   // After 4 seconds, if black screen, show fallback buttons - This is normal!
+   setTimeout(()=>{
+     fallback.style.display='block';
+     badge.innerText='⚠️ FB Blocked - Use Buttons Below';
+     badge.style.background='#ef4444';
+   },4000);
+
  } else {
    fallback.style.display='none';
-   fbWrap.style.display='none';
-   fbVideo.src='';
-   waitBox.style.display='block';
+   fbVideo.src='https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fasifaminstudio&tabs=timeline&width=700&height=700&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false';
    badge.innerText='🔴 WAITING FOR ADMIN';
    badge.style.background='#334155';
-   badge.style.display='block';
  }
 });
 </script>
