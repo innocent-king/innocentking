@@ -2,10 +2,10 @@
 <html>
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MSL LIVE - FINAL</title>
+<title>MSL LIVE - ICC Pin Score</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#020617;color:#fff;max-width:650px;margin:auto}
+body{background:#020617;color:#fff;max-width:650px;margin:auto;padding-bottom:80px}
 .header{background:linear-gradient(90deg,#facc15,#f97316);color:#000;font-weight:900;text-align:center;padding:14px;font-size:18px;display:flex;justify-content:space-between;align-items:center}
 .viewer-badge{background:#000;color:#22c55e;padding:4px 10px;border-radius:20px;font-size:12px;border:1px solid #22c55e}
 .fb-card{background:#1e293b;margin:8px;border-radius:12px;padding:10px;border:2px solid #1877F2}
@@ -17,18 +17,60 @@ body{background:#020617;color:#fff;max-width:650px;margin:auto}
 .b0{background:#334155}.b1{background:#e2e8f0;color:#000}.b4{background:#22c55e}.b6{background:#a855f7}.bOUT{background:#ef4444}
 .stats-bar{background:#1e293b;margin:8px;padding:10px;border-radius:12px;display:flex;gap:8px;text-align:center;font-size:12px;border:1px solid #334155}
 .stats-bar div{flex:1}.stats-bar b{color:#facc15;display:block}
-#floatingScore{position:fixed;top:0;left:0;right:0;background:linear-gradient(90deg,#facc15,#f97316);color:#000;font-weight:900;padding:10px 12px;z-index:99999;display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 20px #000;gap:8px}
-#floatingScore span{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ICC STYLE SIDE PIN SCORE */
+#iccPin{
+ position:fixed;
+ top:70px;
+ right:8px;
+ width:210px;
+ background:linear-gradient(135deg,#0f172a,#1e293b);
+ border:2px solid #facc15;
+ border-radius:14px;
+ z-index:99999;
+ box-shadow:0 8px 30px #000;
+ overflow:hidden;
+ cursor:move;
+}
+.icc-header{background:linear-gradient(90deg,#facc15,#f97316);color:#000;font-weight:900;padding:6px 10px;display:flex;justify-content:space-between;align-items:center;font-size:11px}
+.icc-body{padding:8px}
+.icc-team{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:12px;font-weight:700}
+.icc-team.active{color:#facc15}
+.icc-score{font-size:16px;font-weight:900}
+.icc-info{font-size:10px;color:#94a3b8;margin-top:4px;text-align:center;background:#020617;padding:4px;border-radius:6px}
+.icc-balls{display:flex;gap:3px;margin-top:6px;flex-wrap:wrap}
+.icc-ball{width:18px;height:18px;border-radius:50%;font-size:8px;display:flex;align-items:center;justify-content:center;font-weight:900}
+.icc-footer{display:flex;gap:4px;margin-top:6px}
+.icc-btn{flex:1;padding:4px;border:none;border-radius:6px;font-size:8px;font-weight:900;cursor:pointer}
 </style>
 </head>
 <body>
 
-<div id="floatingScore">
-<span id="floatingText">🏏 MSL LIVE - Loading...</span>
-<button onclick="hideFloating()" style="background:#000;color:#fff;border:none;padding:6px 12px;border-radius:6px;font-weight:900;flex-shrink:0">X</button>
+<!-- ICC STYLE PIN - SIDE PE -->
+<div id="iccPin">
+<div class="icc-header" id="iccDrag">
+<span>📌 ICC LIVE</span>
+<div>
+<button onclick="minimizePin()" style="background:#000;color:#fff;border:none;padding:2px 6px;border-radius:4px;font-size:10px;margin-right:2px">_</button>
+<button onclick="closePin()" style="background:#000;color:#fff;border:none;padding:2px 6px;border-radius:4px;font-size:10px">X</button>
 </div>
+</div>
+<div class="icc-body" id="iccBody">
+<div class="icc-team active" id="iccTeamA"><span id="iccNameA">Team A</span><span class="icc-score" id="iccScoreA">0/0</span></div>
+<div style="font-size:9px;color:#64748b;padding-left:2px" id="iccOverA">0.0 / 5.0</div>
+<div class="icc-team" id="iccTeamB" style="margin-top:4px"><span id="iccNameB">Team B</span><span class="icc-score" id="iccScoreB">0/0</span></div>
+<div style="font-size:9px;color:#64748b;padding-left:2px" id="iccOverB">0.0 / 5.0</div>
 
-<div style="height:48px"></div>
+<div class="icc-info" id="iccBatInfo">Batting: Team A</div>
+<div class="icc-balls" id="iccBalls"></div>
+<div class="icc-info" style="color:#facc15" id="iccNeed">Target: -</div>
+
+<div class="icc-footer">
+<button class="icc-btn" style="background:#1877F2;color:#fff" onclick="window.open(currentFbLink||'https://facebook.com/asifaminstudio/','_blank')">FB LIVE</button>
+<button class="icc-btn" style="background:#0f172a;color:#fff;border:1px solid #334155" onclick="document.getElementById('iccPin').style.right='8px';document.getElementById('iccPin').style.top='70px'">RESET</button>
+</div>
+</div>
+</div>
 
 <div class="header"><span>🏏 MSL LIVE</span><span class="viewer-badge">👁️ <b id="viewerCount">0</b> Watching</span></div>
 
@@ -38,13 +80,11 @@ body{background:#020617;color:#fff;max-width:650px;margin:auto}
 <span id="fbLiveBadge" style="color:#94a3b8;font-size:10px">Waiting...</span>
 </div>
 <div id="fbBox" style="background:#0f172a;border-radius:12px;padding:16px;border:2px solid #1877F2;text-align:center">
-<div id="fbWait"><div style="font-size:50px">📺</div><div style="margin-top:10px;color:#facc15;font-weight:900">Admin Live Ka Intezar Hai</div></div>
+<div id="fbWait"><div style="font-size:50px">📺</div><div style="margin-top:10px;color:#facc15;font-weight:900">Admin Live Ka Intezar Hai</div><div style="color:#94a3b8;font-size:11px;margin-top:6px">Side pe 📌 ICC jaisa score pin hai!</div></div>
 <div id="fbLiveActive" style="display:none">
-<div style="font-size:40px">🔴</div>
-<div style="color:#22c55e;font-weight:900;font-size:14px;margin-top:6px">Admin Ne Facebook Live Lagayi Hai!</div>
-<div id="fbLinkText" style="color:#64748b;font-size:10px;margin-top:6px;word-break:break-all;background:#020617;padding:6px;border-radius:6px"></div>
-<button id="fbOpenBtn" onclick="openFbLive()" style="margin-top:14px;width:100%;padding:16px;border-radius:12px;background:#1877F2;color:#fff;border:none;font-weight:900;font-size:15px">🔵 Facebook Pe LIVE Dekho</button>
-<div style="color:#94a3b8;font-size:10px;margin-top:10px">⚠️ Facebook new tab me khulega - Wapas is tab pe aao to score upar floating me LIVE rahega</div>
+<div style="color:#22c55e;font-weight:900">🔴 LIVE ON</div>
+<div id="fbLinkText" style="color:#64748b;font-size:10px;margin-top:6px;word-break:break-all"></div>
+<button onclick="openFbLive()" style="margin-top:12px;width:100%;padding:14px;border-radius:10px;background:#1877F2;color:#fff;border:none;font-weight:900">🔵 Facebook Pe LIVE Dekho</button>
 </div>
 </div>
 </div>
@@ -54,11 +94,33 @@ body{background:#020617;color:#fff;max-width:650px;margin:auto}
 <div class="balls" id="balls"></div>
 <div class="stats-bar"><div>CRR<br><b id="crr">0.00</b></div><div>TARGET<br><b id="target">-</b></div><div>NEED<br><b id="need">-</b></div><div>BALLS<br><b id="ballsLeft">30</b></div></div>
 
+<div style="margin:8px;background:#1e293b;border-radius:12px;padding:10px;border:1px solid #334155">
+<div style="color:#facc15;font-weight:900;font-size:12px">📌 ICC Pin kaise kaam karega?</div>
+<div style="color:#94a3b8;font-size:10px;margin-top:4px">
+• Ye score card side pe pin rahega - scroll karo to bhi rahega<br>
+• Drag karke kahin bhi le ja sakte ho - Header pakad ke khicho<br>
+• Facebook new tab me kholo, ye pin side pe rahega<br>
+• ICC / Cricbuzz jaisa look hai
+</div>
+<button onclick="showPin()" style="margin-top:8px;width:100%;padding:8px;border-radius:6px;background:#facc15;color:#000;border:none;font-weight:900;font-size:11px">📌 Show Pin Score Again</button>
+</div>
+
 <script>
 let currentFbLink = '';
-function openFbLive(){ if(!currentFbLink) return; window.open(currentFbLink, '_blank'); }
-function hideFloating(){ document.getElementById('floatingScore').style.display='none'; document.querySelector('div[style="height:48px"]').style.display='none'; }
-function showFloating(){ document.getElementById('floatingScore').style.display='flex'; document.querySelector('div[style="height:48px"]').style.display='block'; }
+function openFbLive(){ if(currentFbLink) window.open(currentFbLink, '_blank'); else window.open('https://facebook.com/asifaminstudio/','_blank'); }
+function closePin(){ document.getElementById('iccPin').style.display='none'; }
+function showPin(){ document.getElementById('iccPin').style.display='block'; document.getElementById('iccBody').style.display='block'; }
+function minimizePin(){ const b=document.getElementById('iccBody'); b.style.display=b.style.display==='none'?'block':'none'; }
+// Draggable
+let isDragging=false, startX, startY, origX, origY;
+const pin=document.getElementById('iccPin');
+const drag=document.getElementById('iccDrag');
+drag.addEventListener('touchstart', e=>{ isDragging=true; startX=e.touches[0].clientX; startY=e.touches[0].clientY; const r=pin.getBoundingClientRect(); origX=r.left; origY=r.top; });
+drag.addEventListener('touchmove', e=>{ if(!isDragging) return; const dx=e.touches[0].clientX-startX; const dy=e.touches[0].clientY-startY; pin.style.left=(origX+dx)+'px'; pin.style.right='auto'; pin.style.top=(origY+dy)+'px'; });
+drag.addEventListener('touchend', ()=>isDragging=false);
+drag.addEventListener('mousedown', e=>{ isDragging=true; startX=e.clientX; startY=e.clientY; const r=pin.getBoundingClientRect(); origX=r.left; origY=r.top; });
+document.addEventListener('mousemove', e=>{ if(!isDragging) return; const dx=e.clientX-startX; const dy=e.clientY-startY; pin.style.left=(origX+dx)+'px'; pin.style.right='auto'; pin.style.top=(origY+dy)+'px'; });
+document.addEventListener('mouseup', ()=>isDragging=false);
 </script>
 
 <script type="module">
@@ -66,19 +128,16 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getDatabase, ref, set, onValue, onDisconnect } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 const cfg={apiKey:"AIzaSyAfdtWU8fHz-WQ-JnptfKDHoKcJyP2us4",authDomain:"live-score-msl.firebaseapp.com",databaseURL:"https://live-score-msl-default-rtdb.firebaseio.com",projectId:"live-score-msl",storageBucket:"live-score-msl.firebasestorage.app",messagingSenderId:"905774460099",appId:"1:905774460099:web:6b87f3c1c9fb0a67850676"};
 const app=initializeApp(cfg); const db=getDatabase(app);
-const myId='viewer_'+Date.now();
-const myRef=ref(db,'msl/viewers/'+myId);
-set(myRef,{type:'viewer',time:Date.now()});
-onDisconnect(myRef).remove();
+const myId='viewer_'+Date.now(); const myRef=ref(db,'msl/viewers/'+myId);
+set(myRef,{type:'viewer',time:Date.now()}); onDisconnect(myRef).remove();
 onValue(ref(db,'msl/viewers'),s=>{document.getElementById('viewerCount').innerText=s.exists()?Object.values(s.val()).filter(v=>v.type==='viewer').length:0;});
 onValue(ref(db,'msl/pro'),s=>{
- const d=s.val();if(!d)return;
- const a=d.teams.A,b=d.teams.B;
+ const d=s.val();if(!d)return; const a=d.teams.A,b=d.teams.B;
  document.getElementById('nameA').innerText=a.name;document.getElementById('nameB').innerText=b.name;
  document.getElementById('scoreA').innerText=a.runs+'/'+a.wickets;document.getElementById('scoreB').innerText=b.runs+'/'+b.wickets;
  document.getElementById('overA').innerText=Math.floor(a.balls/6)+'.'+a.balls%6+' / '+d.OVER_LIMIT;document.getElementById('overB').innerText=Math.floor(b.balls/6)+'.'+b.balls%6+' / '+d.OVER_LIMIT;
  const cur=d.bat=='A'?a:b;
- const batText = `${cur.name} ${cur.runs}/${cur.wickets} (${Math.floor(cur.balls/6)}.${cur.balls%6})`;
+ const batText=`${cur.name} ${cur.runs}/${cur.wickets} (${Math.floor(cur.balls/6)}.${cur.balls%6})`;
  document.getElementById('batInfo').innerText=batText + (d.target?' | Target '+d.target:'');
  document.getElementById('crr').innerText=cur.balls?(cur.runs/(cur.balls/6)).toFixed(2):'0.00';
  document.getElementById('target').innerText=d.target||'-';
@@ -86,24 +145,22 @@ onValue(ref(db,'msl/pro'),s=>{
  document.getElementById('ballsLeft').innerText=d.TOTAL-cur.balls;
  const ballsDiv=document.getElementById('balls');ballsDiv.innerHTML='';(d.currentOver||[]).forEach(x=>{const div=document.createElement('div');let cls='b1';if(x.t=='out')cls='bOUT';else if(x.v==0)cls='b0';else if(x.v==4)cls='b4';else if(x.v==6)cls='b6';div.className='ball '+cls;div.innerText=x.v;ballsDiv.appendChild(div);});
  
- // FLOATING SCORE - AB HAMESHA SCORE DIKHEGA - FIX
- const floatingText = document.getElementById('floatingText');
- floatingText.innerText = `🏏 ${a.name} ${a.runs}/${a.wickets} vs ${b.name} ${b.runs}/${b.wickets} | ${batText}`;
+ // ICC PIN SCORE UPDATE
+ document.getElementById('iccNameA').innerText=a.name; document.getElementById('iccScoreA').innerText=a.runs+'/'+a.wickets;
+ document.getElementById('iccOverA').innerText=Math.floor(a.balls/6)+'.'+a.balls%6+' / '+d.OVER_LIMIT;
+ document.getElementById('iccNameB').innerText=b.name; document.getElementById('iccScoreB').innerText=b.runs+'/'+b.wickets;
+ document.getElementById('iccOverB').innerText=Math.floor(b.balls/6)+'.'+b.balls%6+' / '+d.OVER_LIMIT;
+ document.getElementById('iccBatInfo').innerText=batText;
+ document.getElementById('iccNeed').innerText=d.inn==1?`1st Inn | CRR ${(cur.balls?(cur.runs/(cur.balls/6)).toFixed(2):'0.00')}`:`Need ${d.inn==2?Math.max(0,d.target-cur.runs):'-'} from ${d.TOTAL-cur.balls} | Target ${d.target||'-'}`;
+ document.getElementById('iccTeamA').classList.toggle('active',d.bat=='A'); document.getElementById('iccTeamB').classList.toggle('active',d.bat=='B');
+ const iccBalls=document.getElementById('iccBalls'); iccBalls.innerHTML=''; (d.currentOver||[]).slice(-6).forEach(x=>{ const div=document.createElement('div'); let cls='b1'; if(x.t=='out')cls='bOUT'; else if(x.v==0)cls='b0'; else if(x.v==4)cls='b4'; else if(x.v==6)cls='b6'; div.className='icc-ball ball '+cls; div.innerText=x.v; iccBalls.appendChild(div); });
 
- // FACEBOOK LIVE
- currentFbLink = d.fbLiveLink || '';
- const fbWait=document.getElementById('fbWait');
- const fbActive=document.getElementById('fbLiveActive');
- const badge=document.getElementById('fbLiveBadge');
- const linkText=document.getElementById('fbLinkText');
+ currentFbLink=d.fbLiveLink||'';
+ const fbWait=document.getElementById('fbWait'); const fbActive=document.getElementById('fbLiveActive');
+ const badge=document.getElementById('fbLiveBadge'); const linkText=document.getElementById('fbLinkText');
  if(currentFbLink && currentFbLink.includes('facebook.com')){
-   fbWait.style.display='none'; fbActive.style.display='block';
-   badge.innerText='🔴 LIVE ON'; badge.style.color='#22c55e';
-   linkText.innerText=currentFbLink;
- } else {
-   fbWait.style.display='block'; fbActive.style.display='none';
-   badge.innerText='Waiting for Admin...';
- }
+   fbWait.style.display='none'; fbActive.style.display='block'; badge.innerText='🔴 LIVE ON'; badge.style.color='#22c55e'; linkText.innerText=currentFbLink;
+ } else { fbWait.style.display='block'; fbActive.style.display='none'; badge.innerText='Waiting...'; }
 });
 </script>
 </body>
