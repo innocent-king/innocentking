@@ -2,15 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MSL LIVE - FB Live Admin Control</title>
+<title>MSL LIVE - FB Live Admin Control - BLOCK PROOF</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
 body{background:#020617;color:#fff;max-width:650px;margin:auto}
 .header{background:linear-gradient(90deg,#facc15,#f97316);color:#000;font-weight:900;text-align:center;padding:14px;font-size:18px;display:flex;justify-content:space-between;align-items:center}
 .viewer-badge{background:#000;color:#22c55e;padding:4px 10px;border-radius:20px;font-size:12px;border:1px solid #22c55e}
 .fb-card{background:#1e293b;margin:8px;border-radius:12px;padding:10px;border:2px solid #1877F2}
-.fb-box{border-radius:12px;overflow:hidden;background:#000;border:2px solid #1877F2;min-height:400px}
-.fb-box iframe{width:100%;height:500px;border:none}
 .score-bar{background:linear-gradient(135deg,#1e293b,#0f172a);padding:14px;margin:8px;border-radius:16px;border:1px solid #facc15;display:flex;justify-content:space-between;align-items:center}
 .score{font-size:28px;font-weight:900;color:#facc15}
 .batting{background:#facc15;color:#000;font-weight:900;padding:10px;border-radius:10px;text-align:center;margin:8px}
@@ -19,9 +17,13 @@ body{background:#020617;color:#fff;max-width:650px;margin:auto}
 .b0{background:#334155}.b1{background:#e2e8f0;color:#000}.b4{background:#22c55e}.b6{background:#a855f7}.bOUT{background:#ef4444}
 .stats-bar{background:#1e293b;margin:8px;padding:10px;border-radius:12px;display:flex;gap:8px;text-align:center;font-size:12px;border:1px solid #334155}
 .stats-bar div{flex:1}.stats-bar b{color:#facc15;display:block}
+#floatingScore{position:fixed;top:0;left:0;right:0;background:linear-gradient(90deg,#facc15,#f97316);color:#000;font-weight:900;padding:12px;z-index:99999;display:none;justify-content:space-between;align-items:center;box-shadow:0 4px 20px #000}
 </style>
 </head>
 <body>
+
+<div id="floatingScore"><span id="floatingText">🏏 MSL LIVE</span><button onclick="hideFloating()" style="background:#000;color:#fff;border:none;padding:6px 12px;border-radius:6px;font-weight:900">X</button></div>
+
 <div class="header"><span>🏏 MSL LIVE</span><span class="viewer-badge">👁️ <b id="viewerCount">0</b> Watching</span></div>
 
 <div class="fb-card">
@@ -29,13 +31,31 @@ body{background:#020617;color:#fff;max-width:650px;margin:auto}
 <span style="color:#1877F2;font-weight:900;font-size:13px">🔴 Facebook LIVE - Admin Control</span>
 <span id="fbLiveBadge" style="color:#94a3b8;font-size:10px">Waiting for Admin...</span>
 </div>
-<div class="fb-box" id="fbBox">
-<div id="fbWait" style="padding:60px 20px;text-align:center;color:#94a3b8">
+
+<div id="fbBox" style="background:#0f172a;border-radius:12px;padding:16px;border:2px solid #1877F2;text-align:center">
+
+<div id="fbWait">
 <div style="font-size:50px">📺</div>
 <div style="margin-top:10px;color:#facc15;font-weight:900">Admin Live Ka Intezar Hai</div>
-<div style="font-size:11px;margin-top:8px">Jab Admin FB Live link lagayega to yahan automatic Live chalegi<br>Score neeche LIVE rahega</div>
+<div style="color:#94a3b8;font-size:11px;margin-top:8px">Jab Admin FB Live link lagayega to yahan button ayega<br>Score neeche LIVE rahega</div>
 </div>
-<iframe id="fbFrame" style="display:none" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+
+<div id="fbLiveActive" style="display:none">
+<div style="font-size:40px">🔴</div>
+<div style="color:#22c55e;font-weight:900;font-size:14px;margin-top:6px">Admin Ne Facebook Live Lagayi Hai!</div>
+<div id="fbLinkText" style="color:#64748b;font-size:10px;margin-top:6px;word-break:break-all;background:#020617;padding:6px;border-radius:6px"></div>
+<button id="fbOpenBtn" onclick="openFbLive()" style="margin-top:14px;width:100%;padding:16px;border-radius:12px;background:#1877F2;color:#fff;border:none;font-weight:900;font-size:15px">🔵 Facebook Pe LIVE Dekho - Click Karo</button>
+<div style="background:#020617;padding:10px;border-radius:8px;margin-top:12px;border:1px solid #22c55e;text-align:left">
+<div style="color:#22c55e;font-weight:900;font-size:11px">✅ Block Proof Trick:</div>
+<div style="color:#94a3b8;font-size:10px;margin-top:4px">
+1. Blue button dabao → Facebook new tab me khulega (Block nahi hoga)<br>
+2. Is page pe wapas aao → Score upar floating bar me LIVE<br>
+3. Facebook jitna marzi block kare, ye method chalega!
+</div>
+</div>
+<button onclick="showFloating()" style="margin-top:10px;width:100%;padding:10px;border-radius:8px;background:#facc15;color:#000;border:none;font-weight:900;font-size:12px">📌 Show Floating Score Bar</button>
+</div>
+
 </div>
 </div>
 
@@ -43,6 +63,13 @@ body{background:#020617;color:#fff;max-width:650px;margin:auto}
 <div class="score-bar"><div><b id="nameA">Team A</b><div style="font-size:11px;color:#94a3b8" id="overA">0.0</div></div><div class="score" id="scoreA">0/0</div><div>VS</div><div class="score" id="scoreB">0/0</div><div style="text-align:right"><b id="nameB">Team B</b><div style="font-size:11px;color:#94a3b8" id="overB">0.0</div></div></div>
 <div class="balls" id="balls"></div>
 <div class="stats-bar"><div>CRR<br><b id="crr">0.00</b></div><div>TARGET<br><b id="target">-</b></div><div>NEED<br><b id="need">-</b></div><div>BALLS<br><b id="ballsLeft">30</b></div></div>
+
+<script>
+let currentFbLink = '';
+function openFbLive(){ if(!currentFbLink) return; window.open(currentFbLink, '_blank'); showFloating(); }
+function showFloating(){ document.getElementById('floatingScore').style.display='flex'; document.body.style.paddingTop='50px'; }
+function hideFloating(){ document.getElementById('floatingScore').style.display='none'; document.body.style.paddingTop='0px'; }
+</script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -61,27 +88,32 @@ onValue(ref(db,'msl/pro'),s=>{
  document.getElementById('scoreA').innerText=a.runs+'/'+a.wickets;document.getElementById('scoreB').innerText=b.runs+'/'+b.wickets;
  document.getElementById('overA').innerText=Math.floor(a.balls/6)+'.'+a.balls%6+' / '+d.OVER_LIMIT;document.getElementById('overB').innerText=Math.floor(b.balls/6)+'.'+b.balls%6+' / '+d.OVER_LIMIT;
  const cur=d.bat=='A'?a:b;
- document.getElementById('batInfo').innerText=`${cur.name} ${cur.runs}/${cur.wickets} (${Math.floor(cur.balls/6)}.${cur.balls%6} Ov) ${d.target?'Target '+d.target:''}`;
+ const batText = `${cur.name} ${cur.runs}/${cur.wickets} (${Math.floor(cur.balls/6)}.${cur.balls%6} Ov) ${d.target?'Target '+d.target:''}`;
+ document.getElementById('batInfo').innerText=batText;
  document.getElementById('crr').innerText=cur.balls?(cur.runs/(cur.balls/6)).toFixed(2):'0.00';
  document.getElementById('target').innerText=d.target||'-';
  document.getElementById('need').innerText=d.inn==2?Math.max(0,d.target-cur.runs):'-';
  document.getElementById('ballsLeft').innerText=d.TOTAL-cur.balls;
  const ballsDiv=document.getElementById('balls');ballsDiv.innerHTML='';(d.currentOver||[]).forEach(x=>{const div=document.createElement('div');let cls='b1';if(x.t=='out')cls='bOUT';else if(x.v==0)cls='b0';else if(x.v==4)cls='b4';else if(x.v==6)cls='b6';div.className='ball '+cls;div.innerText=x.v;ballsDiv.appendChild(div);});
- // ADMIN FACEBOOK LIVE
- const fbFrame=document.getElementById('fbFrame');
+ 
+ // FACEBOOK LIVE - BLOCK PROOF - NO IFRAME
+ currentFbLink = d.fbLiveLink || '';
  const fbWait=document.getElementById('fbWait');
+ const fbActive=document.getElementById('fbLiveActive');
  const badge=document.getElementById('fbLiveBadge');
- if(d.fbLiveLink && d.fbLiveLink.includes('facebook.com')){
+ const linkText=document.getElementById('fbLinkText');
+ const floatingText=document.getElementById('floatingText');
+
+ if(currentFbLink && currentFbLink.includes('facebook.com')){
    fbWait.style.display='none';
-   fbFrame.style.display='block';
+   fbActive.style.display='block';
    badge.innerText='🔴 LIVE ON';
    badge.style.color='#22c55e';
-   const enc=encodeURIComponent(d.fbLiveLink);
-   const newSrc=`https://www.facebook.com/plugins/video.php?href=${enc}&show_text=0&width=650&height=500&autoplay=1`;
-   if(fbFrame.src!==newSrc) fbFrame.src=newSrc;
+   linkText.innerText=currentFbLink;
+   floatingText.innerText='🏏 '+batText;
  } else {
    fbWait.style.display='block';
-   fbFrame.style.display='none';
+   fbActive.style.display='none';
    badge.innerText='Waiting for Admin...';
    badge.style.color='#94a3b8';
  }
