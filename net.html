@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hasilpur WiFi Pehchan Test</title>
+<title>Hasilpur Pro - Final Fix</title>
 <style>
   body{background:#0a0a0a;color:#fff;font-family:Arial;text-align:center;padding:15px}
   .box{background:#161616;border:2px solid #25D366;border-radius:20px;max-width:450px;margin:auto;padding:20px}
@@ -18,6 +18,7 @@
   .card b{font-size:18px;color:#25D366}
   .card span{font-size:12px;color:#bbb}
   button{background:#25D366;border:none;color:#fff;padding:15px 40px;font-size:18px;border-radius:50px;margin-top:15px;cursor:pointer}
+  .manualBtn{background:#333;border:1px solid #555;color:#fff;padding:8px 12px;border-radius:20px;font-size:12px;margin:3px;cursor:pointer}
   #bar{height:10px;background:#333;border-radius:10px;margin-top:15px;overflow:hidden}
   #fill{height:100%;width:0%;background:#25D366;transition:0.2s}
 </style>
@@ -30,9 +31,18 @@
   <div class="networkBox">
     <span>📶 Tera Network Abhi:</span><br>
     <b id="autoNetwork">Pata Lag Raha Hai...</b><br>
-    <div id="wifiBadge"><span class="wifiType" id="wifiTypeText">Checking...</span></div>
-    <br><span id="autoDetail" style="font-size:13px;color:#ccc">Checking...</span><br>
+    <span class="wifiType" id="wifiTypeText">Checking... 3 API Try Ho Rahi Hain</span><br>
+    <span id="autoDetail" style="font-size:13px;color:#ccc">Checking...</span><br>
     <span id="autoCity" style="font-size:12px;color:#888"></span>
+    <div id="manualBox" style="display:none;margin-top:10px">
+      <p style="font-size:12px">Auto nahi chala? Khud dabao:</p>
+      <button class="manualBtn" onclick="manualSet('ZONG')">🟢 ZONG</button>
+      <button class="manualBtn" onclick="manualSet('JAZZ')">🔴 JAZZ</button>
+      <button class="manualBtn" onclick="manualSet('TELENOR')">🔵 TELENOR</button>
+      <button class="manualBtn" onclick="manualSet('PTCL')">📡 PTCL</button>
+      <button class="manualBtn" onclick="manualSet('FIBER')">⚡ FIBER</button>
+      <button class="manualBtn" onclick="manualSet('WIFI')">📶 WIFI</button>
+    </div>
   </div>
 
   <div class="main"><span id="mainSpeed">0.00</span> <span style="font-size:20px">Mbps</span></div>
@@ -50,116 +60,115 @@
 
   <button id="btn" onclick="startTest()">START TEST</button>
   <p class="small" style="margin-top:10px" id="verdict"></p>
-  <p class="small">Made by Hasilpur Wala - WiFi Pehchan V5</p>
+  <p class="small">Made by Hasilpur Wala - V6 Final Fix</p>
 </div>
 
 <script>
 window.onload = async function(){ detectNetwork(); };
 
+function manualSet(type){
+  if(type=='ZONG'){ showResult("🟢 ZONG 4G","📱 MOBILE DATA - ZONG","Zong Ka Mobile Data Chal Raha Hai","Zong","4G Data"); }
+  if(type=='JAZZ'){ showResult("🔴 JAZZ 4G","📱 MOBILE DATA - JAZZ","Jazz Ka Mobile Data Chal Raha Hai","Jazz","4G Data"); }
+  if(type=='TELENOR'){ showResult("🔵 TELENOR 4G","📱 MOBILE DATA - TELENOR","Telenor Ka Mobile Data Chal Raha Hai","Telenor","4G Data"); }
+  if(type=='PTCL'){ showResult("📶 WiFi - PTCL","📡 PTCL HAI","Tera WiFi PTCL Ka Hai","PTCL","WiFi"); }
+  if(type=='FIBER'){ showResult("📶 WiFi - Fiber","⚡ FIBER HAI","Tera WiFi Fiber Hai","Fiber","WiFi"); }
+  if(type=='WIFI'){ showResult("📶 WiFi","📶 WIFI HAI","WiFi Chal Raha Hai","WiFi","WiFi"); }
+  document.getElementById('manualBox').style.display='none';
+}
+
+function showResult(netName, wifiType, detail, isp, conn){
+  document.getElementById('autoNetwork').innerText = netName;
+  document.getElementById('wifiTypeText').innerText = wifiType;
+  document.getElementById('autoDetail').innerText = detail;
+  document.getElementById('ispName').innerText = isp;
+  document.getElementById('connType').innerText = conn;
+  window.currentISP = isp;
+  window.currentIsWifi = (conn=="WiFi");
+}
+
+// 3 API - Ek fail to dusri, dusri fail to teesri
+async function getISPInfo(){
+  // 1. ipwho.is - Sab se fast, Pakistan me chalta hai
+  try{
+    let r = await fetch('https://ipwho.is/?fields=connection,isp,city,country,ip,success');
+    let d = await r.json();
+    if(d.success !== false && d.connection){
+      return { org: d.connection.isp || d.isp, city: d.city, ip: d.ip, asn: d.connection.asn };
+    }
+  }catch(e){}
+
+  // 2. ip-api.com - Dusra option
+  try{
+    let r = await fetch('http://ip-api.com/json/?fields=status,org,isp,city,query,as');
+    let d = await r.json();
+    if(d.status=="success"){
+      return { org: d.isp || d.org, city: d.city, ip: d.query, asn: d.as };
+    }
+  }catch(e){}
+
+  // 3. ipapi.co - Teesra option (pehle wala)
+  try{
+    let r = await fetch('https://ipapi.co/json/');
+    let d = await r.json();
+    if(d.org){
+      return { org: d.org, city: d.city, ip: d.ip, asn: d.asn };
+    }
+  }catch(e){}
+
+  return null;
+}
+
 async function detectNetwork(){
+  document.getElementById('wifiTypeText').innerText = "Checking... API 1 Try Ho Rahi Hai";
   let conn = navigator.connection;
   let type = conn ? conn.effectiveType : "4G";
-  let savedWifi = localStorage.getItem('myWifiName') || "";
 
-  try{
-    let data = await fetch('https://ipapi.co/json/').then(r=>r.json());
-    let org = (data.org || "").toLowerCase();
-    let ispFull = data.org || "Unknown";
-    let city = data.city || "";
+  let info = await getISPInfo();
 
-    document.getElementById('autoCity').innerText = "Location: " + city + " | IP: " + data.ip;
-    document.getElementById('ispName').innerText = ispFull.split(' ')[0];
-    document.getElementById('ispDetail').innerText = ispFull;
+  if(!info){
+    // Agar teeno API fail ho jayein to Browser se andaza + Manual button dikhao
+    let browserType = conn ? (conn.type || "") : "";
+    // Browser ke hisab se WiFi ya Data ka andaza
+    if(browserType=="wifi"){
+      showResult("📶 WiFi","📶 WIFI HAI","WiFi Lag Raha Hai - API Block Hai","WiFi","WiFi");
+    } else {
+      showResult("📶 "+type.toUpperCase(),"📱 MOBILE DATA","Mobile Data Lag Raha Hai - API Block Hai", type.toUpperCase(), type.toUpperCase()+" Data");
+    }
+    document.getElementById('autoDetail').innerText = "API Block Hai, Neeche Se Khud Select Karo";
+    document.getElementById('manualBox').style.display='block';
+    return;
+  }
 
-    let netName = "";
-    let detail = "";
-    let wifiType = "";
-    let isWifi = false;
+  let org = (info.org || "").toLowerCase();
+  let ispFull = info.org || "Unknown";
+  document.getElementById('autoCity').innerText = "Location: " + (info.city||"") + " | IP: " + (info.ip||"");
+  document.getElementById('ispName').innerText = ispFull.split(' ')[0];
+  document.getElementById('ispDetail').innerText = ispFull;
 
-    // ===== WIFI WALI COMPANIES - YEHI ASLI PEHCHAN HAI =====
-    if(org.includes("stormfiber") || org.includes("storm fiber")){
-      isWifi = true;
-      netName = "📶 WiFi - StormFiber";
-      wifiType = "⚡ FIBER HAI - StormFiber";
-      detail = "Tera WiFi StormFiber Ka Fiber Hai";
-    }
-    else if(org.includes("nayatel")){
-      isWifi = true;
-      netName = "📶 WiFi - Nayatel";
-      wifiType = "⚡ FIBER HAI - Nayatel";
-      detail = "Tera WiFi Nayatel Ka Fiber Hai";
-    }
-    else if(org.includes("transworld") || org.includes("tw1") || org.includes("trans world")){
-      isWifi = true;
-      netName = "📶 WiFi - Transworld";
-      wifiType = "⚡ FIBER HAI - Transworld";
-      detail = "Tera WiFi Transworld Fiber Hai";
-    }
-    else if(org.includes("optix") || org.includes("optical")){
-      isWifi = true;
-      netName = "📶 WiFi - Optix Fiber";
-      wifiType = "⚡ FIBER HAI - Optix";
-      detail = "Tera WiFi Optix Fiber Hai";
-    }
-    else if(org.includes("cybernet") || org.includes("cyber")){
-      isWifi = true;
-      netName = "📶 WiFi - Cybernet";
-      wifiType = "⚡ FIBER HAI - Cybernet";
-      detail = "Tera WiFi Cybernet Fiber Hai";
-    }
-    else if(org.includes("ptcl")){
-      isWifi = true;
-      // PTCL me 2 tarah hota hai - Flash Fiber aur DSL
-      // IP se hum pehchan lete hain, speed se confirm hoga
-      netName = "📶 WiFi - PTCL";
-      wifiType = "📡 PTCL HAI - Flash Fiber / DSL";
-      detail = "Tera WiFi PTCL Ka Hai - Speed se pata chalega Fiber hai ya DSL";
-    }
-    else if(org.includes("fiber") || org.includes("fibre")){
-      isWifi = true;
-      netName = "📶 WiFi - " + ispFull;
-      wifiType = "⚡ FIBER HAI";
-      detail = "Tera WiFi Fiber Hai - " + ispFull;
-    }
-    else if(org.includes("zong") || org.includes("cmpak") || org.includes("china mobile")){
-      netName = "🟢 ZONG 4G";
-      wifiType = "📱 MOBILE DATA - ZONG";
-      detail = "Zong Ka Mobile Data Chal Raha Hai, WiFi Nahi Hai";
-    }
-    else if(org.includes("jazz") || org.includes("mobilink") || org.includes("pmcl")){
-      netName = "🔴 JAZZ 4G";
-      wifiType = "📱 MOBILE DATA - JAZZ";
-      detail = "Jazz Ka Mobile Data Chal Raha Hai";
-    }
-    else if(org.includes("telenor")){
-      netName = "🔵 TELENOR 4G";
-      wifiType = "📱 MOBILE DATA - TELENOR";
-      detail = "Telenor Ka Mobile Data Chal Raha Hai";
-    }
-    else if(org.includes("ufone") || org.includes("ptml")){
-      netName = "🟣 UFONE 4G";
-      wifiType = "📱 MOBILE DATA - UFONE";
-      detail = "Ufone Ka Mobile Data Chal Raha Hai";
-    }
-    else {
-      netName = "📶 " + ispFull;
-      wifiType = "🌐 INTERNET - " + ispFull;
-      detail = type.toUpperCase() + " Network";
-    }
-
-    document.getElementById('autoNetwork').innerText = netName;
-    document.getElementById('wifiTypeText').innerText = wifiType;
-    document.getElementById('autoDetail').innerText = detail;
-    document.getElementById('connType').innerText = isWifi ? "WiFi" : type.toUpperCase() + " Data";
-    document.getElementById('signalText').innerText = isWifi ? "WiFi Connection" : "Mobile Data";
-
-    // Save for next time
-    window.currentIsWifi = isWifi;
-    window.currentISP = ispFull;
-
-  }catch(e){
-    document.getElementById('autoNetwork').innerText = "📶 " + type.toUpperCase();
-    document.getElementById('wifiTypeText').innerText = "Check Nahi Ho Saka";
+  if(org.includes("stormfiber")){
+    showResult("📶 WiFi - StormFiber","⚡ FIBER HAI - StormFiber","Tera WiFi StormFiber Ka Fiber Hai","StormFiber","WiFi");
+  } else if(org.includes("nayatel")){
+    showResult("📶 WiFi - Nayatel","⚡ FIBER HAI - Nayatel","Tera WiFi Nayatel Ka Fiber Hai","Nayatel","WiFi");
+  } else if(org.includes("transworld")){
+    showResult("📶 WiFi - Transworld","⚡ FIBER HAI - Transworld","Tera WiFi Transworld Fiber Hai","Transworld","WiFi");
+  } else if(org.includes("optix")){
+    showResult("📶 WiFi - Optix","⚡ FIBER HAI - Optix","Tera WiFi Optix Fiber Hai","Optix","WiFi");
+  } else if(org.includes("cybernet")){
+    showResult("📶 WiFi - Cybernet","⚡ FIBER HAI - Cybernet","Tera WiFi Cybernet Fiber Hai","Cybernet","WiFi");
+  } else if(org.includes("ptcl") || org.includes("pakistan telecommunication")){
+    showResult("📶 WiFi - PTCL","📡 PTCL HAI - Flash Fiber / DSL","Tera WiFi PTCL Ka Hai","PTCL","WiFi");
+  } else if(org.includes("fiber") || org.includes("fibre")){
+    showResult("📶 WiFi - "+ispFull,"⚡ FIBER HAI","Tera WiFi Fiber Hai - "+ispFull, ispFull,"WiFi");
+  } else if(org.includes("zong") || org.includes("cmpak") || org.includes("china mobile")){
+    showResult("🟢 ZONG 4G","📱 MOBILE DATA - ZONG","Zong Ka Mobile Data Chal Raha Hai","Zong","4G Data");
+  } else if(org.includes("jazz") || org.includes("mobilink") || org.includes("pmcl")){
+    showResult("🔴 JAZZ 4G","📱 MOBILE DATA - JAZZ","Jazz Ka Mobile Data Chal Raha Hai","Jazz","4G Data");
+  } else if(org.includes("telenor")){
+    showResult("🔵 TELENOR 4G","📱 MOBILE DATA - TELENOR","Telenor Ka Mobile Data Chal Raha Hai","Telenor","4G Data");
+  } else if(org.includes("ufone") || org.includes("ptml")){
+    showResult("🟣 UFONE 4G","📱 MOBILE DATA - UFONE","Ufone Ka Mobile Data Chal Raha Hai","Ufone","4G Data");
+  } else {
+    showResult("📶 "+ispFull,"🌐 INTERNET - "+ispFull, type.toUpperCase()+" Network - "+ispFull, ispFull, type.toUpperCase());
   }
 }
 
@@ -188,21 +197,13 @@ async function startTest(){
   let down=((20*8)/dTime).toFixed(2);
   document.getElementById('down').innerText=down+' Mbps';
   document.getElementById('mainSpeed').innerText=down;
-
-  // PTCL FIBER YA DSL - SPEED SE FINAL PEHCHAN
   if(window.currentISP && window.currentISP.toLowerCase().includes("ptcl")){
     if(down > 25 && avg < 20){
       document.getElementById('wifiTypeText').innerText = "⚡ PTCL FLASH FIBER HAI";
-      document.getElementById('autoDetail').innerText = "PTCL Ka Flash Fiber Hai - Speed Bohot Achi Hai";
-    } else if(down > 10){
-      document.getElementById('wifiTypeText').innerText = "📡 PTCL HAI - Fiber / VDSL";
-      document.getElementById('autoDetail').innerText = "PTCL Hai - Lagta Hai Fiber Ya VDSL Hai";
-    } else {
+    } else if(down < 10){
       document.getElementById('wifiTypeText').innerText = "📡 PTCL DSL HAI - Purana Wala";
-      document.getElementById('autoDetail').innerText = "PTCL Ka Purana DSL Lag Raha Hai - Speed Kam Hai";
     }
   }
-
   document.getElementById('status').innerText='Upload Check...';
   document.getElementById('fill').style.width='85%';
   let data=new Blob([new Uint8Array(3000000)]);
@@ -214,8 +215,7 @@ async function startTest(){
   document.getElementById('fill').style.width='100%';
   document.getElementById('status').innerText='Ho Gaya!';
   let net=document.getElementById('autoNetwork').innerText;
-  let wtype=document.getElementById('wifiTypeText').innerText;
-  document.getElementById('verdict').innerText = wtype + " | Speed: " + down + " Mbps";
+  document.getElementById('verdict').innerText = net + " | Speed: " + down + " Mbps";
   btn.disabled=false; btn.innerText='DOBARA TEST KARO';
 }
 </script>
