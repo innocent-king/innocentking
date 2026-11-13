@@ -3,63 +3,67 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hasilpur Passport Photo Maker - Premium</title>
+<title>Hasilpur Studio - Passport Photo Maker Pro</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  *{box-sizing:border-box}
-  body{margin:0;font-family:'Poppins',Arial;background:linear-gradient(180deg,#0f2027,#203a43,#2c5364);min-height:100vh;padding:15px;color:#fff}
-  .top{text-align:center;margin-bottom:12px}
-  .logo{font-size:32px}
-  .top h1{margin:2px;font-size:24px;font-weight:800;background:linear-gradient(90deg,#25D366,#00e5ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-  .top p{margin:0;font-size:13px;color:#cbd5e1}
-  .badge{background:#25D366;color:#000;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;display:inline-block;margin-top:6px}
-  .card{background:rgba(255,255,255,0.96);color:#111;border-radius:24px;max-width:480px;margin:auto;padding:18px;box-shadow:0 20px 40px rgba(0,0,0,0.4)}
-  .upload{border:2px dashed #25D366;background:#f0fdf4;border-radius:18px;padding:18px;text-align:center;cursor:pointer}
-  .upload input{display:none}
-  .upload b{color:#111;font-size:15px}
-  .upload span{font-size:12px;color:#666}
-  .upload .icon{font-size:42px}
-  .label{font-size:12px;font-weight:700;color:#333;margin:14px 0 6px;text-align:left}
-  .pills{display:flex;gap:8px;flex-wrap:wrap}
-  .pill{flex:1;min-width:70px;border:2px solid #e5e7eb;background:#fff;border-radius:12px;padding:8px 4px;font-size:12px;font-weight:600;cursor:pointer;text-align:center}
-  .pill.active{border-color:#25D366;background:#eafff3;color:#0a7a3a}
-  .pill span{width:18px;height:18px;border-radius:50%;display:inline-block;border:1px solid #ccc;vertical-align:middle;margin-right:4px}
-  select{width:100%;padding:12px;border-radius:12px;border:2px solid #e5e7eb;font-family:'Poppins';font-weight:600;background:#fff}
-  .previewWrap{background:linear-gradient(135deg,#e0f2fe,#f0fdf4);border-radius:18px;padding:12px;margin-top:12px;text-align:center;position:relative}
-  .previewWrap canvas{border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.25);max-width:100%;background:#fff;touch-action:none}
-  .zoomRow{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:12px;font-weight:600;color:#333}
-  .zoomRow input{flex:1;accent-color:#25D366}
-  .btn{width:100%;border:none;padding:15px;border-radius:50px;font-family:'Poppins';font-size:16px;font-weight:700;cursor:pointer;margin-top:10px}
-  .btn-green{background:linear-gradient(90deg,#25D366,#00b894);color:#fff;box-shadow:0 8px 20px rgba(37,211,102,0.4)}
-  .btn-dark{background:#111;color:#fff}
-  .btn-orange{background:linear-gradient(90deg,#ff9800,#ff5722);color:#fff}
-  .steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px;text-align:center}
-  .steps div{background:#f8fafc;border-radius:12px;padding:10px 5px;font-size:11px;color:#333;font-weight:600}
-  .steps b{display:block;font-size:18px}
-  .sheetBox{display:none;background:#fff;border-radius:18px;padding:12px;margin-top:14px;text-align:center}
-  .sheetBox canvas{max-width:100%;border:1px solid #eee;border-radius:10px}
-  .footer{text-align:center;font-size:11px;color:#94a3b8;margin-top:12px}
-  .price{position:fixed;bottom:12px;right:12px;background:#ff9800;color:#fff;font-size:11px;font-weight:700;padding:8px 12px;border-radius:20px;box-shadow:0 5px 15px rgba(0,0,0,0.3);z-index:10}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:'Poppins',Arial;background:linear-gradient(180deg,#0f2027,#203a43,#2c5364);min-height:100vh;padding:12px;color:#fff;padding-bottom:80px}
+.top{text-align:center}
+.top h1{margin:2px;font-size:23px;font-weight:800;background:linear-gradient(90deg,#25D366,#00e5ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.top p{margin:0;font-size:12px;color:#cbd5e1}
+.badge{background:#25D366;color:#000;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;display:inline-block;margin-top:6px}
+.card{background:#fff;color:#111;border-radius:24px;max-width:500px;margin:12px auto;padding:16px;box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.upload{border:2px dashed #25D366;background:#f0fdf4;border-radius:18px;padding:16px;text-align:center;cursor:pointer;display:block}
+.upload input{display:none}
+.upload b{font-size:15px}
+.upload span{font-size:12px;color:#666}
+.label{font-size:12px;font-weight:700;color:#333;margin:14px 0 6px;text-align:left}
+.pills{display:flex;gap:6px;flex-wrap:wrap}
+.pill{flex:1;min-width:68px;border:2px solid #e5e7eb;background:#fff;border-radius:12px;padding:8px 2px;font-size:12px;font-weight:600;cursor:pointer;text-align:center}
+.pill.active{border-color:#25D366;background:#eafff3;color:#0a7a3a}
+.pill span{width:16px;height:16px;border-radius:50%;display:inline-block;border:1px solid #ccc;vertical-align:middle}
+select,input[type=text]{width:100%;padding:12px;border-radius:12px;border:2px solid #e5e7eb;font-family:'Poppins';font-weight:600;background:#fff}
+.previewWrap{background:linear-gradient(135deg,#e0f2fe,#f0fdf4);border-radius:18px;padding:12px;margin-top:12px;text-align:center}
+.previewWrap canvas{border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,.25);max-width:100%;background:#fff;touch-action:none;cursor:grab}
+.previewWrap canvas:active{cursor:grabbing}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.controls div{background:#f8fafc;border-radius:12px;padding:8px;text-align:left;font-size:11px;font-weight:700;color:#333}
+.controls input{width:100%;accent-color:#25D366}
+.btn{width:100%;border:none;padding:15px;border-radius:50px;font-family:'Poppins';font-size:15px;font-weight:700;cursor:pointer;margin-top:10px}
+.btn-green{background:linear-gradient(90deg,#25D366,#00b894);color:#fff;box-shadow:0 8px 20px rgba(37,211,102,.4)}
+.btn-dark{background:#111;color:#fff}
+.btn-orange{background:linear-gradient(90deg,#ff9800,#ff5722);color:#fff}
+.btn-blue{background:linear-gradient(90deg,#2563eb,#00bfff);color:#fff}
+.btn:disabled{opacity:.5}
+.sheetBox{display:none;background:#f8fafc;border-radius:18px;padding:12px;margin-top:14px;text-align:center}
+.sheetBox canvas{max-width:100%;border:1px solid #ddd;border-radius:10px;background:#fff}
+.steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px;text-align:center}
+.steps div{background:#f8fafc;border-radius:12px;padding:10px 5px;font-size:11px;color:#333;font-weight:600}
+.loading{display:none;background:#fef3c7;color:#92400e;padding:10px;border-radius:12px;font-size:12px;font-weight:700;margin-top:10px}
+.footer{text-align:center;font-size:11px;color:#94a3b8;margin-top:12px}
+.price{position:fixed;bottom:12px;right:12px;background:#ff9800;color:#fff;font-size:11px;font-weight:700;padding:8px 12px;border-radius:20px;box-shadow:0 5px 15px rgba(0,0,0,.3);z-index:10}
 </style>
 </head>
 <body>
-
 <div class="top">
-  <div class="logo">📸</div>
+  <div style="font-size:32px">📸</div>
   <h1>HASILPUR PHOTO STUDIO</h1>
-  <p>Passport Photo Ghar Bethe Banao - Bilkul Free</p>
-  <span class="badge">✅ 100% FREE • NO WATERMARK • 2 MIN ME READY</span>
+  <p>Passport Photo Ghar Bethe Banao - Studio Jaisi Quality</p>
+  <span class="badge">✅ 100% FREE • AI BACKGROUND REMOVER • 300 DPI HD</span>
 </div>
 
 <div class="card">
   <label class="upload">
-    <div class="icon">🖼️</div>
-    <b>Apni Photo Select Karo</b><br>
-    <span>Gallery / Camera se - Koi bhi photo chalegi</span>
+    <div style="font-size:38px">🖼️</div>
+    <b>Photo Select Karo - Gallery / Camera</b><br><span>Koi bhi photo chalegi, chahe background kaisa bhi ho</span>
     <input type="file" id="fileInput" accept="image/*" onchange="loadImage(event)">
   </label>
+  <button class="btn btn-blue" onclick="openCamera()">📷 CAMERA SE PHOTO LO</button>
+  <input type="file" id="camInput" accept="image/*" capture="user" style="display:none" onchange="loadImage(event)">
 
-  <div class="label">1. BACKGROUND SELECT KARO</div>
+  <div id="loadingBox" class="loading">⏳ AI Background Hataya Ja Raha Hai... 5 Second Ruko...</div>
+
+  <div class="label">1. BACKGROUND - AI Se Asli Background Hatayega</div>
   <div class="pills" id="bgPills">
     <div class="pill active" data-bg="#ffffff" onclick="setBg(this)"><span style="background:#fff"></span>White</div>
     <div class="pill" data-bg="#e8f4ff" onclick="setBg(this)"><span style="background:#e8f4ff"></span>Light Blue</div>
@@ -67,28 +71,56 @@
     <div class="pill" data-bg="#ef4444" onclick="setBg(this)"><span style="background:#ef4444"></span>Red</div>
     <div class="pill" data-bg="original" onclick="setBg(this)">✨ Original</div>
   </div>
+  <button class="btn btn-dark" style="padding:10px;font-size:13px" onclick="removeBgAI()">✨ AI SE BACKGROUND HATAO (Auto White)</button>
 
-  <div class="label">2. SIZE SELECT KARO</div>
+  <div class="label">2. DRESS / SUIT - Studio Wala Formal Look</div>
+  <div class="pills" id="dressPills">
+    <div class="pill active" data-dress="none" onclick="setDress(this)">👕 Koi Dress Nahi</div>
+    <div class="pill" data-dress="suit" onclick="setDress(this)">🤵 Coat + Tie</div>
+    <div class="pill" data-dress="shalwar" onclick="setDress(this)">👔 Shalwar Kameez</div>
+    <div class="pill" data-dress="hijab" onclick="setDress(this)">🧕 Hijab (Ladkiyon Ke Liye)</div>
+  </div>
+
+  <div class="label">3. SIZE - Kis Kaam Ke Liye Chahiye?</div>
   <select id="sizeSelect" onchange="redraw()">
-    <option value="passport">🇵🇰 Passport / ID Card - 35 x 45mm (Pakistan)</option>
+    <option value="passport">🇵🇰 Passport / CNIC - 35 x 45mm</option>
     <option value="visa">🇺🇸 USA Visa - 2 x 2 inch</option>
-    <option value="id">🪪 CNIC / Driving License - 35 x 45mm</option>
+    <option value="id">🪪 Driving License - 35 x 45mm</option>
+    <option value="school">🏫 School / College Form - 35 x 45mm</option>
   </select>
 
   <div class="previewWrap">
-    <div style="font-size:12px;font-weight:700;color:#333;margin-bottom:6px">👇 PREVIEW - Photo Ko Ungli Se Upar Neeche Karo</div>
+    <div style="font-size:12px;font-weight:700;color:#333;margin-bottom:6px">👇 PREVIEW - Ungli Se Photo Ko Set Karo</div>
     <canvas id="preview" width="350" height="450"></canvas>
-    <div class="zoomRow"><span>➖ Chota</span><input type="range" id="zoom" min="1" max="3" step="0.1" value="1" oninput="redraw()"><span>Bara ➕</span></div>
+    <div class="controls">
+      <div>🔍 ZOOM<br><input type="range" id="zoom" min="1" max="3" step="0.1" value="1" oninput="redraw()"></div>
+      <div>↻ GHUMAO<br><input type="range" id="rotate" min="-30" max="30" step="1" value="0" oninput="redraw()"></div>
+      <div>☀️ ROSHNI<br><input type="range" id="bright" min="0.7" max="1.5" step="0.1" value="1" oninput="redraw()"></div>
+      <div>🎨 SAFED / KALA<br><input type="range" id="contrast" min="0.8" max="1.4" step="0.1" value="1" oninput="redraw()"></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button onclick="resetAll()" style="flex:1;padding:8px;border-radius:20px;border:1px solid #ddd;background:#fff;font-weight:700;cursor:pointer">🔄 Reset</button>
+      <button onclick="autoCenter()" style="flex:1;padding:8px;border-radius:20px;border:1px solid #25D366;background:#eafff3;font-weight:700;cursor:pointer">🎯 Chehra Auto Center</button>
+    </div>
   </div>
 
-  <button class="btn btn-green" onclick="makeSheet()">📄 4x6 SHEET BANAO - 8 Photos Ek Sath</button>
-  <button class="btn btn-dark" onclick="downloadSingle()">⬇️ Sirf 1 Photo Download Karo</button>
+  <div class="label">4. SHEET ME KITNI PHOTOS CHAHIYE?</div>
+  <div class="pills" id="countPills">
+    <div class="pill" data-count="4" onclick="setCount(this)">4 Photos</div>
+    <div class="pill active" data-count="8" onclick="setCount(this)">8 Photos ⭐</div>
+    <div class="pill" data-count="12" onclick="setCount(this)">12 Photos</div>
+    <div class="pill" data-count="20" onclick="setCount(this)">20 Photos</div>
+  </div>
+
+  <button class="btn btn-green" onclick="makeSheet()">📄 4x6 SHEET BANAO - Print Ke Liye Tayyar</button>
+  <button class="btn btn-dark" onclick="downloadSingle()">⬇️ Sirf 1 Photo Download (HD)</button>
 
   <div class="sheetBox" id="sheetPreview">
     <div style="font-weight:700;color:#111">🎉 Teri Sheet Tayyar Hai!</div>
-    <p style="font-size:12px;color:#666;margin:4px">Isko download karke kisi bhi shop se Rs 30 me print karwa lo</p>
+    <p style="font-size:12px;color:#666;margin:4px">Shop wale ko ye wali photo dikhao, Rs 30 me print ho jayegi</p>
     <canvas id="sheetShow" width="400" height="600"></canvas><br>
-    <button class="btn btn-orange" onclick="downloadSheet()">🖨️ SHEET DOWNLOAD KARO</button>
+    <button class="btn btn-orange" onclick="downloadSheet()">🖨️ SHEET DOWNLOAD KARO (HD)</button>
+    <button class="btn btn-dark" onclick="window.print()">🖨️ Seedha Print Karo</button>
   </div>
 
   <div class="steps">
@@ -96,38 +128,89 @@
     <div><b>2️⃣</b>Chehra Set Karo</div>
     <div><b>3️⃣</b>Sheet Download Karo</div>
   </div>
-
   <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:10px;margin-top:12px;font-size:12px;color:#7c2d12;text-align:left">
-    <b>💡 Pro Tip:</b> Deewar ke samne khare hoke photo lo, seedha munh rakho, dono kaan nazar aane chahiye. Studio wale 300 lete hain, yahan FREE hai.
+    <b>💡 Studio Wala Tarika:</b> Deewar ke samne seedha khare ho, dono kaan nazar aayein, muskurahat halki ho. Chashma ho to utaar do. Photo din ki roshni me lo.
   </div>
 </div>
-
-<div class="footer">Made with ❤️ by Hasilpur Wala • Share Karo Doston Ke Sath</div>
+<div class="footer">Made with ❤️ by Hasilpur Wala • Apne Doston Ko Bhejo - Sab Ka Faida Hoga</div>
 <div class="price">Studio: Rs 300 | Yahan: FREE</div>
-
 <canvas id="sheet" width="1200" height="1800" style="display:none"></canvas>
+<canvas id="work" width="350" height="450" style="display:none"></canvas>
 
+<script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.5/dist/index.umd.js"></script>
 <script>
-let img=null, imgX=0, imgY=0, isDragging=false, startX=0, startY=0, currentBg="#ffffff";
-let canvas=document.getElementById('preview');
-let ctx=canvas.getContext('2d');
+let img=null, imgCut=null, imgX=0, imgY=0, isDragging=false, startX=0, startY=0, currentBg="#ffffff", currentDress="none", sheetCount=8;
+let canvas=document.getElementById('preview'), ctx=canvas.getContext('2d');
+let work=document.getElementById('work'), wctx=work.getContext('2d');
 
-function setBg(el){
-  document.querySelectorAll('#bgPills .pill').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active');
-  currentBg=el.dataset.bg;
-  redraw();
-}
-function loadImage(e){
+function openCamera(){ document.getElementById('camInput').click(); }
+function setBg(el){ document.querySelectorAll('#bgPills .pill').forEach(p=>p.classList.remove('active')); el.classList.add('active'); currentBg=el.dataset.bg; redraw(); }
+function setDress(el){ document.querySelectorAll('#dressPills .pill').forEach(p=>p.classList.remove('active')); el.classList.add('active'); currentDress=el.dataset.dress; redraw(); }
+function setCount(el){ document.querySelectorAll('#countPills .pill').forEach(p=>p.classList.remove('active')); el.classList.add('active'); sheetCount=parseInt(el.dataset.count); }
+
+async function loadImage(e){
   let file=e.target.files[0]; if(!file) return;
-  let reader=new FileReader();
-  reader.onload=function(ev){
-    img=new Image();
-    img.onload=function(){ imgX=0; imgY=0; document.getElementById('zoom').value=1; redraw(); };
-    img.src=ev.target.result;
+  // BUG FIX: Bari photo ko pehle chota karo taake hang na ho
+  let url=URL.createObjectURL(file);
+  let tempImg=new Image();
+  tempImg.onload=function(){
+    let maxW=1200; let scale=1;
+    if(tempImg.width>maxW){ scale=maxW/tempImg.width; }
+    let c=document.createElement('canvas'); c.width=tempImg.width*scale; c.height=tempImg.height*scale;
+    c.getContext('2d').drawImage(tempImg,0,0,c.width,c.height);
+    img=new Image(); img.onload=function(){ imgX=0; imgY=0; imgCut=null; resetSliders(); redraw(); }; img.src=c.toDataURL('image/jpeg',0.9);
   };
-  reader.readAsDataURL(file);
+  tempImg.src=url;
 }
+function resetSliders(){ document.getElementById('zoom').value=1; document.getElementById('rotate').value=0; document.getElementById('bright').value=1; document.getElementById('contrast').value=1; }
+function resetAll(){ imgX=0; imgY=0; resetSliders(); redraw(); }
+function autoCenter(){ imgX=0; imgY=0; document.getElementById('zoom').value=1.15; redraw(); }
+
+async function removeBgAI(){
+  if(!img){ alert("Pehle Photo Select Karo!"); return; }
+  document.getElementById('loadingBox').style.display='block';
+  try{
+    // Imgly AI - Background hatayega
+    const blob = await ImglyBackgroundRemoval.removeBackground(img.src);
+    const url = URL.createObjectURL(blob);
+    let ni=new Image();
+    ni.onload=function(){
+      imgCut=ni; currentBg="#ffffff";
+      document.querySelectorAll('#bgPills .pill').forEach(p=>p.classList.remove('active'));
+      document.querySelector('#bgPills .pill').classList.add('active');
+      document.getElementById('loadingBox').style.display='none';
+      redraw(); alert("Ho Gaya! Background Hat Gaya, Ab White Ho Gaya Hai ✅");
+    };
+    ni.src=url;
+  }catch(err){
+    document.getElementById('loadingBox').style.display='none';
+    alert("AI abhi busy hai, dobara try karo ya White Background use karo. Net tez hona chahiye.");
+  }
+}
+
+function drawDress(){
+  // Dress neeche draw karo - Suit / Shalwar / Hijab
+  if(currentDress=="none") return;
+  ctx.save();
+  if(currentDress=="suit"){
+    // Coat - neeche kala coat + white shirt + red tie
+    ctx.fillStyle="#1a1a1a"; ctx.beginPath(); ctx.moveTo(70,450); ctx.lineTo(140,340); ctx.lineTo(175,450); ctx.closePath(); ctx.fill();
+    ctx.fillStyle="#1a1a1a"; ctx.beginPath(); ctx.moveTo(280,450); ctx.lineTo(210,340); ctx.lineTo(175,450); ctx.closePath(); ctx.fill();
+    ctx.fillStyle="#ffffff"; ctx.beginPath(); ctx.moveTo(175,340); ctx.lineTo(150,450); ctx.lineTo(200,450); ctx.closePath(); ctx.fill();
+    ctx.fillStyle="#cc0000"; ctx.beginPath(); ctx.moveTo(175,340); ctx.lineTo(165,380); ctx.lineTo(175,400); ctx.lineTo(185,380); ctx.closePath(); ctx.fill();
+  } else if(currentDress=="shalwar"){
+    ctx.fillStyle="#f5f5f5"; ctx.fillRect(70,360,210,90);
+    ctx.fillStyle="#ddd"; ctx.fillRect(70,360,210,5);
+  } else if(currentDress=="hijab"){
+    // Hijab - chehre ke around
+    ctx.fillStyle="#111"; ctx.beginPath(); ctx.ellipse(175,180,110,115,0,0,Math.PI*2); ctx.fill();
+    ctx.globalCompositeOperation='destination-out';
+    ctx.beginPath(); ctx.ellipse(175,190,75,85,0,0,Math.PI*2); ctx.fill();
+    ctx.globalCompositeOperation='source-over';
+  }
+  ctx.restore();
+}
+
 function redraw(){
   if(!img){
     ctx.fillStyle="#e2e8f0"; ctx.fillRect(0,0,350,450);
@@ -137,42 +220,71 @@ function redraw(){
     return;
   }
   let zoom=parseFloat(document.getElementById('zoom').value);
+  let rot=parseFloat(document.getElementById('rotate').value);
+  let bright=parseFloat(document.getElementById('bright').value);
+  let contrast=parseFloat(document.getElementById('contrast').value);
+
+  // Background
   if(currentBg=="original"){ ctx.fillStyle="#fff"; ctx.fillRect(0,0,350,450); }
   else { ctx.fillStyle=currentBg; ctx.fillRect(0,0,350,450); }
-  let scale=Math.max(350/img.width,450/img.height)*zoom;
-  let w=img.width*scale, h=img.height*scale;
-  let x=(350-w)/2+imgX, y=(450-h)/2+imgY;
-  ctx.save(); ctx.beginPath(); ctx.rect(0,0,350,450); ctx.clip(); ctx.drawImage(img,x,y,w,h); ctx.restore();
-  // Passport guide
+
+  ctx.save();
+  ctx.filter=`brightness(${bright}) contrast(${contrast})`;
+  ctx.beginPath(); ctx.rect(0,0,350,450); ctx.clip();
+  ctx.translate(175+imgX,225+imgY); ctx.rotate(rot*Math.PI/180); ctx.translate(-175,-225);
+  let src = imgCut || img;
+  let scale=Math.max(350/src.width,450/src.height)*zoom;
+  let w=src.width*scale, h=src.height*scale;
+  let x=(350-w)/2, y=(450-h)/2;
+  ctx.drawImage(src,x,y,w,h);
+  ctx.restore();
+  ctx.filter="none";
+  drawDress();
+  // Guide
   ctx.strokeStyle="rgba(37,211,102,0.7)"; ctx.setLineDash([6,6]); ctx.lineWidth=2; ctx.strokeRect(60,45,230,310); ctx.setLineDash([]);
-  ctx.fillStyle="rgba(0,0,0,0.6)"; ctx.font="11px Poppins"; ctx.textAlign="center"; ctx.fillText("Chehra Is Box Ke Andar Rakho",175,35);
+  ctx.fillStyle="rgba(0,0,0,0.6)"; ctx.font="11px Poppins"; ctx.textAlign="center"; ctx.fillText("Chehra Is Box Ke Andar Rakho",175,28);
 }
 redraw();
-canvas.addEventListener('touchstart',e=>{isDragging=true; startX=e.touches[0].clientX; startY=e.touches[0].clientY;});
+
+// Drag - Mobile + PC dono ke liye FIX
+canvas.addEventListener('touchstart',e=>{isDragging=true; startX=e.touches[0].clientX; startY=e.touches[0].clientY;},{passive:true});
 canvas.addEventListener('touchmove',e=>{if(!isDragging) return; e.preventDefault(); imgX+=e.touches[0].clientX-startX; imgY+=e.touches[0].clientY-startY; startX=e.touches[0].clientX; startY=e.touches[0].clientY; redraw();},{passive:false});
 canvas.addEventListener('touchend',()=>{isDragging=false;});
 canvas.addEventListener('mousedown',e=>{isDragging=true; startX=e.clientX; startY=e.clientY;});
 canvas.addEventListener('mousemove',e=>{if(!isDragging) return; imgX+=e.clientX-startX; imgY+=e.clientY-startY; startX=e.clientX; startY=e.clientY; redraw();});
 canvas.addEventListener('mouseup',()=>{isDragging=false;});
+canvas.addEventListener('mouseleave',()=>{isDragging=false;});
 
 function makeSheet(){
   if(!img){ alert("Pehle Photo Select Karo Bhai!"); return; }
   let sheet=document.getElementById('sheet'); let sctx=sheet.getContext('2d');
   sctx.fillStyle="#ffffff"; sctx.fillRect(0,0,1200,1800);
+  // High Quality - preview ko bari karke lo
   let temp=document.createElement('canvas'); temp.width=350; temp.height=450;
   temp.getContext('2d').drawImage(canvas,0,0);
-  let pw=413, ph=531;
-  for(let r=0;r<4;r++){ for(let c=0;c<2;c++){ let x=50+c*580; let y=30+r*440; sctx.drawImage(temp,x,y,pw,ph); sctx.strokeStyle="#e5e7eb"; sctx.strokeRect(x,y,pw,ph); } }
-  let show=document.getElementById('sheetShow'); show.getContext('2d').drawImage(sheet,0,0,400,600);
+  // Layout: 8 photos = 2 x 4, 12 = 3 x 4, 20 = 4 x 5
+  let cols = sheetCount==20 ? 4 : sheetCount==12 ? 3 : 2;
+  let rows = Math.ceil(sheetCount/cols);
+  let pw = sheetCount==20 ? 280 : sheetCount==12 ? 380 : 413;
+  let ph = pw*45/35;
+  let startX = (1200 - cols*pw - (cols-1)*20)/2;
+  let startY = 30;
+  let idx=0;
+  for(let r=0;r<rows;r++){ for(let c=0;c<cols;c++){ if(idx>=sheetCount) break; let x=startX+c*(pw+20); let y=startY+r*(ph+20); sctx.drawImage(temp,x,y,pw,ph); sctx.strokeStyle="#e5e7eb"; sctx.strokeRect(x,y,pw,ph); idx++; } }
+  // Neeche naam likho
+  sctx.fillStyle="#999"; sctx.font="20px Arial"; sctx.textAlign="center"; sctx.fillText("Hasilpur Photo Studio - Free",600,1770);
+  let show=document.getElementById('sheetShow'); let s2=show.getContext('2d'); s2.fillStyle="#fff"; s2.fillRect(0,0,400,600); s2.drawImage(sheet,0,0,400,600);
   document.getElementById('sheetPreview').style.display='block';
   document.getElementById('sheetPreview').scrollIntoView({behavior:'smooth'});
 }
 function downloadSheet(){
-  let a=document.createElement('a'); a.download="Hasilpur-Passport-Sheet.png"; a.href=document.getElementById('sheet').toDataURL('image/png'); a.click();
+  let a=document.createElement('a'); a.download="Hasilpur-Passport-Sheet-4x6-HD.png"; a.href=document.getElementById('sheet').toDataURL('image/png',1.0); a.click();
 }
 function downloadSingle(){
   if(!img){ alert("Pehle Photo Select Karo!"); return; }
-  let a=document.createElement('a'); a.download="Passport-Photo.png"; a.href=canvas.toDataURL('image/png'); a.click();
+  // HD Single - 1050x1350 (300 DPI)
+  let c=document.createElement('canvas'); c.width=1050; c.height=1350; c.getContext('2d').drawImage(canvas,0,0,1050,1350);
+  let a=document.createElement('a'); a.download="Passport-Photo-HD.png"; a.href=c.toDataURL('image/png',1.0); a.click();
 }
 </script>
 </body>
