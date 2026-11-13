@@ -3,160 +3,219 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hasilpur Pro Speed Test - Accurate</title>
+<title>Hasilpur WiFi Pehchan Test</title>
 <style>
   body{background:#0a0a0a;color:#fff;font-family:Arial;text-align:center;padding:15px}
   .box{background:#161616;border:2px solid #25D366;border-radius:20px;max-width:450px;margin:auto;padding:20px}
   h1{color:#25D366;margin:5px}
+  .networkBox{background:#222;border:2px solid #00ff88;border-radius:15px;padding:15px;margin:10px 0}
+  .networkBox b{font-size:26px;color:#00ff88}
+  .wifiType{background:#25D366;color:#000;font-weight:bold;padding:6px 15px;border-radius:20px;display:inline-block;margin-top:8px;font-size:14px}
   .main{font-size:70px;font-weight:bold}
-  .live{font-size:14px;color:#00ff88;height:18px}
-  .small{font-size:14px;color:#aaa}
+  .small{font-size:13px;color:#aaa}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}
   .card{background:#222;padding:12px;border-radius:12px}
-  .card b{font-size:20px;color:#25D366}
+  .card b{font-size:18px;color:#25D366}
   .card span{font-size:12px;color:#bbb}
-  button{background:#25D366;border:none;color:#fff;padding:15px 40px;font-size:18px;border-radius:50px;margin-top:20px;cursor:pointer}
+  button{background:#25D366;border:none;color:#fff;padding:15px 40px;font-size:18px;border-radius:50px;margin-top:15px;cursor:pointer}
   #bar{height:10px;background:#333;border-radius:10px;margin-top:15px;overflow:hidden}
   #fill{height:100%;width:0%;background:#25D366;transition:0.2s}
-  .result{margin-top:10px;font-size:13px;color:#00ff88}
 </style>
 </head>
 <body>
 <div class="box">
   <h1>⚡ HASILPUR PRO</h1>
-  <p class="small">Accurate Speed Test - Speedtest Jaisa</p>
+  <p class="small">WiFi Hai To Batayega - PTCL Hai Ya Fiber Hai</p>
+
+  <div class="networkBox">
+    <span>📶 Tera Network Abhi:</span><br>
+    <b id="autoNetwork">Pata Lag Raha Hai...</b><br>
+    <div id="wifiBadge"><span class="wifiType" id="wifiTypeText">Checking...</span></div>
+    <br><span id="autoDetail" style="font-size:13px;color:#ccc">Checking...</span><br>
+    <span id="autoCity" style="font-size:12px;color:#888"></span>
+  </div>
+
   <div class="main"><span id="mainSpeed">0.00</span> <span style="font-size:20px">Mbps</span></div>
-  <div class="live" id="liveSpeed">Ready Hai</div>
   <p id="status">START dabao</p>
   <div id="bar"><div id="fill"></div></div>
 
   <div class="grid">
-    <div class="card">Ping<br><b id="ping">--</b><br><span>ms - Sab Se Kam Wala</span></div>
+    <div class="card">Ping<br><b id="ping">--</b><br><span>ms</span></div>
     <div class="card">Jitter<br><b id="jitter">--</b><br><span>ms</span></div>
     <div class="card">Download<br><b id="down">--</b><br><span>Mbps</span></div>
     <div class="card">Upload<br><b id="up">--</b><br><span>Mbps</span></div>
-    <div class="card">Gaming<br><b id="latency">--</b><br><span>PUBG Latency</span></div>
-    <div class="card">ISP<br><b id="conn">--</b><br><span id="isp">Checking...</span></div>
+    <div class="card">WiFi Company<br><b id="ispName">--</b><br><span id="ispDetail">Checking</span></div>
+    <div class="card">Connection<br><b id="connType">--</b><br><span id="signalText">Checking</span></div>
   </div>
-  <div class="result" id="verdict"></div>
+
   <button id="btn" onclick="startTest()">START TEST</button>
-  <p class="small" style="margin-top:15px">Made by Hasilpur Wala - V2 Accurate</p>
+  <p class="small" style="margin-top:10px" id="verdict"></p>
+  <p class="small">Made by Hasilpur Wala - WiFi Pehchan V5</p>
 </div>
 
 <script>
-// --- 1. ACCURATE PING - 10 baar me sab se kam wala lega ---
-async function getAccuratePing(){
-  let pings=[];
-  for(let i=0;i<10;i++){
-    let t1=performance.now();
-    await fetch('https://www.google.com/favicon.ico?x='+Math.random(),{mode:'no-cors',cache:'no-store'});
-    pings.push(performance.now()-t1);
-    await new Promise(r=>setTimeout(r,50));
+window.onload = async function(){ detectNetwork(); };
+
+async function detectNetwork(){
+  let conn = navigator.connection;
+  let type = conn ? conn.effectiveType : "4G";
+  let savedWifi = localStorage.getItem('myWifiName') || "";
+
+  try{
+    let data = await fetch('https://ipapi.co/json/').then(r=>r.json());
+    let org = (data.org || "").toLowerCase();
+    let ispFull = data.org || "Unknown";
+    let city = data.city || "";
+
+    document.getElementById('autoCity').innerText = "Location: " + city + " | IP: " + data.ip;
+    document.getElementById('ispName').innerText = ispFull.split(' ')[0];
+    document.getElementById('ispDetail').innerText = ispFull;
+
+    let netName = "";
+    let detail = "";
+    let wifiType = "";
+    let isWifi = false;
+
+    // ===== WIFI WALI COMPANIES - YEHI ASLI PEHCHAN HAI =====
+    if(org.includes("stormfiber") || org.includes("storm fiber")){
+      isWifi = true;
+      netName = "📶 WiFi - StormFiber";
+      wifiType = "⚡ FIBER HAI - StormFiber";
+      detail = "Tera WiFi StormFiber Ka Fiber Hai";
+    }
+    else if(org.includes("nayatel")){
+      isWifi = true;
+      netName = "📶 WiFi - Nayatel";
+      wifiType = "⚡ FIBER HAI - Nayatel";
+      detail = "Tera WiFi Nayatel Ka Fiber Hai";
+    }
+    else if(org.includes("transworld") || org.includes("tw1") || org.includes("trans world")){
+      isWifi = true;
+      netName = "📶 WiFi - Transworld";
+      wifiType = "⚡ FIBER HAI - Transworld";
+      detail = "Tera WiFi Transworld Fiber Hai";
+    }
+    else if(org.includes("optix") || org.includes("optical")){
+      isWifi = true;
+      netName = "📶 WiFi - Optix Fiber";
+      wifiType = "⚡ FIBER HAI - Optix";
+      detail = "Tera WiFi Optix Fiber Hai";
+    }
+    else if(org.includes("cybernet") || org.includes("cyber")){
+      isWifi = true;
+      netName = "📶 WiFi - Cybernet";
+      wifiType = "⚡ FIBER HAI - Cybernet";
+      detail = "Tera WiFi Cybernet Fiber Hai";
+    }
+    else if(org.includes("ptcl")){
+      isWifi = true;
+      // PTCL me 2 tarah hota hai - Flash Fiber aur DSL
+      // IP se hum pehchan lete hain, speed se confirm hoga
+      netName = "📶 WiFi - PTCL";
+      wifiType = "📡 PTCL HAI - Flash Fiber / DSL";
+      detail = "Tera WiFi PTCL Ka Hai - Speed se pata chalega Fiber hai ya DSL";
+    }
+    else if(org.includes("fiber") || org.includes("fibre")){
+      isWifi = true;
+      netName = "📶 WiFi - " + ispFull;
+      wifiType = "⚡ FIBER HAI";
+      detail = "Tera WiFi Fiber Hai - " + ispFull;
+    }
+    else if(org.includes("zong") || org.includes("cmpak") || org.includes("china mobile")){
+      netName = "🟢 ZONG 4G";
+      wifiType = "📱 MOBILE DATA - ZONG";
+      detail = "Zong Ka Mobile Data Chal Raha Hai, WiFi Nahi Hai";
+    }
+    else if(org.includes("jazz") || org.includes("mobilink") || org.includes("pmcl")){
+      netName = "🔴 JAZZ 4G";
+      wifiType = "📱 MOBILE DATA - JAZZ";
+      detail = "Jazz Ka Mobile Data Chal Raha Hai";
+    }
+    else if(org.includes("telenor")){
+      netName = "🔵 TELENOR 4G";
+      wifiType = "📱 MOBILE DATA - TELENOR";
+      detail = "Telenor Ka Mobile Data Chal Raha Hai";
+    }
+    else if(org.includes("ufone") || org.includes("ptml")){
+      netName = "🟣 UFONE 4G";
+      wifiType = "📱 MOBILE DATA - UFONE";
+      detail = "Ufone Ka Mobile Data Chal Raha Hai";
+    }
+    else {
+      netName = "📶 " + ispFull;
+      wifiType = "🌐 INTERNET - " + ispFull;
+      detail = type.toUpperCase() + " Network";
+    }
+
+    document.getElementById('autoNetwork').innerText = netName;
+    document.getElementById('wifiTypeText').innerText = wifiType;
+    document.getElementById('autoDetail').innerText = detail;
+    document.getElementById('connType').innerText = isWifi ? "WiFi" : type.toUpperCase() + " Data";
+    document.getElementById('signalText').innerText = isWifi ? "WiFi Connection" : "Mobile Data";
+
+    // Save for next time
+    window.currentIsWifi = isWifi;
+    window.currentISP = ispFull;
+
+  }catch(e){
+    document.getElementById('autoNetwork').innerText = "📶 " + type.toUpperCase();
+    document.getElementById('wifiTypeText').innerText = "Check Nahi Ho Saka";
   }
-  pings.sort((a,b)=>a-b);
-  let best = pings[0];
-  let avg = pings.slice(0,5).reduce((a,b)=>a+b)/5; // top 5 ka average
-  let jitter = Math.max(...pings) - Math.min(...pings);
-  return {ping: Math.round(avg), jitter: Math.round(jitter), best: Math.round(best)};
 }
 
-// --- 2. ACCURATE DOWNLOAD - Stream se live speed ---
-async function testDownload(){
-  // 4 parallel connections - jaise Speedtest karta hai
-  let totalBytes=0;
-  let start=performance.now();
-  let duration=8000; // 8 second tak test karega
-  let active=true;
-
-  async function oneStream(){
-    while(active){
-      try{
-        let res=await fetch('https://speed.cloudflare.com/__down?bytes=25000000&x='+Math.random(),{cache:'no-store'});
-        let reader=res.body.getReader();
-        while(true){
-          let {done,value}=await reader.read();
-          if(done) break;
-          totalBytes+=value.length;
-          let elapsed=(performance.now()-start)/1000;
-          if(elapsed>0.5){
-            let speed=((totalBytes*8)/elapsed/1000000).toFixed(2);
-            document.getElementById('mainSpeed').innerText=speed;
-            document.getElementById('liveSpeed').innerText='Live Download: '+speed+' Mbps';
-          }
-          if(performance.now()-start>duration) break;
-        }
-      }catch(e){ break; }
-    }
-  }
-
-  let workers=[oneStream(),oneStream(),oneStream(),oneStream()];
-  await new Promise(r=>setTimeout(r,duration));
-  active=false;
-  await Promise.allSettled(workers);
-  let elapsed=(performance.now()-start)/1000;
-  // Aakhri 2 second ki speed sab se accurate hoti hai
-  return ((totalBytes*8)/elapsed/1000000);
-}
-
-// --- 3. ACCURATE UPLOAD ---
-async function testUpload(){
-  let totalSent=0;
-  let start=performance.now();
-  let duration=5000;
-  let chunk=new Uint8Array(1000000); // 1MB chunk
-
-  async function oneUpload(){
-    while(performance.now()-start<duration){
-      try{
-        await fetch('https://speed.cloudflare.com/__up',{method:'POST',body:chunk,mode:'no-cors',cache:'no-store'});
-        totalSent+=chunk.length;
-      }catch(e){}
-    }
-  }
-  await Promise.all([oneUpload(),oneUpload()]);
-  let elapsed=(performance.now()-start)/1000;
-  return ((totalSent*8)/elapsed/1000000);
+async function getPing(){
+  let t1=performance.now();
+  await fetch('https://www.google.com/favicon.ico?x='+Math.random(),{mode:'no-cors',cache:'no-store'});
+  return performance.now()-t1;
 }
 
 async function startTest(){
   let btn=document.getElementById('btn');
   btn.disabled=true; btn.innerText='Testing...';
-  document.getElementById('fill').style.width='10%';
-  document.getElementById('status').innerText='Ping Check Ho Raha Hai... (10 Baar)';
-
-  let p=await getAccuratePing();
-  document.getElementById('ping').innerText=p.ping+' ms';
-  document.getElementById('jitter').innerText=p.jitter+' ms';
-  document.getElementById('latency').innerText=p.ping+' ms';
-
-  try{
-    let ipData=await fetch('https://ipapi.co/json/').then(r=>r.json());
-    document.getElementById('isp').innerText=ipData.org||'Unknown';
-    document.getElementById('conn').innerText=ipData.org ? ipData.org.split(' ')[0] : '4G';
-  }catch(e){}
-
-  document.getElementById('status').innerText='Download Check Ho Raha Hai... 8 Second';
+  await detectNetwork();
+  document.getElementById('status').innerText='Ping Check...';
+  document.getElementById('fill').style.width='15%';
+  let pings=[];
+  for(let i=0;i<5;i++) pings.push(await getPing());
+  let avg=pings.reduce((a,b)=>a+b)/pings.length;
+  document.getElementById('ping').innerText=Math.round(avg)+' ms';
+  document.getElementById('jitter').innerText=Math.round(Math.max(...pings)-Math.min(...pings))+' ms';
+  document.getElementById('status').innerText='Download Check...';
   document.getElementById('fill').style.width='50%';
-  let down=await testDownload();
-  document.getElementById('down').innerText=down.toFixed(2)+' Mbps';
-  document.getElementById('mainSpeed').innerText=down.toFixed(2);
+  let dStart=performance.now();
+  await fetch('https://speed.cloudflare.com/__down?bytes=20000000',{cache:'no-store'}).then(r=>r.blob());
+  let dTime=(performance.now()-dStart)/1000;
+  let down=((20*8)/dTime).toFixed(2);
+  document.getElementById('down').innerText=down+' Mbps';
+  document.getElementById('mainSpeed').innerText=down;
 
-  document.getElementById('status').innerText='Upload Check Ho Raha Hai... 5 Second';
+  // PTCL FIBER YA DSL - SPEED SE FINAL PEHCHAN
+  if(window.currentISP && window.currentISP.toLowerCase().includes("ptcl")){
+    if(down > 25 && avg < 20){
+      document.getElementById('wifiTypeText').innerText = "⚡ PTCL FLASH FIBER HAI";
+      document.getElementById('autoDetail').innerText = "PTCL Ka Flash Fiber Hai - Speed Bohot Achi Hai";
+    } else if(down > 10){
+      document.getElementById('wifiTypeText').innerText = "📡 PTCL HAI - Fiber / VDSL";
+      document.getElementById('autoDetail').innerText = "PTCL Hai - Lagta Hai Fiber Ya VDSL Hai";
+    } else {
+      document.getElementById('wifiTypeText').innerText = "📡 PTCL DSL HAI - Purana Wala";
+      document.getElementById('autoDetail').innerText = "PTCL Ka Purana DSL Lag Raha Hai - Speed Kam Hai";
+    }
+  }
+
+  document.getElementById('status').innerText='Upload Check...';
   document.getElementById('fill').style.width='85%';
-  let up=await testUpload();
-  document.getElementById('up').innerText=up.toFixed(2)+' Mbps';
-
+  let data=new Blob([new Uint8Array(3000000)]);
+  let uStart=performance.now();
+  try{ await fetch('https://speed.cloudflare.com/__up',{method:'POST',body:data,mode:'no-cors'}); }catch(e){}
+  let uTime=(performance.now()-uStart)/1000;
+  let up=((3*8)/uTime).toFixed(2);
+  document.getElementById('up').innerText=up+' Mbps';
   document.getElementById('fill').style.width='100%';
-  document.getElementById('status').innerText='Ho Gaya - Accurate Result';
-  document.getElementById('liveSpeed').innerText='Test Complete';
-
-  let verdict='';
-  if(down>30) verdict='🔥 Zabardast - 4K + Gaming Dono Chalega';
-  else if(down>15) verdict='✅ Acha Hai - YouTube HD Aaram Se';
-  else if(down>7) verdict='⚠️ Theek Hai - Bas Normal Use';
-  else verdict='❌ Slow Hai - Jazz/Zong Ka Signal Check Kar';
-  document.getElementById('verdict').innerText=verdict;
-
+  document.getElementById('status').innerText='Ho Gaya!';
+  let net=document.getElementById('autoNetwork').innerText;
+  let wtype=document.getElementById('wifiTypeText').innerText;
+  document.getElementById('verdict').innerText = wtype + " | Speed: " + down + " Mbps";
   btn.disabled=false; btn.innerText='DOBARA TEST KARO';
 }
 </script>
