@@ -3,213 +3,176 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hasilpur Passport Photo Maker - Free</title>
+<title>Hasilpur Passport Photo Maker - Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  body{background:#0a0a0a;color:#fff;font-family:Arial;text-align:center;padding:15px}
-  .box{background:#161616;border:2px solid #25D366;border-radius:20px;max-width:480px;margin:auto;padding:20px}
-  h1{color:#25D366;margin:5px;font-size:22px}
-  .small{font-size:13px;color:#aaa}
-  .uploadBox{border:2px dashed #25D366;border-radius:15px;padding:20px;margin:15px 0;cursor:pointer}
-  .uploadBox input{display:none}
-  canvas{max-width:100%;border-radius:10px;background:#fff;margin-top:10px}
-  .btn{background:#25D366;border:none;color:#fff;padding:14px 25px;font-size:16px;border-radius:50px;margin:8px 5px;cursor:pointer;font-weight:bold}
-  .btn2{background:#fff;color:#000}
-  .btn3{background:#ff9800}
-  select{background:#333;color:#fff;padding:10px;border-radius:10px;border:1px solid #25D366;width:100%;margin-top:10px}
-  .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-  .info{background:#222;padding:10px;border-radius:10px;font-size:12px;text-align:left;margin-top:10px}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Poppins',Arial;background:linear-gradient(180deg,#0f2027,#203a43,#2c5364);min-height:100vh;padding:15px;color:#fff}
+  .top{text-align:center;margin-bottom:12px}
+  .logo{font-size:32px}
+  .top h1{margin:2px;font-size:24px;font-weight:800;background:linear-gradient(90deg,#25D366,#00e5ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .top p{margin:0;font-size:13px;color:#cbd5e1}
+  .badge{background:#25D366;color:#000;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;display:inline-block;margin-top:6px}
+  .card{background:rgba(255,255,255,0.96);color:#111;border-radius:24px;max-width:480px;margin:auto;padding:18px;box-shadow:0 20px 40px rgba(0,0,0,0.4)}
+  .upload{border:2px dashed #25D366;background:#f0fdf4;border-radius:18px;padding:18px;text-align:center;cursor:pointer}
+  .upload input{display:none}
+  .upload b{color:#111;font-size:15px}
+  .upload span{font-size:12px;color:#666}
+  .upload .icon{font-size:42px}
+  .label{font-size:12px;font-weight:700;color:#333;margin:14px 0 6px;text-align:left}
+  .pills{display:flex;gap:8px;flex-wrap:wrap}
+  .pill{flex:1;min-width:70px;border:2px solid #e5e7eb;background:#fff;border-radius:12px;padding:8px 4px;font-size:12px;font-weight:600;cursor:pointer;text-align:center}
+  .pill.active{border-color:#25D366;background:#eafff3;color:#0a7a3a}
+  .pill span{width:18px;height:18px;border-radius:50%;display:inline-block;border:1px solid #ccc;vertical-align:middle;margin-right:4px}
+  select{width:100%;padding:12px;border-radius:12px;border:2px solid #e5e7eb;font-family:'Poppins';font-weight:600;background:#fff}
+  .previewWrap{background:linear-gradient(135deg,#e0f2fe,#f0fdf4);border-radius:18px;padding:12px;margin-top:12px;text-align:center;position:relative}
+  .previewWrap canvas{border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.25);max-width:100%;background:#fff;touch-action:none}
+  .zoomRow{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:12px;font-weight:600;color:#333}
+  .zoomRow input{flex:1;accent-color:#25D366}
+  .btn{width:100%;border:none;padding:15px;border-radius:50px;font-family:'Poppins';font-size:16px;font-weight:700;cursor:pointer;margin-top:10px}
+  .btn-green{background:linear-gradient(90deg,#25D366,#00b894);color:#fff;box-shadow:0 8px 20px rgba(37,211,102,0.4)}
+  .btn-dark{background:#111;color:#fff}
+  .btn-orange{background:linear-gradient(90deg,#ff9800,#ff5722);color:#fff}
+  .steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px;text-align:center}
+  .steps div{background:#f8fafc;border-radius:12px;padding:10px 5px;font-size:11px;color:#333;font-weight:600}
+  .steps b{display:block;font-size:18px}
+  .sheetBox{display:none;background:#fff;border-radius:18px;padding:12px;margin-top:14px;text-align:center}
+  .sheetBox canvas{max-width:100%;border:1px solid #eee;border-radius:10px}
+  .footer{text-align:center;font-size:11px;color:#94a3b8;margin-top:12px}
+  .price{position:fixed;bottom:12px;right:12px;background:#ff9800;color:#fff;font-size:11px;font-weight:700;padding:8px 12px;border-radius:20px;box-shadow:0 5px 15px rgba(0,0,0,0.3);z-index:10}
 </style>
 </head>
 <body>
-<div class="box">
-  <h1>📸 HASILPUR PASSPORT PHOTO MAKER</h1>
-  <p class="small">Studio Jane Ki Zaroorat Nahi - Ghar Pe Banao - Bilkul Free</p>
 
-  <label class="uploadBox">
-    <div style="font-size:40px">📷</div>
-    <b>Photo Yahan Dabake Select Karo</b><br>
-    <span class="small">Gallery se apni photo select karo</span>
+<div class="top">
+  <div class="logo">📸</div>
+  <h1>HASILPUR PHOTO STUDIO</h1>
+  <p>Passport Photo Ghar Bethe Banao - Bilkul Free</p>
+  <span class="badge">✅ 100% FREE • NO WATERMARK • 2 MIN ME READY</span>
+</div>
+
+<div class="card">
+  <label class="upload">
+    <div class="icon">🖼️</div>
+    <b>Apni Photo Select Karo</b><br>
+    <span>Gallery / Camera se - Koi bhi photo chalegi</span>
     <input type="file" id="fileInput" accept="image/*" onchange="loadImage(event)">
   </label>
 
-  <select id="bgSelect" onchange="redraw()">
-    <option value="#ffffff">Background: White - Passport / ID Card Ke Liye</option>
-    <option value="#e8f4ff">Background: Halka Blue - Govt Form Ke Liye</option>
-    <option value="#ff0000">Background: Red - Passport Ke Liye</option>
-    <option value="#0000ff">Background: Blue - Visa Ke Liye</option>
-    <option value="original">Background: Original - Jaisa Hai Waisa</option>
-  </select>
+  <div class="label">1. BACKGROUND SELECT KARO</div>
+  <div class="pills" id="bgPills">
+    <div class="pill active" data-bg="#ffffff" onclick="setBg(this)"><span style="background:#fff"></span>White</div>
+    <div class="pill" data-bg="#e8f4ff" onclick="setBg(this)"><span style="background:#e8f4ff"></span>Light Blue</div>
+    <div class="pill" data-bg="#2563eb" onclick="setBg(this)"><span style="background:#2563eb"></span>Blue</div>
+    <div class="pill" data-bg="#ef4444" onclick="setBg(this)"><span style="background:#ef4444"></span>Red</div>
+    <div class="pill" data-bg="original" onclick="setBg(this)">✨ Original</div>
+  </div>
 
+  <div class="label">2. SIZE SELECT KARO</div>
   <select id="sizeSelect" onchange="redraw()">
-    <option value="passport">Size: Passport - 35mm x 45mm (Pakistan Standard)</option>
-    <option value="id">Size: ID Card - 35mm x 45mm</option>
-    <option value="visa">Size: Visa - 2x2 inch (USA Visa)</option>
+    <option value="passport">🇵🇰 Passport / ID Card - 35 x 45mm (Pakistan)</option>
+    <option value="visa">🇺🇸 USA Visa - 2 x 2 inch</option>
+    <option value="id">🪪 CNIC / Driving License - 35 x 45mm</option>
   </select>
 
-  <p class="small" style="margin-top:10px">👇 Neeche Teri Photo Ka Preview - Photo Ko Drag Karke Set Kar Sakte Ho</p>
-  <canvas id="preview" width="350" height="450"></canvas>
-  <br>
-  <span class="small">Zoom: </span>
-  <input type="range" id="zoom" min="1" max="3" step="0.1" value="1" oninput="redraw()" style="width:60%">
-  
-  <div class="row">
-    <button class="btn" onclick="makeSheet()">📄 4x6 SHEET BANAO (8 Photos)</button>
-    <button class="btn btn2" onclick="downloadSingle()">⬇️ SINGLE PHOTO DOWNLOAD</button>
+  <div class="previewWrap">
+    <div style="font-size:12px;font-weight:700;color:#333;margin-bottom:6px">👇 PREVIEW - Photo Ko Ungli Se Upar Neeche Karo</div>
+    <canvas id="preview" width="350" height="450"></canvas>
+    <div class="zoomRow"><span>➖ Chota</span><input type="range" id="zoom" min="1" max="3" step="0.1" value="1" oninput="redraw()"><span>Bara ➕</span></div>
   </div>
 
-  <canvas id="sheet" width="1200" height="1800" style="display:none"></canvas>
+  <button class="btn btn-green" onclick="makeSheet()">📄 4x6 SHEET BANAO - 8 Photos Ek Sath</button>
+  <button class="btn btn-dark" onclick="downloadSingle()">⬇️ Sirf 1 Photo Download Karo</button>
 
-  <div id="sheetPreview" style="display:none">
-    <p class="small">👇 Ye Teri 4x6 Sheet Hai - Isko Download Karke Kisi Bhi Shop Se Print Karwa Lo (Rs 30-50)</p>
-    <canvas id="sheetShow" width="400" height="600" style="background:#fff"></canvas><br>
-    <button class="btn btn3" onclick="downloadSheet()">🖨️ SHEET DOWNLOAD KARO</button>
+  <div class="sheetBox" id="sheetPreview">
+    <div style="font-weight:700;color:#111">🎉 Teri Sheet Tayyar Hai!</div>
+    <p style="font-size:12px;color:#666;margin:4px">Isko download karke kisi bhi shop se Rs 30 me print karwa lo</p>
+    <canvas id="sheetShow" width="400" height="600"></canvas><br>
+    <button class="btn btn-orange" onclick="downloadSheet()">🖨️ SHEET DOWNLOAD KARO</button>
   </div>
 
-  <div class="info">
-    <b>Kaise Use Karein?</b><br>
-    1. Upar se apni photo select karo<br>
-    2. Background White rakho (Passport ke liye)<br>
-    3. Zoom se chehra beech me lao<br>
-    4. 4x6 Sheet banao -> Download karo -> Shop se print karwa lo<br>
-    <b>Faida:</b> Studio wale 300 lete hain, yahan Free + Print sirf 30-50 Rs
+  <div class="steps">
+    <div><b>1️⃣</b>Photo Select Karo</div>
+    <div><b>2️⃣</b>Chehra Set Karo</div>
+    <div><b>3️⃣</b>Sheet Download Karo</div>
   </div>
-  <p class="small" style="margin-top:10px">Made by Hasilpur Wala - Free Tool</p>
+
+  <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:10px;margin-top:12px;font-size:12px;color:#7c2d12;text-align:left">
+    <b>💡 Pro Tip:</b> Deewar ke samne khare hoke photo lo, seedha munh rakho, dono kaan nazar aane chahiye. Studio wale 300 lete hain, yahan FREE hai.
+  </div>
 </div>
 
-<script>
-let img = null;
-let imgX = 0, imgY = 0;
-let isDragging = false, startX=0, startY=0;
-let canvas = document.getElementById('preview');
-let ctx = canvas.getContext('2d');
+<div class="footer">Made with ❤️ by Hasilpur Wala • Share Karo Doston Ke Sath</div>
+<div class="price">Studio: Rs 300 | Yahan: FREE</div>
 
+<canvas id="sheet" width="1200" height="1800" style="display:none"></canvas>
+
+<script>
+let img=null, imgX=0, imgY=0, isDragging=false, startX=0, startY=0, currentBg="#ffffff";
+let canvas=document.getElementById('preview');
+let ctx=canvas.getContext('2d');
+
+function setBg(el){
+  document.querySelectorAll('#bgPills .pill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  currentBg=el.dataset.bg;
+  redraw();
+}
 function loadImage(e){
-  let file = e.target.files[0];
-  if(!file) return;
-  let reader = new FileReader();
-  reader.onload = function(ev){
-    img = new Image();
-    img.onload = function(){
-      imgX=0; imgY=0;
-      document.getElementById('zoom').value=1;
-      redraw();
-    };
-    img.src = ev.target.result;
+  let file=e.target.files[0]; if(!file) return;
+  let reader=new FileReader();
+  reader.onload=function(ev){
+    img=new Image();
+    img.onload=function(){ imgX=0; imgY=0; document.getElementById('zoom').value=1; redraw(); };
+    img.src=ev.target.result;
   };
   reader.readAsDataURL(file);
 }
-
 function redraw(){
   if(!img){
-    ctx.fillStyle="#333";
-    ctx.fillRect(0,0,350,450);
-    ctx.fillStyle="#fff";
-    ctx.font="16px Arial";
-    ctx.textAlign="center";
-    ctx.fillText("Yahan Photo Aayegi",175,225);
+    ctx.fillStyle="#e2e8f0"; ctx.fillRect(0,0,350,450);
+    ctx.fillStyle="#64748b"; ctx.font="700 15px Poppins"; ctx.textAlign="center";
+    ctx.fillText("Yahan Teri Photo Aayegi",175,220);
+    ctx.font="12px Poppins"; ctx.fillText("Upar se photo select karo",175,245);
     return;
   }
-  let bg = document.getElementById('bgSelect').value;
-  let zoom = parseFloat(document.getElementById('zoom').value);
-  // Background
-  if(bg=="original"){
-    ctx.fillStyle="#fff";
-    ctx.fillRect(0,0,350,450);
-  } else {
-    ctx.fillStyle=bg;
-    ctx.fillRect(0,0,350,450);
-  }
-  // Image ko cover karke draw karo - chehra beech me
-  let scale = Math.max(350/img.width, 450/img.height) * zoom;
-  let w = img.width * scale;
-  let h = img.height * scale;
-  let x = (350 - w)/2 + imgX;
-  let y = (450 - h)/2 + imgY;
-  // Agar original background nahi hai to thoda simple crop
-  if(bg!="original"){
-    ctx.save();
-    ctx.beginPath();
-    ctx.rect(0,0,350,450);
-    ctx.clip();
-    ctx.drawImage(img, x, y, w, h);
-    ctx.restore();
-  } else {
-    ctx.drawImage(img, x, y, w, h);
-  }
-  // Guide lines - Passport ke liye chehra kahan hona chahiye
-  ctx.strokeStyle="rgba(37,211,102,0.5)";
-  ctx.setLineDash([5,5]);
-  ctx.strokeRect(60,50,230,300);
-  ctx.setLineDash([]);
+  let zoom=parseFloat(document.getElementById('zoom').value);
+  if(currentBg=="original"){ ctx.fillStyle="#fff"; ctx.fillRect(0,0,350,450); }
+  else { ctx.fillStyle=currentBg; ctx.fillRect(0,0,350,450); }
+  let scale=Math.max(350/img.width,450/img.height)*zoom;
+  let w=img.width*scale, h=img.height*scale;
+  let x=(350-w)/2+imgX, y=(450-h)/2+imgY;
+  ctx.save(); ctx.beginPath(); ctx.rect(0,0,350,450); ctx.clip(); ctx.drawImage(img,x,y,w,h); ctx.restore();
+  // Passport guide
+  ctx.strokeStyle="rgba(37,211,102,0.7)"; ctx.setLineDash([6,6]); ctx.lineWidth=2; ctx.strokeRect(60,45,230,310); ctx.setLineDash([]);
+  ctx.fillStyle="rgba(0,0,0,0.6)"; ctx.font="11px Poppins"; ctx.textAlign="center"; ctx.fillText("Chehra Is Box Ke Andar Rakho",175,35);
 }
 redraw();
-
-// Drag karke photo ko upar neeche karo
-canvas.addEventListener('touchstart', e=>{ isDragging=true; startX=e.touches[0].clientX; startY=e.touches[0].clientY; });
-canvas.addEventListener('touchmove', e=>{ if(!isDragging) return; imgX += e.touches[0].clientX - startX; imgY += e.touches[0].clientY - startY; startX=e.touches[0].clientX; startY=e.touches[0].clientY; redraw(); });
-canvas.addEventListener('touchend', ()=>{ isDragging=false; });
-canvas.addEventListener('mousedown', e=>{ isDragging=true; startX=e.clientX; startY=e.clientY; });
-canvas.addEventListener('mousemove', e=>{ if(!isDragging) return; imgX += e.clientX - startX; imgY += e.clientY - startY; startX=e.clientX; startY=e.clientY; redraw(); });
-canvas.addEventListener('mouseup', ()=>{ isDragging=false; });
+canvas.addEventListener('touchstart',e=>{isDragging=true; startX=e.touches[0].clientX; startY=e.touches[0].clientY;});
+canvas.addEventListener('touchmove',e=>{if(!isDragging) return; e.preventDefault(); imgX+=e.touches[0].clientX-startX; imgY+=e.touches[0].clientY-startY; startX=e.touches[0].clientX; startY=e.touches[0].clientY; redraw();},{passive:false});
+canvas.addEventListener('touchend',()=>{isDragging=false;});
+canvas.addEventListener('mousedown',e=>{isDragging=true; startX=e.clientX; startY=e.clientY;});
+canvas.addEventListener('mousemove',e=>{if(!isDragging) return; imgX+=e.clientX-startX; imgY+=e.clientY-startY; startX=e.clientX; startY=e.clientY; redraw();});
+canvas.addEventListener('mouseup',()=>{isDragging=false;});
 
 function makeSheet(){
-  if(!img){ alert("Pehle Photo Select Karo!"); return; }
-  // 4x6 inch sheet - 1200x1800 px (300 DPI)
-  let sheet = document.getElementById('sheet');
-  let sctx = sheet.getContext('2d');
-  sctx.fillStyle="#ffffff";
-  sctx.fillRect(0,0,1200,1800);
-
-  // Ek passport photo 35x45mm = 413x531 px @300dpi
-  let pw = 413, ph = 531;
-  // Preview wali photo ko ek temp canvas pe lo
-  let temp = document.createElement('canvas');
-  temp.width=350; temp.height=450;
-  let tctx = temp.getContext('2d');
-  tctx.drawImage(canvas,0,0);
-
-  // 8 photos - 2 column x 4 row
-  let positions = [[30,30],[650,30],[30,590],[650,590],[30,1150],[650,1150],[30,1710-531+60],[650,1710-531+60]];
-  // Simple grid: 2 x 4
-  positions = [[40,40],[650,40],[40,620],[650,620],[40,1200],[650,1200],[40,1780-531-20],[650,1780-531-20]];
-  // Actually 4x6 sheet me 8 aati hain - 2 per row, 4 rows
-  sctx.fillStyle="#fff";
-  sctx.fillRect(0,0,1200,1800);
-  let gapX=30, gapY=20;
-  for(let r=0;r<4;r++){
-    for(let c=0;c<2;c++){
-      let x = gapX + c*(pw+gapX+150);
-      let y = gapY + r*(ph+gapY);
-      // Center adjust
-      x = 50 + c*580;
-      y = 30 + r*440;
-      sctx.drawImage(temp, x, y, pw, ph);
-      sctx.strokeStyle="#ddd";
-      sctx.strokeRect(x,y,pw,ph);
-    }
-  }
-  // Preview dikhao
-  let show = document.getElementById('sheetShow');
-  let showCtx = show.getContext('2d');
-  showCtx.drawImage(sheet,0,0,400,600);
+  if(!img){ alert("Pehle Photo Select Karo Bhai!"); return; }
+  let sheet=document.getElementById('sheet'); let sctx=sheet.getContext('2d');
+  sctx.fillStyle="#ffffff"; sctx.fillRect(0,0,1200,1800);
+  let temp=document.createElement('canvas'); temp.width=350; temp.height=450;
+  temp.getContext('2d').drawImage(canvas,0,0);
+  let pw=413, ph=531;
+  for(let r=0;r<4;r++){ for(let c=0;c<2;c++){ let x=50+c*580; let y=30+r*440; sctx.drawImage(temp,x,y,pw,ph); sctx.strokeStyle="#e5e7eb"; sctx.strokeRect(x,y,pw,ph); } }
+  let show=document.getElementById('sheetShow'); show.getContext('2d').drawImage(sheet,0,0,400,600);
   document.getElementById('sheetPreview').style.display='block';
   document.getElementById('sheetPreview').scrollIntoView({behavior:'smooth'});
 }
-
 function downloadSheet(){
-  let sheet = document.getElementById('sheet');
-  let a = document.createElement('a');
-  a.download = "Hasilpur-Passport-Sheet-4x6.png";
-  a.href = sheet.toDataURL('image/png');
-  a.click();
+  let a=document.createElement('a'); a.download="Hasilpur-Passport-Sheet.png"; a.href=document.getElementById('sheet').toDataURL('image/png'); a.click();
 }
-
 function downloadSingle(){
   if(!img){ alert("Pehle Photo Select Karo!"); return; }
-  let a = document.createElement('a');
-  a.download = "Passport-Photo-35x45.png";
-  a.href = canvas.toDataURL('image/png');
-  a.click();
+  let a=document.createElement('a'); a.download="Passport-Photo.png"; a.href=canvas.toDataURL('image/png'); a.click();
 }
 </script>
 </body>
