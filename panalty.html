@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Penalty Kick Counter</title>
+<title>Penalty Kick Counter - Referee Decision</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
   body{background:#0f172a;color:white;min-height:100vh;padding:15px}
@@ -16,18 +16,26 @@
   .team input{background:#0f172a;border:1px solid #475569;color:white;padding:8px;border-radius:8px;width:100%;text-align:center;font-size:18px;font-weight:bold;outline:none}
   .score{font-size:55px;font-weight:900;margin:10px 0}
   .dots{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;min-height:28px}
-  .dot{width:28px;height:28px;border-radius:50%;background:#334155;display:flex;align-items:center;justify-content:center;font-size:14px}
+  .dot{width:28px;height:28px;border-radius:50%;background:#334155;display:flex;align-items:center;justify-content:center;font-size:13px}
   .dot.goal{background:#22c55e}
   .dot.miss{background:#ef4444}
+  .dot.sudden{border:2px solid #facc15}
   .controls{max-width:700px;margin:15px auto;background:#1e293b;padding:15px;border-radius:16px;text-align:center}
-  .round{font-size:18px;margin-bottom:12px}
+  .round{font-size:19px;margin-bottom:6px}
   .round b{color:#facc15}
+  .suddenBadge{display:none;background:#facc15;color:black;padding:4px 12px;border-radius:20px;font-size:13px;font-weight:bold;margin-bottom:8px}
   .turn{font-size:15px;color:#94a3b8;margin-bottom:12px}
-  .btn{padding:13px 18px;border:none;border-radius:10px;font-size:17px;font-weight:bold;cursor:pointer;margin:5px;width:45%}
+  .btn{padding:14px 18px;border:none;border-radius:10px;font-size:17px;font-weight:bold;cursor:pointer;margin:5px;width:45%}
   .goalBtn{background:#22c55e;color:white}
   .missBtn{background:#ef4444;color:white}
   .undoBtn{background:#f59e0b;color:black;width:95%;margin-top:8px}
   .resetBtn{background:#475569;color:white;width:95%;margin-top:8px}
+  .refBox{max-width:700px;margin:15px auto;background:#fef3c7;padding:15px;border-radius:16px;text-align:center;color:#111}
+  .refBox h3{margin-bottom:10px;font-size:18px}
+  .refBtn{padding:13px 12px;border:none;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;margin:5px;width:30%}
+  .winA{background:#22c55e;color:white}
+  .winB{background:#3b82f6;color:white}
+  .drawBtn{background:#111;color:white}
   #winner{font-size:24px;font-weight:900;color:#facc15;margin-top:10px;display:none}
   .history{max-width:700px;margin:15px auto;background:#1e293b;padding:12px;border-radius:12px;font-size:14px;color:#cbd5e1}
 </style>
@@ -35,7 +43,7 @@
 <body>
 
 <h1>⚽ Penalty Kick Counter</h1>
-<p class="sub">5 Rounds Shootout • Goal / Miss Count</p>
+<p class="sub">Count App Karegi • Faisla Referee Karega</p>
 
 <div class="teams">
   <div class="team a">
@@ -53,7 +61,8 @@
 </div>
 
 <div class="controls">
-  <div class="round">Round: <b id="roundText">1</b> / 5</div>
+  <div class="round">Round: <b id="roundText">1 / 5</b></div>
+  <div class="suddenBadge" id="suddenBadge">🔥 SUDDEN DEATH - 5-5 Complete</div>
   <div class="turn" id="turnText">Team A ki bari hai</div>
   <button class="btn goalBtn" onclick="kick(true)">✅ GOAL</button>
   <button class="btn missBtn" onclick="kick(false)">❌ MISS</button>
@@ -61,6 +70,17 @@
   <button class="btn undoBtn" onclick="undo()">↩️ Undo Last Kick</button>
   <button class="btn resetBtn" onclick="resetGame()">🔄 Reset Match</button>
   <div id="winner"></div>
+</div>
+
+<!-- REFEREE DECISION BOX -->
+<div class="refBox">
+  <h3>🧑‍⚖️ REFEREE FAISLA - Sirf Tum Karo Ge</h3>
+  <p style="font-size:13px;margin-bottom:10px">App khud winner nahi batayegi. Jab match khatam ho to yahan se faisla karo.</p>
+  <button class="refBtn winA" onclick="refereeWin('A')">🏆 Team A Jeeti</button>
+  <button class="refBtn drawBtn" onclick="refereeWin('DRAW')">🤝 Draw</button>
+  <button class="refBtn winB" onclick="refereeWin('B')">🏆 Team B Jeeti</button>
+  <br>
+  <button class="refBtn" style="background:#e5e7eb;width:95%;margin-top:8px" onclick="continueGame()">▶️ Faisla Wapas Lo / Khel Jari Rakho</button>
 </div>
 
 <div class="history" id="history"><b>History:</b><br>Abhi koi kick nahi hui.</div>
@@ -72,69 +92,70 @@ let history = [];
 let turnA = true;
 let gameOver = false;
 
+function getNames(){
+  return {
+    a: document.getElementById('teamAName').value || 'Team A',
+    b: document.getElementById('teamBName').value || 'Team B'
+  };
+}
+
 function updateUI(){
+  let {a:nameA, b:nameB} = getNames();
   let scoreA = kicksA.filter(x=>x).length;
   let scoreB = kicksB.filter(x=>x).length;
   document.getElementById('scoreA').innerText = scoreA;
   document.getElementById('scoreB').innerText = scoreB;
-  document.getElementById('dotsA').innerHTML = kicksA.map(x=>`<div class="dot ${x?'goal':'miss'}">${x?'⚽':'✕'}</div>`).join('');
-  document.getElementById('dotsB').innerHTML = kicksB.map(x=>`<div class="dot ${x?'goal':'miss'}">${x?'⚽':'✕'}</div>`).join('');
-  document.getElementById('takenA').innerText = `Kicks: ${kicksA.length} / 5`;
-  document.getElementById('takenB').innerText = `Kicks: ${kicksB.length} / 5`;
 
-  let round = Math.max(kicksA.length, kicksB.length);
-  if(round===0) round=1;
-  if(round>5) round=5;
-  document.getElementById('roundText').innerText = round;
+  document.getElementById('dotsA').innerHTML = kicksA.map((x,i)=>`<div class="dot ${x?'goal':'miss'} ${i>=5?'sudden':''}">${x?'⚽':'✕'}</div>`).join('');
+  document.getElementById('dotsB').innerHTML = kicksB.map((x,i)=>`<div class="dot ${x?'goal':'miss'} ${i>=5?'sudden':''}">${x?'⚽':'✕'}</div>`).join('');
 
-  let nameA = document.getElementById('teamAName').value || 'Team A';
-  let nameB = document.getElementById('teamBName').value || 'Team B';
+  if(kicksA.length <= 5) document.getElementById('takenA').innerText = `Kicks: ${kicksA.length} / 5`;
+  else document.getElementById('takenA').innerText = `Kicks: ${kicksA.length} (Sudden Death)`;
+  if(kicksB.length <= 5) document.getElementById('takenB').innerText = `Kicks: ${kicksB.length} / 5`;
+  else document.getElementById('takenB').innerText = `Kicks: ${kicksB.length} (Sudden Death)`;
+
+  // Round display
+  let roundDisplay = document.getElementById('roundText');
+  if(kicksA.length >= 5 && kicksB.length >= 5){
+    let r = Math.max(kicksA.length, kicksB.length);
+    if(kicksA.length === kicksB.length) r = r + 1;
+    roundDisplay.innerText = r + ' (Sudden Death)';
+  } else {
+    let r = Math.max(kicksA.length, kicksB.length);
+    if(kicksA.length > kicksB.length) r = kicksA.length;
+    else if(kicksA.length === kicksB.length && kicksA.length>0) r = kicksA.length + 1;
+    if(r < 1) r = 1;
+    if(r > 5) r = 5;
+    roundDisplay.innerText = r + ' / 5';
+  }
+
+  let isSudden = kicksA.length >= 5 && kicksB.length >= 5;
+  document.getElementById('suddenBadge').style.display = isSudden && !gameOver ? 'inline-block' : 'none';
 
   if(gameOver){
-    document.getElementById('turnText').innerText = 'Match Khatam!';
+    document.getElementById('turnText').innerText = 'Match Khatam - Referee ka Faisla Aa Gaya';
   } else {
-    document.getElementById('turnText').innerText = (turnA ? nameA : nameB) + ' ki bari hai';
-  }
-
-  // Check winner after 5-5
-  if(kicksA.length===5 && kicksB.length===5){
-    gameOver = true;
-    let w = document.getElementById('winner');
-    w.style.display='block';
-    if(scoreA>scoreB) w.innerText = `🏆 ${nameA} Jeet Gaya! ${scoreA} - ${scoreB}`;
-    else if(scoreB>scoreA) w.innerText = `🏆 ${nameB} Jeet Gaya! ${scoreB} - ${scoreA}`;
-    else w.innerText = `🤝 Draw! Sudden Death - Agli Kick Faisla Karegi`;
-    if(scoreA===scoreB){
-      gameOver=false;
-      document.getElementById('turnText').innerText = 'Sudden Death! ' + (turnA ? nameA : nameB) + ' ki bari';
-    }
-  } else {
-    document.getElementById('winner').style.display='none';
-  }
-
-  // Sudden death check
-  if(kicksA.length>5 && kicksB.length>5 && kicksA.length===kicksB.length){
-    if(scoreA!==scoreB){
-      gameOver=true;
-      let w=document.getElementById('winner');
-      w.style.display='block';
-      w.innerText = scoreA>scoreB ? `🏆 ${nameA} Jeet Gaya!` : `🏆 ${nameB} Jeet Gaya!`;
-    }
+    if(isSudden) document.getElementById('turnText').innerText = 'Sudden Death! ' + (turnA ? nameA : nameB) + ' ki bari hai';
+    else document.getElementById('turnText').innerText = (turnA ? nameA : nameB) + ' ki bari hai';
   }
 
   document.getElementById('history').innerHTML = '<b>History:</b><br>' + (history.length? history.join('<br>') : 'Abhi koi kick nahi hui.');
 }
 
 function kick(isGoal){
-  if(gameOver) return;
-  let nameA = document.getElementById('teamAName').value || 'Team A';
-  let nameB = document.getElementById('teamBName').value || 'Team B';
+  if(gameOver){
+    alert('Match khatam hai! Agar aur kicks karni hain to "Khel Jari Rakho" dabao.');
+    return;
+  }
+  let {a:nameA, b:nameB} = getNames();
   if(turnA){
     kicksA.push(isGoal);
-    history.unshift(`${nameA} - Round ${kicksA.length}: ${isGoal?'GOAL ⚽':'MISS ❌'}`);
+    let tag = kicksA.length > 5 ? ' [Sudden Death]' : '';
+    history.unshift(`${nameA} - Round ${kicksA.length}${tag}: ${isGoal?'GOAL ⚽':'MISS ❌'}`);
   } else {
     kicksB.push(isGoal);
-    history.unshift(`${nameB} - Round ${kicksB.length}: ${isGoal?'GOAL ⚽':'MISS ❌'}`);
+    let tag = kicksB.length > 5 ? ' [Sudden Death]' : '';
+    history.unshift(`${nameB} - Round ${kicksB.length}${tag}: ${isGoal?'GOAL ⚽':'MISS ❌'}`);
   }
   turnA = !turnA;
   updateUI();
@@ -142,15 +163,10 @@ function kick(isGoal){
 
 function undo(){
   if(history.length===0) return;
+  // Agar game over tha to undo karne se khel khul jayega
   gameOver=false;
   document.getElementById('winner').style.display='none';
-  // Last kick was opposite of current turn
-  if(!turnA){
-    // last was A
-    kicksA.pop();
-  } else {
-    kicksB.pop();
-  }
+  if(!turnA){ kicksA.pop(); } else { kicksB.pop(); }
   history.shift();
   turnA = !turnA;
   updateUI();
@@ -158,6 +174,26 @@ function undo(){
 
 function resetGame(){
   kicksA=[]; kicksB=[]; history=[]; turnA=true; gameOver=false;
+  document.getElementById('winner').style.display='none';
+  updateUI();
+}
+
+// REFEREE FAISLA
+function refereeWin(who){
+  let {a:nameA, b:nameB} = getNames();
+  let scoreA = kicksA.filter(x=>x).length;
+  let scoreB = kicksB.filter(x=>x).length;
+  gameOver = true;
+  let w = document.getElementById('winner');
+  w.style.display='block';
+  if(who==='A') w.innerText = `🏆 REFEREE FAISLA: ${nameA} Jeet Gaya! ${scoreA} - ${scoreB}`;
+  else if(who==='B') w.innerText = `🏆 REFEREE FAISLA: ${nameB} Jeet Gaya! ${scoreB} - ${scoreA}`;
+  else w.innerText = `🤝 REFEREE FAISLA: Draw! ${scoreA} - ${scoreB}`;
+  updateUI();
+}
+
+function continueGame(){
+  gameOver=false;
   document.getElementById('winner').style.display='none';
   updateUI();
 }
