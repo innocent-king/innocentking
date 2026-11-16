@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Football Rules - Urdu Guide</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+  body{background:#0f172a;color:white;padding:15px;padding-bottom:40px}
+  .top{text-align:center;max-width:800px;margin:0 auto 15px}
+  .top h1{font-size:28px;margin-bottom:5px}
+  .top p{color:#94a3b8;font-size:14px}
+  .searchBox{max-width:800px;margin:0 auto 15px;position:sticky;top:10px;z-index:10}
+  .searchBox input{width:100%;padding:14px;border-radius:12px;border:2px solid #334155;background:#1e293b;color:white;font-size:16px;outline:none}
+  .searchBox input:focus{border-color:#22c55e}
+  .menu{max-width:800px;margin:0 auto 15px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .menu button{padding:9px 14px;border-radius:20px;border:1px solid #334155;background:#1e293b;color:white;cursor:pointer;font-size:13px;font-weight:bold}
+  .menu button.active{background:#22c55e;color:white;border-color:#22c55e}
+  .card{max-width:800px;margin:0 auto 12px;background:#1e293b;border-radius:16px;overflow:hidden;border:1px solid #334155}
+  .cardHead{padding:15px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+  .cardHead h2{font-size:18px}
+  .cardHead span{font-size:22px}
+  .cardBody{display:none;padding:0 15px 15px;line-height:1.7;font-size:15px;color:#e2e8f0}
+  .card.open .cardBody{display:block}
+  .card.open .cardHead{background:#020617}
+  .tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:bold;margin-bottom:8px}
+  .tag-green{background:#22c55e;color:white}
+  .tag-red{background:#ef4444;color:white}
+  .tag-yellow{background:#facc15;color:black}
+  .tag-blue{background:#3b82f6;color:white}
+  .tag-purple{background:#a855f7;color:white}
+  .tag-orange{background:#f97316;color:white}
+  .example{background:#0f172a;border-left:4px solid #22c55e;padding:10px;border-radius:8px;margin:10px 0;font-size:14px}
+  .example b{color:#facc15}
+  .doDont{display:flex;gap:10px;margin-top:10px}
+  .doDont div{flex:1;padding:10px;border-radius:10px;font-size:13px}
+  .yes{background:#14532d}
+  .no{background:#7f1d1d}
+  ul{padding-left:18px;margin:8px 0}
+  li{margin-bottom:6px}
+  .footer{max-width:800px;margin:20px auto 0;text-align:center;color:#94a3b8;font-size:13px}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h1>⚽ Football Rules Guide</h1>
+  <p>Saare Major Rules - Aasan Urdu Me • Referee Ke Liye Full Guide</p>
+</div>
+
+<div class="searchBox">
+  <input id="search" oninput="searchRules()" placeholder="🔍 Search karo... jaise Offside, Penalty, Handball...">
+</div>
+
+<div class="menu" id="menu">
+  <button class="active" onclick="filterCat('all',this)">Sab</button>
+  <button onclick="filterCat('basic',this)">Basic</button>
+  <button onclick="filterCat('foul',this)">Foul / Card</button>
+  <button onclick="filterCat('penalty',this)">Penalty ⭐</button>
+  <button onclick="filterCat('offside',this)">Offside</button>
+  <button onclick="filterCat('keeper',this)">Goalkeeper</button>
+</div>
+
+<div id="list">
+
+<!-- 1 BASIC -->
+<div class="card" data-cat="basic">
+  <div class="cardHead" onclick="toggle(this)"><h2>1. Match Ka Basic Structure</h2><span>➕</span></div>
+  <div class="cardBody">
+    <span class="tag tag-green">BASIC</span>
+    <ul>
+      <li><b>Players:</b> Har team me 11 players, 1 Goalkeeper lazmi hai.</li>
+      <li><b>Time:</b> Match 90 minute ka hota hai, 45-45 minute ke 2 half.</li>
+      <li><b>Half Time Break:</b> 15 minute ka break hota hai.</li>
+      <li><b>Extra Time:</b> Agar barabar ho aur knockout match ho to 30 minute extra, 15-15 ke 2 half.</li>
+      <li><b>Substitution:</b> Aam tor par 5 substitutions allowed hain, 3 moko me.</li>
+      <li><b>Jeet:</b> Jo team zyada goal karegi wo jeetegi.</li>
+    </ul>
+    <div class="example"><b>Misal:</b> Agar 90 minute ke baad score 2-2 hai aur ye final hai, to pehle 30 minute Extra Time hoga, phir bhi barabar raha to Penalties hongi.</div>
+  </div>
+</div>
+
+<!-- 2 KICK OFF -->
+<div class="card" data-cat="basic">
+  <div class="cardHead" onclick="toggle(this)"><h2>2. Kick Off / Match Shuru</h2><span>➕</span></div>
+  <div class="cardBody">
+    <span class="tag tag-green">BASIC</span>
+    <ul>
+      <li>Toss se decide hota hai kon si team pehle kick off karegi aur kon si side legi.</li>
+      <li>Kick off center circle se hota hai, ball aage ya peeche ja sakti hai.</li>
+      <li>Goal ke baad bhi dobara center se kick off hota hai, jis team ne goal khaya ho wo kick off karti hai.</li>
+      <li>Kick off par seedha goal nahi ho sakta apni taraf? Apne half se seedha goal ho sakta hai agar ball seedhi goal me chali jaye.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 3 OFFSIDE -->
+<div class="card" data-cat="offside">
+  <div class="cardHead" onclick="toggle(this)"><h2>3. Offside - Sab Se Mushkil Rule, Aasan Me</h2><span>➕</span></div>
+  <div class="cardBody">
+    <span class="tag tag-blue">OFFSIDE</span>
+    <p><b>Seedha Matlab:</b> Agar tumhare sathi ne pass diya aur us waqt tum sab se aage ho, tumhare aur goal ke beech me sirf Goalkeeper bacha hai (ya us se bhi kam), to tum Offside ho.</p>
+    <ul>
+      <li><b>Offside kab hota hai?</b> Jab pass dene ke waqt tum opponent ke 2nd last player se aage ho.</li>
+      <li><b>Apne Half me kabhi Offside nahi hota.</b></li>
+      <li><b>Throw-In, Corner, Goal Kick par Offside nahi hota.</b></li>
+      <li><b>Sirf khara hona Offside nahi hai,</b> jab tak tum ball ko touch na karo ya khel me dakhal na do.</li>
+      <li>Offside par Indirect Free Kick milti hai, jahan se Offside hua tha.</li>
+    </ul>
+    <div class="example"><b>Misal:</b> Ali ne Ahmed ko pass diya. Pass ke waqt Ahmed defender se 2 kadam aage tha aur sirf Keeper uske samne tha. Ahmed ne ball pakri = <b>Offside</b>. Agar Ahmed ball ko chor deta aur peeche wala player aake leta, to Offside nahi.</div>
+    <div class="doDont"><div class="yes">✅ Apne half me ho = No Offside</div><div class="no">❌ Pass ke waqt sab se aage = Offside</div></div>
+  </div>
+</div>
+
+<!-- 4 FOUL -->
+<div class="card" data-cat="foul">
+  <div class="cardHead" onclick="toggle(this)"><h2>4. Foul Kya Hota Hai?</h2><span>➕</span></div>
+  <div class="cardBody">
+    <span class="tag tag-red">FOUL</span>
+    <ul>
+      <li>Kisi player ko dhakka dena, tang marna, pakarna, hath se rokna.</li>
+      <li>Ball ke bajaye player ko kick marna.</li>
+      <li>Khatarnak tareeqe se tackle karna.</li>
+      <li>Opponent par thookna, gaali dena, badtameezi karna.</li>
+    </ul>
+    <p><b>Saza:</b> Foul jahan hua, wahan se Direct Free Kick milti hai. Agar foul apne Penalty Box me hua to Penalty milti hai.</p>
+  </div>
+</div>
+
+<!-- 5 HANDBALL -->
+<div class="card" data-cat="foul">
+  <div class="cardHead" onclick="toggle(this)"><h2>5. Handball Rule</h2><span>➕</span></div>
+  <div class="cardBody">
+    <span class="tag tag-red">HANDBALL</span>
+    <ul>
+      <li>Agar ball hath ya bazu ko lag jaye aur hath jism se bahar phaila hua ho to Handball hai.</li>
+      <li>Agar ball hath se goal ki taraf ja rahi thi aur hath ne roka, to Handball hai.</li>
+      <li>Agar hath jism ke sath chipka hua hai aur ball aake lagi, to aksar Handball nahi diya jata.</li>
+      <li>Goalkeeper apne box ke bahar hath nahi laga sakta.</li>
+      <li>Handball se agar goal hua to goal cancel ho jayega.</li>
+    </ul>
+    <div class="example"><b>Misal:</b> Defender ne hath phaila kar ball roki jo goal me ja rahi thi = <b>Handball + Penalty + Yellow/Red Card.</b></div>
+  </div>
+</div>
+
+<!-- 6 YELLOW RED -->
+<div class="card" data-cat="foul">
+  <div class="cardHead" onclick="toggle(this)"><h2>6. Yellow Card / Red Card</h2><span>➕</span></div>
+  <div class="cardBody">
+    <span class="tag tag-yellow">YELLOW</span> <span class="tag tag-red">RED</span>
+    <p><b>Yellow Card Kab Milta Hai?</b></p>
+    <ul>
+      <li>Bar bar foul karna.</li>
+      <li>Time zaya karna.</li>
+      <li>Referee se behas karna.</li>
+      <li>Shirt utar kar goal celebrate karna.</li>
+      <li>Jaankari ke liye jhooti diving karna.</li>
+    </ul>
+    <p><b>Red Card Kab Milta Hai?</b></p>
+    <ul>
+      <li>2 Yellow Card = 1 Red Card, player bahar.</li>
+      <li>Seedha Red: Last player ko goal se rokna, khatarnak tackle, mukka marna, gaali dena.</li>
+      <li>Red Card wala player wapas nahi aa sakta, team 10 players se khelti hai.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 7 FREE KICK -->
+<div class="card" data-cat="basic">
+  <div class="cardHead" onclick="toggle(this)"><h2>7. Free Kick - Direct Aur Indirect</h2><span>➕</span></div>
+  <div class="cardBody">
+    <span class="tag tag-green">FREE KICK</span>
+    <p><b>Direct Free Kick:</b> Is se seedha goal ho sakta hai. Foul, Handball par milti hai.</p>
+    <p><b>Indirect Free Kick:</b> Is se seedha goal nahi ho sakta, pehle kisi aur player ko touch karna lazmi hai. Offside, Goalkeeper ka ball zyada der pakarna, khatarnak khel par milti hai.</p>
+    <p>Referee Indirect ke liye hath upar uthata hai.</p>
+  </div>
+</div>
+
+<!-- 8 PENALTY - ALAG SECTION -->
+<div class="card" data-cat="penalty">
+  <div class="cardHead" onclick="toggle(this)"><h2>⭐ 8. Penalty Rules - Alag Se Poora Section</h2><span>➕</span></div>
+  <div class="cardBody">
+    <span class="tag tag-orange">PENALTY</span>
+    <p><b>Penalty Kab Milti Hai?</b></p>
+    <ul>
+      <li>Jab koi player apne Penalty Box (Dabba) ke andar Foul kare.</li>
+      <li>Jab apne Box ke andar Handball ho.</li>
+      <li>Goalkeeper apne Box me kisi ko giraye to bhi Penalty.</li>
+    </ul>
+    <p><b>Penalty Kick Ka Tareeqa:</b></p>
+    <ul>
+      <li>Ball Penalty Spot par rakhi jati hai, jo goal se 11 meter (12 yard) door hota hai.</li>
+      <li>Sirf Kick marne wala aur Goalkeeper hota hai, baaki sab players Box ke bahar aur D ke peeche hote hain.</li>
+      <li>Referee ki seeti par hi kick marni hai, pehle nahi.</li>
+      <li>Kick marne wala ball ko aage ki taraf hi marega, peeche nahi.</li>
+      <li>Goalkeeper line par hona chahiye, kick se pehle aage nahi aa sakta. Ek paon line par hona lazmi hai.</li>
+    </ul>
+    <p><b>Agar Goalkeeper Aage Aa Gaya?</b> Kick dobara hogi, aur Keeper ko Yellow Card mil sakta hai.</p>
+    <p><b>Agar Koi Player Pehle Andar Aa Gaya?</b></p>
+    <ul>
+      <li>Agar goal ho gaya aur attacker pehle andar aya tha to kick dobara hogi.</li>
+      <li>Agar miss hui aur defender pehle andar aya tha to kick dobara hogi.</li>
+    </ul>
+    <p><b>Penalty Shootout Ke Rules (5-5):</b></p>
+    <ul>
+      <li>Dono teams 5-5 penalties marti hain, bari bari.</li>
+      <li>Pehle 5-5 poore karne hain, beech me faisla nahi hoga (agar Referee chahe to).</li>
+      <li>5-5 ke baad barabar ho to Sudden Death, 1-1 kar ke chalta rahega.</li>
+      <li>Shootout me jo player Red Card se bahar hua wo kick nahi maar sakta.</li>
+      <li>Goalkeeper shootout me change ho sakta hai agar zakhmi ho jaye.</li>
+      <li>Haar Jeet ka aakhri faisla Referee karega.</li>
+    </ul>
+    <div class="example"><b>Misal:</b> Defender ne Box me shirt pakar kar giraya = <b>Penalty + Yellow Card.</b> Keeper ne line se pehle jump mara aur ball rok li = <b>Penalty Dobara.</b></div>
+  </div>
+</div>
+
+<!-- 9 CORNER -->
+<div class="card" data-cat="basic">
+  <div class="cardHead" onclick="toggle(this)"><h2>9. Corner Kick</h2><span>➕</span></div>
+  <div class="cardBody">
+    <span class="tag tag-green">CORNER</span>
+    <ul>
+      <li>Jab defending team ka player ball ko apni Goal Line se bahar nikal de (Goal ke baghair) to Corner milta hai.</li>
+      <li>Corner, corner wale jhande ke paas se liya jata hai.</li>
+      <li>Corner se seedha goal ho sakta hai, isko Olympic Goal kehte hain.</li>
+      <li>Corner par Offside nahi hota.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 10 GOAL KICK -->
+<div class="card" data-cat="basic">
+  <div class="cardHead" onclick="toggle(this)"><h2>10. Goal Kick</h2><span>➕</span></div>
+  <div class="cardBody">
+    <span class="tag tag-green">GOAL KICK</span>
+    <ul>
+      <li>Jab attacking team ka player ball ko Goal Line se bahar nikal de to Goal Kick milti hai.</li>
+      <li>Goalkeeper ya defender Goal Area se ball ko kick karta hai.</li>
+      <li>Goal Kick par bhi Offside nahi hota.</li>
+      <li>Goal Kick se seedha goal ho sakta hai.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 11 THROW IN -->
+<div class="card" data-cat="basic">
+  <div class="cardHead" onclick="toggle(this)"><h2>11. Throw-In</h2><span>➕</span></div>
+  <div class="cardBody">
+    <span class="tag tag-green">THROW-IN</span>
+    <ul>
+      <li>Jab ball side line se bahar jaye to Throw-In milta hai.</li>
+      <li>Dono hath se, sar ke peeche se ball phenkni hai.</li>
+      <li>Dono paon zameen par hone chahiye.</li>
+      <li>Throw-In se seedha goal nahi ho sakta.</li>
+      <li>Throw-In par Offside nahi hota.</li>
+      <li>Galat Throw-In hua to dosri team ko mil jayega.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 12 KEEPER -->
+<div class="card" data-cat="keeper">
+  <div class="cardHead" onclick="toggle(this)"><h2>13. Goalkeeper Ke Khas Rules</h2><span>➕</span></div>
+  <div class="cardBody">
+    <span class="tag tag-purple">KEEPER</span>
+    <ul>
+      <li>Keeper sirf apne Penalty Box ke andar hath laga sakta hai.</li>
+      <li>Keeper ball ko hath me 6 second se zyada nahi rakh sakta.</li>
+      <li>Apne hi player ne paon se Back Pass diya to Keeper hath se nahi pakar sakta, paon se khelna hoga.</li>
+      <li>Throw-In se aayi hui ball Keeper hath se nahi pakar sakta.</li>
+      <li>Agar Keeper Box ke bahar hath lagaye to Handball + Free Kick / Red Card bhi ho sakta hai.</li>
+      <li>Keeper ka kapron ka rang baaki players se alag hona chahiye.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 13 VAR -->
+<div class="card" data-cat="basic">
+  <div class="cardHead" onclick="toggle(this)"><h2>14. VAR Kya Hai?</h2><span>➕</span></div>
+  <div class="cardBody">
+    <span class="tag tag-blue">VAR</span>
+    <p>VAR matlab Video Assistant Referee. Bara match me camera se check karte hain.</p>
+    <ul>
+      <li>Goal hua ya nahi?</li>
+      <li>Penalty thi ya nahi?</li>
+      <li>Red Card banta tha ya nahi?</li>
+      <li>Offside tha ya nahi?</li>
+    </ul>
+    <p>Referee screen par ja kar khud bhi dekh sakta hai. Aakhri faisla ground wale Referee ka hi hota hai.</p>
+  </div>
+</div>
+
+<!-- 14 DIVING -->
+<div class="card" data-cat="foul">
+  <div class="cardHead" onclick="toggle(this)"><h2>15. Diving / Natak Karna</h2><span>➕</span></div>
+  <div class="cardBody">
+    <span class="tag tag-red">DIVING</span>
+    <p>Agar player baghair foul ke khud gir jaye taake Penalty ya Free Kick mil jaye, isko Diving kehte hain.</p>
+    <p><b>Saza:</b> Yellow Card + dosri team ko Free Kick.</p>
+  </div>
+</div>
+
+<!-- 15 ADVANTAGE -->
+<div class="card" data-cat="basic">
+  <div class="cardHead" onclick="toggle(this)"><h2>16. Advantage Rule</h2><span>➕</span></div>
+  <div class="cardBody">
+    <span class="tag tag-green">ADVANTAGE</span>
+    <p>Agar foul hua lekin jis team par foul hua usko faida ho raha hai (wo attack par hai), to Referee khel nahi rokta, khel chalne deta hai. Isko Advantage kehte hain.</p>
+    <div class="example"><b>Misal:</b> Defender ne foul kiya, lekin ball attacker ke paas hi reh gayi aur wo goal ki taraf ja raha hai, to Referee seeti nahi bajayega.</div>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">Made for Referee • Saare Rules FIFA Laws of the Game ke mutabiq aasan Urdu me</div>
+
+<script>
+function toggle(el){
+  let card = el.parentElement;
+  let isOpen = card.classList.contains('open');
+  document.querySelectorAll('.card').forEach(c=>{c.classList.remove('open'); c.querySelector('span').innerText='➕';});
+  if(!isOpen){ card.classList.add('open'); el.querySelector('span').innerText='➖'; }
+}
+function filterCat(cat, btn){
+  document.querySelectorAll('.menu button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.card').forEach(c=>{
+    if(cat==='all' || c.dataset.cat===cat) c.style.display='block';
+    else c.style.display='none';
+  });
+}
+function searchRules(){
+  let q = document.getElementById('search').value.toLowerCase();
+  document.querySelectorAll('.card').forEach(c=>{
+    let text = c.innerText.toLowerCase();
+    if(text.includes(q)) c.style.display='block';
+    else c.style.display='none';
+  });
+}
+// Pehla card khula hua rakho
+document.querySelector('.card').classList.add('open');
+</script>
+</body>
+  </html>
