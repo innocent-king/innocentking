@@ -1,125 +1,299 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ur">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Penalty Kick Counter</title>
+<title>Volleyball Point Counter + Change</title>
 <style>
-  *{box-sizing:border-box;font-family:Arial,sans-serif}
-  body{margin:0;background:#0f172a;color:white;display:flex;justify-content:center;padding:15px}
-  .box{width:100%;max-width:480px;background:#1e293b;border-radius:20px;padding:20px;text-align:center}
-  h1{margin:0;font-size:22px}
-  p{color:#94a3b8;font-size:13px}
-  .teams{display:flex;gap:12px;margin:20px 0}
-  .team{flex:1;background:#0f172a;border-radius:15px;padding:15px}
-  .team input{width:100%;background:#334155;border:none;color:white;text-align:center;font-size:18px;font-weight:bold;padding:8px;border-radius:10px;outline:none}
-  .score{font-size:50px;font-weight:900;margin:10px 0}
-  .balls{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;min-height:28px}
-  .ball{width:26px;height:26px;border-radius:50%;background:#334155;display:flex;align-items:center;justify-content:center;font-size:14px}
-  .goal{background:#22c55e !important}
-  .miss{background:#ef4444 !important}
-  .btns{display:flex;gap:10px;margin-top:10px}
-  button{flex:1;padding:12px;border:none;border-radius:12px;font-size:16px;font-weight:bold;cursor:pointer}
-  .g{background:#22c55e;color:white}
-  .m{background:#ef4444;color:white}
-  .turn{margin:15px 0;background:#f59e0b;color:black;padding:10px;border-radius:12px;font-weight:bold}
-  #winner{font-size:20px;font-weight:900;color:#facc15;margin:10px 0;min-height:28px}
-  .reset{background:#64748b;color:white;width:100%;margin-top:10px}
-  .service{background:#3b82f6;color:white;width:100%;margin-top:10px}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+  body{background:#0f172a;color:white;min-height:100vh;padding:15px}
+  h1{text-align:center;margin:10px 0 5px;font-size:26px}
+  p.sub{text-align:center;color:#94a3b8;margin-bottom:15px}
+  .teams{display:flex;gap:12px;max-width:700px;margin:0 auto}
+  .team{flex:1;background:#1e293b;border-radius:16px;padding:15px;text-align:center;border:2px solid #334155}
+  .team.a{border-color:#f97316}
+  .team.b{border-color:#06b6d4}
+  .team input{background:#0f172a;border:1px solid #475569;color:white;padding:8px;border-radius:8px;width:100%;text-align:center;font-size:18px;font-weight:bold;outline:none}
+  .score{font-size:60px;font-weight:900;margin:5px 0}
+  .sets{font-size:16px;margin-bottom:8px}
+  .sets b{color:#facc15;font-size:22px}
+  .serve{font-size:13px;background:#22c55e;color:white;padding:4px 10px;border-radius:20px;display:inline-block;margin-bottom:8px}
+  .serve.hidden{visibility:hidden}
+  .setDots{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;min-height:26px}
+  .setDot{width:26px;height:26px;border-radius:50%;background:#334155;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold}
+  .setDot.win{background:#22c55e}
+  .setDot.lose{background:#ef4444}
+  .controls{max-width:700px;margin:15px auto;background:#1e293b;padding:15px;border-radius:16px;text-align:center}
+  .setInfo{font-size:18px;margin-bottom:4px}
+  .setInfo b{color:#facc15}
+  .target{font-size:13px;color:#94a3b8;margin-bottom:12px}
+  .btn{padding:16px 10px;border:none;border-radius:12px;font-size:18px;font-weight:bold;cursor:pointer;margin:5px;width:45%}
+  .plusA{background:#f97316;color:white}
+  .plusB{background:#06b6d4;color:white}
+  .minusBtn{background:#334155;color:white;width:45%;padding:10px;font-size:14px}
+  .undoBtn{background:#f59e0b;color:black;width:95%;margin-top:8px;padding:12px;border-radius:10px;border:none;font-size:16px;font-weight:bold;cursor:pointer}
+  .resetBtn{background:#475569;color:white;width:95%;margin-top:8px;padding:12px;border-radius:10px;border:none;font-size:16px;font-weight:bold;cursor:pointer}
+  .serviceBtn{background:#3b82f6;color:white;width:95%;margin-top:8px;padding:12px;border-radius:10px;border:none;font-size:16px;font-weight:bold;cursor:pointer}
+  .refBox{max-width:700px;margin:15px auto;background:#fef3c7;padding:15px;border-radius:16px;text-align:center;color:#111}
+  .refBox h3{margin-bottom:10px;font-size:18px}
+  .refBtn{padding:13px 10px;border:none;border-radius:10px;font-size:15px;font-weight:bold;cursor:pointer;margin:5px;width:30%}
+  .winA{background:#f97316;color:white}
+  .winB{background:#06b6d4;color:white}
+  #winner{font-size:22px;font-weight:900;color:#facc15;margin-top:10px;display:none}
+  .history{max-width:700px;margin:15px auto;background:#1e293b;padding:12px;border-radius:12px;font-size:14px;color:#cbd5e1;line-height:1.6}
+  .scoreBoard{max-width:700px;margin:0 auto 12px;background:#1e293b;padding:10px;border-radius:12px;text-align:center;font-size:13px;color:#cbd5e1}
+  .changeBox{max-width:700px;margin:15px auto;background:#1e293b;padding:15px;border-radius:16px;border:1px solid #a855f7}
+  .changeBox h3{text-align:center;margin-bottom:5px;font-size:18px}
+  .changeBox p{font-size:12px;color:#94a3b8;text-align:center;margin-bottom:12px}
+  .changeRow{display:flex;gap:8px;margin-bottom:8px}
+  .changeRow select, .changeRow input{flex:1;padding:11px;border-radius:10px;border:1px solid #475569;background:#0f172a;color:white;font-size:14px;outline:none}
+  .changeBtn{width:100%;padding:13px;border:none;border-radius:10px;background:#a855f7;color:white;font-size:16px;font-weight:bold;cursor:pointer;margin-top:4px}
+  .changeList{margin-top:12px;font-size:13px;color:#e2e8f0;line-height:1.7}
+  .changeCount{display:flex;gap:10px;margin-top:10px}
+  .changeCount div{flex:1;text-align:center;background:#0f172a;padding:10px;border-radius:10px;font-size:13px}
+  .changeCount b{color:#facc15;font-size:18px}
+  .note{max-width:700px;margin:10px auto;background:#14532d;padding:10px;border-radius:10px;text-align:center;font-size:13px;font-weight:bold}
 </style>
 </head>
 <body>
-<div class="box">
-  <h1>⚽ PENALTY KICK COUNTER</h1>
-  <p>5 - 5 Kicks Shootout</p>
 
-  <div id="winner"></div>
-  <div class="turn" id="turnText">Team A ki Bari Hai</div>
+<h1>🏐 Volleyball Point Counter</h1>
+<p class="sub">Best of 5 Sets • 25 Points • Change Par NO Point</p>
+<div class="note">✅ CHANGE PAR KOI POINT NAHI HOGA • Sirf Player Badlega, Score Same Rahega</div>
 
-  <div class="teams">
-    <div class="team">
-      <input id="teamAName" value="TEAM A">
-      <div class="score" id="scoreA">0</div>
-      <div class="balls" id="ballsA"></div>
-      <div>Kicks: <span id="kickA">0</span>/5</div>
-    </div>
-    <div class="team">
-      <input id="teamBName" value="TEAM B">
-      <div class="score" id="scoreB">0</div>
-      <div class="balls" id="ballsB"></div>
-      <div>Kicks: <span id="kickB">0</span>/5</div>
-    </div>
+<div class="scoreBoard" id="scoreBoard">Set 1 • Target: 25 Points • 2 Points Se Jeet Lazmi Hai</div>
+
+<div class="teams">
+  <div class="team a">
+    <input id="teamAName" value="Team A">
+    <div class="sets">Sets Jeete: <b id="setsA">0</b></div>
+    <div class="score" id="scoreA">0</div>
+    <div><span class="serve" id="serveA">🏐 SERVE</span></div>
+    <div class="setDots" id="dotsA"></div>
+    <div style="font-size:12px;color:#94a3b8;margin-top:6px" id="lastA">Pichle Sets: -</div>
   </div>
-
-  <div class="btns">
-    <button class="g" onclick="addKick(true)">✅ GOAL</button>
-    <button class="m" onclick="addKick(false)">❌ MISS</button>
+  <div class="team b">
+    <input id="teamBName" value="Team B">
+    <div class="sets">Sets Jeete: <b id="setsB">0</b></div>
+    <div class="score" id="scoreB">0</div>
+    <div><span class="serve hidden" id="serveB">🏐 SERVE</span></div>
+    <div class="setDots" id="dotsB"></div>
+    <div style="font-size:12px;color:#94a3b8;margin-top:6px" id="lastB">Pichle Sets: -</div>
   </div>
-  <button class="service" onclick="serviceChange()">🔄 SERVICE CHANGE</button>
-  <button class="reset" onclick="resetGame()">🔄 Dobara Shuru Karo</button>
 </div>
 
+<div class="controls">
+  <div class="setInfo">Set: <b id="setText">1</b> / 5</div>
+  <div class="target" id="targetText">Is Set Ka Target: 25 Points • 2 Se Aage Hona Lazmi</div>
+  <button class="btn plusA" onclick="addPoint('A')">+1 Team A<br><span style="font-size:12px">Point Do</span></button>
+  <button class="btn plusB" onclick="addPoint('B')">+1 Team B<br><span style="font-size:12px">Point Do</span></button>
+  <br>
+  <button class="btn minusBtn" onclick="minusPoint('A')">-1 Team A</button>
+  <button class="btn minusBtn" onclick="minusPoint('B')">-1 Team B</button>
+  <br>
+  <button class="undoBtn" onclick="undoPoint()">↩️ Undo Last Point</button>
+  <button class="serviceBtn" onclick="serviceChange()">🔄 SERVICE CHANGE - No Point</button>
+  <button class="undoBtn" style="background:#3b82f6;color:white" onclick="nextSet()">➡️ Agla Set Shuru Karo</button>
+  <button class="resetBtn" onclick="resetGame()">🔄 Poora Match Reset</button>
+  <div id="winner"></div>
+</div>
+
+<!-- CHANGE BOX -->
+<div class="changeBox">
+  <h3>🔄 Player Change / Substitution - NO POINT</h3>
+  <p>Change karne se Score me 0 farq parega • Har Set me 6 Changes • Libero Alag</p>
+  <div class="changeRow">
+    <select id="changeTeam">
+      <option value="A">Team A</option>
+      <option value="B">Team B</option>
+    </select>
+    <select id="changeType">
+      <option value="Normal">Normal Change</option>
+      <option value="Libero">Libero Change</option>
+      <option value="Injury">Injury Change</option>
+    </select>
+  </div>
+  <div class="changeRow">
+    <input id="outPlayer" placeholder="Bahar: Ali #4">
+    <input id="inPlayer" placeholder="Andar: Ahmed #7">
+  </div>
+  <button class="changeBtn" onclick="doChange()">✅ Change Karo - Point Nahi Milega</button>
+  <button class="changeBtn" style="background:#475569;margin-top:8px" onclick="undoChange()">↩️ Aakhri Change Wapas Lo</button>
+  <div class="changeCount">
+    <div>Team A Changes<br><b id="changeCountA">0 / 6</b></div>
+    <div>Team B Changes<br><b id="changeCountB">0 / 6</b></div>
+  </div>
+  <div class="changeList" id="changeList"><b>Changes:</b><br>Abhi koi change nahi hua.</div>
+</div>
+
+<!-- REFEREE -->
+<div class="refBox">
+  <h3>🧑‍⚖️ REFEREE FAISLA - Sirf Tum Karo Ge</h3>
+  <p style="font-size:13px;margin-bottom:10px">App khud winner nahi batayegi. Jab Set ya Match khatam ho to yahan se faisla karo.</p>
+  <button class="refBtn winA" onclick="refereeWin('A')">🏆 Team A Jeeti</button>
+  <button class="refBtn" style="background:#22c55e;color:white" onclick="refereeSetWin()">✅ Set Khatam Karo</button>
+  <button class="refBtn winB" onclick="refereeWin('B')">🏆 Team B Jeeti</button>
+  <br>
+  <button class="refBtn" style="background:#e5e7eb;width:95%;margin-top:8px" onclick="continueGame()">▶️ Faisla Wapas Lo / Khel Jari Rakho</button>
+</div>
+
+<div class="history" id="history"><b>History:</b><br>Abhi koi point nahi hua.</div>
+
 <script>
-  let scoreA=0, scoreB=0, kicksA=0, kicksB=0;
-  let turnA=true;
-  let historyA=[], historyB=[];
+let scoreA = 0, scoreB = 0;
+let setsA = 0, setsB = 0;
+let currentSet = 1;
+let serve = 'A';
+let pointHistory = []; // SIRF POINTS - Change is me nahi ayega
+let changeHistory = []; // SIRF CHANGES - Point is me nahi ayega
+let gameOver = false;
+let setScores = [];
+let changeA = 0, changeB = 0;
 
-  function addKick(isGoal){
-    if(kicksA>=5 && kicksB>=5){
-      if(scoreA!==scoreB){ return; }
-      // Sudden Death me bhi chalta rahega
-    }
-    if(turnA){
-      kicksA++;
-      if(isGoal){ scoreA++; historyA.push('goal'); } else { historyA.push('miss'); }
-    } else {
-      kicksB++;
-      if(isGoal){ scoreB++; historyB.push('goal'); } else { historyB.push('miss'); }
-    }
-    turnA=!turnA;
-    update();
-    checkWinner();
-  }
+function getNames(){ return { a: document.getElementById('teamAName').value || 'Team A', b: document.getElementById('teamBName').value || 'Team B' }; }
+function getTarget(){ return currentSet === 5 ? 15 : 25; }
 
-  function serviceChange(){
-    turnA=!turnA;
-    update();
-  }
+function updateUI(){
+  let {a:nameA, b:nameB} = getNames();
+  document.getElementById('scoreA').innerText = scoreA;
+  document.getElementById('scoreB').innerText = scoreB;
+  document.getElementById('setsA').innerText = setsA;
+  document.getElementById('setsB').innerText = setsB;
+  document.getElementById('setText').innerText = currentSet;
+  document.getElementById('targetText').innerText = `Is Set Ka Target: ${getTarget()} Points • 2 Se Aage Hona Lazmi • Set ${currentSet} / 5`;
+  document.getElementById('scoreBoard').innerText = `Set ${currentSet} • Target: ${getTarget()} Points • Sets: ${nameA} ${setsA} - ${setsB} ${nameB}`;
+  document.getElementById('serveA').classList.toggle('hidden', serve !== 'A');
+  document.getElementById('serveB').classList.toggle('hidden', serve !== 'B');
+  document.getElementById('dotsA').innerHTML = setScores.map(s=>`<div class="setDot ${s.winner==='A'?'win':'lose'}">${s.a}</div>`).join('');
+  document.getElementById('dotsB').innerHTML = setScores.map(s=>`<div class="setDot ${s.winner==='B'?'win':'lose'}">${s.b}</div>`).join('');
+  document.getElementById('lastA').innerText = setScores.length ? 'Pichle Sets: ' + setScores.map(s=>s.a+'-'+s.b).join(', ') : 'Pichle Sets: -';
+  document.getElementById('lastB').innerText = setScores.length ? 'Set Scores Upar Dekho' : 'Pichle Sets: -';
+  // History - Sirf Points + Set Result, Change alag list me hai
+  document.getElementById('history').innerHTML = '<b>Points History:</b><br>' + (pointHistory.length? pointHistory.join('<br>') : 'Abhi koi point nahi hua.');
+  document.getElementById('changeCountA').innerText = `${changeA} / 6`;
+  document.getElementById('changeCountB').innerText = `${changeB} / 6`;
+  document.getElementById('changeTeam').options[0].text = nameA;
+  document.getElementById('changeTeam').options[1].text = nameB;
+  document.getElementById('changeList').innerHTML = '<b>Changes (No Point):</b><br>' + (changeHistory.length ? changeHistory.join('<br>') : 'Abhi koi change nahi hua.');
+}
 
-  function update(){
-    document.getElementById('scoreA').innerText=scoreA;
-    document.getElementById('scoreB').innerText=scoreB;
-    document.getElementById('kickA').innerText=kicksA;
-    document.getElementById('kickB').innerText=kicksB;
-    document.getElementById('ballsA').innerHTML=historyA.map(h=>`<div class="ball ${h}"> ${h==='goal'?'⚽':'✖'} </div>`).join('');
-    document.getElementById('ballsB').innerHTML=historyB.map(h=>`<div class="ball ${h}"> ${h==='goal'?'⚽':'✖'} </div>`).join('');
-    let nameA=document.getElementById('teamAName').value || 'TEAM A';
-    let nameB=document.getElementById('teamBName').value || 'TEAM B';
-    document.getElementById('turnText').innerText = turnA ? nameA + ' ki Bari Hai' : nameB + ' ki Bari Hai';
+function addPoint(team){
+  if(gameOver){ alert('Match khatam hai! Khel jari rakhne ke liye "Khel Jari Rakho" dabao.'); return; }
+  let {a:nameA, b:nameB} = getNames();
+  if(team==='A'){ scoreA++; serve='A'; pointHistory.unshift(`Set ${currentSet} - ${nameA} ko point • Score: ${scoreA} - ${scoreB}`); }
+  else { scoreB++; serve='B'; pointHistory.unshift(`Set ${currentSet} - ${nameB} ko point • Score: ${scoreA} - ${scoreB}`); }
+  updateUI();
+  let target = getTarget();
+  if((scoreA >= target || scoreB >= target) && Math.abs(scoreA-scoreB) >= 2){
+    let leader = scoreA > scoreB ? nameA : nameB;
+    document.getElementById('targetText').innerText = `⚠️ ${leader} Set Jeetne Ke Kareeb Hai (${scoreA}-${scoreB}) • Referee "Set Khatam Karo" Dabaye`;
   }
+}
+function minusPoint(team){
+  if(team==='A' && scoreA>0) scoreA--;
+  if(team==='B' && scoreB>0) scoreB--;
+  if(pointHistory.length) pointHistory.shift();
+  updateUI();
+}
+function undoPoint(){
+  if(pointHistory.length===0) return;
+  gameOver=false;
+  document.getElementById('winner').style.display='none';
+  let last = pointHistory[0];
+  let {a:nameA, b:nameB} = getNames();
+  // Sirf point wapas karo, change ko hath nahi lagana
+  if(last.includes(nameA)) scoreA = Math.max(0, scoreA-1);
+  else if(last.includes(nameB)) scoreB = Math.max(0, scoreB-1);
+  pointHistory.shift();
+  serve = serve==='A' ? 'B' : 'A';
+  updateUI();
+}
 
-  function checkWinner(){
-    let nameA=document.getElementById('teamAName').value || 'TEAM A';
-    let nameB=document.getElementById('teamBName').value || 'TEAM B';
-    if(kicksA>=5 && kicksB>=5){
-      if(scoreA>scoreB){ document.getElementById('winner').innerText='🏆 '+nameA+' JEET GAYA!'; }
-      else if(scoreB>scoreA){ document.getElementById('winner').innerText='🏆 '+nameB+' JEET GAYA!'; }
-      else { document.getElementById('winner').innerText='⚡ BARABAR! Sudden Death - Agli Kick Faisla Karegi'; }
-    }
-    // Pehle hi jeet pakki ho jaye
-    if(kicksA<5 || kicksB<5){
-      let remA=5-kicksA, remB=5-kicksB;
-      if(scoreA > scoreB+remB){ document.getElementById('winner').innerText='🏆 '+nameA+' JEET GAYA!'; }
-      if(scoreB > scoreA+remA){ document.getElementById('winner').innerText='🏆 '+nameB+' JEET GAYA!'; }
-    }
-  }
+// ===== SERVICE CHANGE - IS ME KOI POINT NAHI HAI =====
+function serviceChange(){
+  // Sirf SERVE badlega, Score / Set / Change ko hath nahi lagayenge
+  serve = serve === 'A' ? 'B' : 'A';
+  updateUI();
+}
 
-  function resetGame(){
-    scoreA=0; scoreB=0; kicksA=0; kicksB=0; turnA=true; historyA=[]; historyB=[];
-    document.getElementById('winner').innerText='';
-    update();
+// ===== CHANGE - IS ME KOI POINT NAHI HAI =====
+function doChange(){
+  let teamVal = document.getElementById('changeTeam').value;
+  let type = document.getElementById('changeType').value;
+  let outP = document.getElementById('outPlayer').value.trim();
+  let inP = document.getElementById('inPlayer').value.trim();
+  let {a:nameA, b:nameB} = getNames();
+  let teamName = teamVal==='A' ? nameA : nameB;
+  if(!outP || !inP){ alert('Dono naam likho - Kon bahar, kon andar?'); return; }
+  // Libero ka count nahi hota
+  if(type !== 'Libero'){
+    if(teamVal==='A' && changeA >= 6){ alert(`${nameA} ke 6 changes khatam ho gaye is set me!`); return; }
+    if(teamVal==='B' && changeB >= 6){ alert(`${nameB} ke 6 changes khatam ho gaye is set me!`); return; }
+    if(teamVal==='A') changeA++; else changeB++;
   }
-  update();
+  // YAHAN KOI SCORE / SERVE CHANGE NAHI HO RAHA - SIRF CHANGE LIST
+  let txt = `Set ${currentSet} - ${teamName} - ${type}: OUT ${outP} ➡️ IN ${inP} [NO POINT]`;
+  changeHistory.unshift(txt);
+  document.getElementById('outPlayer').value='';
+  document.getElementById('inPlayer').value='';
+  // Score ko bilkul hath nahi lagaya
+  updateUI();
+}
+function undoChange(){
+  if(changeHistory.length===0) return;
+  let last = changeHistory[0];
+  if(!last.includes('Libero')){
+    if(last.includes(getNames().a)) changeA = Math.max(0, changeA-1);
+    else changeB = Math.max(0, changeB-1);
+  }
+  changeHistory.shift();
+  // Score ko phir bhi hath nahi lagana
+  updateUI();
+}
+
+function refereeSetWin(){
+  if(scoreA===scoreB){ alert('Score barabar hai, set khatam nahi ho sakta!'); return; }
+  let {a:nameA, b:nameB} = getNames();
+  let winner = scoreA > scoreB ? 'A' : 'B';
+  let winnerName = winner==='A' ? nameA : nameB;
+  setScores.push({a:scoreA, b:scoreB, winner:winner, set:currentSet});
+  if(winner==='A') setsA++; else setsB++;
+  pointHistory.unshift(`✅ Set ${currentSet} Khatam - ${winnerName} Jeeta ${scoreA} - ${scoreB} (Referee Faisla)`);
+  if(setsA===3 || setsB===3){ alert(`${winnerName} ne 3 Sets jeet liye! Ab "Team Jeeti" wala button dabao.`); }
+  if(currentSet < 5){
+    currentSet++;
+    scoreA=0; scoreB=0;
+    serve = winner;
+    changeA=0; changeB=0;
+    changeHistory.unshift(`--- Set ${currentSet} Shuru - Changes Reset ---`);
+  } else { gameOver=true; }
+  updateUI();
+}
+function nextSet(){
+  if(scoreA===0 && scoreB===0){ alert('Pehle is set me points do!'); return; }
+  refereeSetWin();
+}
+function refereeWin(who){
+  let {a:nameA, b:nameB} = getNames();
+  gameOver=true;
+  let w=document.getElementById('winner');
+  w.style.display='block';
+  if(who==='A') w.innerText = `🏆 REFEREE FAISLA: ${nameA} Match Jeet Gaya! Sets ${setsA} - ${setsB}`;
+  else w.innerText = `🏆 REFEREE FAISLA: ${nameB} Match Jeet Gaya! Sets ${setsB} - ${setsA}`;
+  pointHistory.unshift(`🏆 REFEREE FAISLA: Match Khatam`);
+  updateUI();
+}
+function continueGame(){
+  gameOver=false;
+  document.getElementById('winner').style.display='none';
+  updateUI();
+}
+function resetGame(){
+  scoreA=0; scoreB=0; setsA=0; setsB=0; currentSet=1; serve='A'; pointHistory=[]; changeHistory=[]; gameOver=false; setScores=[]; changeA=0; changeB=0;
+  document.getElementById('winner').style.display='none';
+  updateUI();
+}
+updateUI();
 </script>
 </body>
 </html>
